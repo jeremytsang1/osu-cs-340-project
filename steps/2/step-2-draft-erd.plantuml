@@ -36,15 +36,15 @@ entity garrisons {
 '------------------------------------------------------------------------------
 ' Composite Entities
 
-entity shipTrooperManifest {
-    * shipID
-    * trooperID
-}
-
-entity shipDroidManfiest {
-    * shipID
-    * droidID
-}
+'entity shipTrooperManifest {
+'    * shipID
+'    * trooperID
+'}
+'
+'entity shipDroidManfiest {
+'    * shipID
+'    * droidID
+'}
 
 '------------------------------------------------------------------------------
 ' Relationships
@@ -53,10 +53,12 @@ garrisons |o-o{ troopers:\t
 loadOuts ||--|{ troopers  /' TODO: check if this is in fact 1-to-1 or 1-to-many '/
 
 'troopers ships M:M relationship relies on composite entity shipTrooperManifest
-troopers ||--o{ shipTrooperManifest
-shipTrooperManifest }o-|| ships:\t
+troopers }o-o{ ships:\t
+'troopers ||--o{ shipTrooperManifest
+'shipTrooperManifest }o-|| ships:\t
 
 'droids ships M:M relationship relies on composite entity shipDroidManifest
-ships ||--o{ shipDroidManfiest
-shipDroidManfiest }o-|| droids:\t
+ships }o-o{ droids:\t
+'ships ||--o{ shipDroidManfiest
+'shipDroidManfiest }o-|| droids:\t
 @enduml
