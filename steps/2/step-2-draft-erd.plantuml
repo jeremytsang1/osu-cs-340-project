@@ -10,4 +10,40 @@ hide circle         /' Hide "E" symbol '/
 hide empty fields   /' remove empty bar '/
 hide empty methods  /' remove empty bar '/
 
+'------------------------------------------------------------------------------
+' Entities
+
+entity troopers {
+    * id
+}
+
+entity ships {
+    * id
+}
+
+entity droids {
+    * id
+}
+
+entity loadOuts {
+    * id
+}
+
+entity garrisons {
+    * id
+}
+
+'------------------------------------------------------------------------------
+' Composite Entities
+
+entity shipTrooperManifest {
+    * shipID
+    * trooperID
+}
+
+entity shipDroidManfiest {
+    * shipID
+    * droidID
+}
+
 @enduml
