@@ -1,0 +1,13 @@
+@startuml
+
+/'
+ ' set size and orientation
+ '/
+scale 1000 width          /' Set dimensions '/
+skinparam linetype ortho  /' Avoid diagonal, as it doesn't look great in ERD '/
+
+hide circle         /' Hide "E" symbol '/
+hide empty fields   /' remove empty bar '/
+hide empty methods  /' remove empty bar '/
+
+@enduml
