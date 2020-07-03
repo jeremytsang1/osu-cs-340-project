@@ -46,4 +46,17 @@ entity shipDroidManfiest {
     * droidID
 }
 
+'------------------------------------------------------------------------------
+' Relationships
+
+garrisons - troopers:\t
+loadOuts -- troopers  /' TODO: check if this is in fact 1-to-1 or 1-to-many '/
+
+'troopers ships M:M relationship relies on composite entity shipTrooperManifest
+troopers -- shipTrooperManifest
+shipTrooperManifest - ships:\t
+
+'droids ships M:M relationship relies on composite entity shipDroidManifest
+ships -- shipDroidManfiest
+shipDroidManfiest - droids:\t
 @enduml
