@@ -25,7 +25,7 @@ entity droids {
     * id
 }
 
-entity loadOuts {
+entity loadouts {
     * id
 }
 
@@ -50,7 +50,7 @@ entity garrisons {
 ' Relationships
 
 garrisons |o-o{ troopers:\t
-loadOuts ||--|{ troopers  /' TODO: check if this is in fact 1-to-1 or 1-to-many '/
+loadouts ||--|{ troopers  /' TODO: check if this is in fact 1-to-1 or 1-to-many '/
 
 'troopers ships M:M relationship relies on composite entity shipTrooperManifest
 troopers }o-o{ ships:\t
