@@ -50,12 +50,12 @@
     outline: 1px solid black;
 }
 
-.trooper_table {
+.table {
     outline: 2px solid black;
     padding: 10px 10px;
 }
 
-.trooper_table input {
+.table input {
     width: 90px;
 }
 
