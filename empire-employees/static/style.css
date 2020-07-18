@@ -32,6 +32,23 @@
     float: left;
 }
 
+.db_troopers {
+    float: left;
+    margin-top: 92px;
+    margin-left: 120px;
+    /* outline: 2px solid black; */
+    padding: 10px 10px;
+}
+
+.db_troopers th {
+    outline: 1px solid black;
+    background: rgb(61, 142, 209, .5);
+}
+
+.db_troopers td {
+    outline: 1px solid black;
+}
+
 .trooper_table {
     outline: 2px solid black;
     padding: 10px 10px;
