@@ -15,15 +15,14 @@
       <div><a href="index.html">Home</a></div>
       <br>
       <div>ENTITIES</div>
-      <div><a href="troopers.html">troopers</a></div>
-      <div><a href="garrisons.html">garrisons</a></div>
-      <div><a href="">loadouts</a></div>
-      <div><a href="">ships</a></div>
-      <div><a href="">droids</a></div>
+      <div><a href="troopers.html">Troopers</a></div>
+      <div><a href="garrisons.html">Garrisons</a></div>
+      <div><a href="loadouts.html">Loadouts</a></div>
+      <div><a href="ships.html">Ships</a></div>
+      <div><a href="droids.html">Droids</a></div>
       <br>
       <div>COMPOSITES</div>
-      <div><a href="">ships_troopers</a></div>
-      <div><a href="">ships_droids</a></div>
+      <div><a href="manifests.html">Manifests</a></div>
     </ul>
   </div>
 
@@ -36,14 +35,57 @@
             <form action="" id="trooper_add">             
                 <div class="form_input">
 
-                    <input type="text" value="trooper id">
-                    <input type="text" value="garrison">                    
-                    <input type="text" value="loadout">
+                    <legend><strong>Add a new trooper</strong></legend>  
+
+                    <Label>
+                        <input type="text"> Trooper ID
+                    </Label>
+    
+                    <br>
+                    <Label>
+                        <input type="text"> Garrison ID
+                    </Label>
+    
+                    <br>
+                    <Label>
+                        <input type="text"> Loadout ID
+                    </Label>
+    
+                    <br>
 
                 </div>
 
-                <div><button>add</button></div>
+                <div><button>Add</button></div>
 
+            </form>
+        </div>
+
+        <br>
+
+        <div class="table">
+            <form action="" id="garrison_filter">             
+                <div class="form_input">
+
+                    <legend><strong>Filter by garrison</strong></legend>  
+
+
+                    <Label>
+                        <input type="text"> Garrison ID
+                    </Label>
+    
+                    <br>
+                    <Label>
+                        <input type="text"> Ship ID
+                    </Label>
+    
+                    <br>
+
+                    
+
+                </div>
+
+                <div><button>Filter</button></div>
+                
             </form>
         </div>
 
@@ -53,29 +95,19 @@
             <form action="" id="trooper_filter">             
                 <div class="form_input">
 
-                    <input type="text" value="garrison">
-                    <input type="text" value="ship">                    
+                    <legend><strong>Filter by trooper id</strong></legend>  
+
+
+                    <Label>
+                        <input type="text"> Trooper ID
+                    </Label>
+    
+                    <br>              
                     
 
                 </div>
 
-                <div><button>filter</button></div>
-                
-            </form>
-        </div>
-
-        <br>
-
-        <div class="table">
-            <form action="" id="trooper_delete">             
-                <div class="form_input">
-
-                    <input type="text" value="trooper id">                
-                    
-
-                </div>
-
-                <div><button>filter</button></div>
+                <div><button>Filter</button></div>
                 
             </form>
         </div>
@@ -86,7 +118,12 @@
             <form action="" id="trooper_garrison_change">             
                 <div class="form_input">
 
-                    <input type="text" value="garrison">
+                    <legend><strong>Change garrison assignment</strong></legend>  
+
+                    <Label>
+                        <input type="text"> Garrison ID
+                    </Label>
+    
                     
                     <br>
 
@@ -95,21 +132,46 @@
                 <div >
                         <label>
                             <input type="radio" class="radio_b" name="move"> 
-                            remove from garrison
+                            Remove From garrison
                         </label>
 
                         <label>
                             <input type="radio" class="radio_b" name="move">
-                            move to
+                            Move To
                         </label>
                     
 
                 </div>
 
-                <div><button>submit</button></div>
+                <div><button>Submit</button></div>
                 
             </form>
         </div>
+
+        <br>
+
+        <div class="table">
+            <form action="" id="trooper_delete">             
+                <div class="form_input">
+
+                    <legend><strong>Delete trooper (RIP)</strong></legend>  
+
+
+                    <Label>
+                        <input type="text"> Trooper ID
+                    </Label>
+    
+                    <br>              
+                    
+
+                </div>
+
+                <div><button>Delete</button></div>
+                
+            </form>
+        </div>
+
+        <br>
 
     </div>
 
@@ -117,21 +179,21 @@
     <div class="db">
         <table>
             <tr>
-                <th>id</th>
-                <th>garrison.name</th>
-                <th>loadout</th>
+                <th>Trooper ID</th>
+                <th>Garrison ID</th>
+                <th>Loadout ID</th>
             </tr>
             
             <tr>
                 <td>6944</td>
-                <td>Tattooine</td>
-                <td>3</td>
+                <td>82</td>
+                <td>100</td>
             </tr>
 
             <tr>
                 <td>3153</td>
-                <td>Kashyyk</td>
-                <td>4</td>
+                <td>23</td>
+                <td>101</td>
             </tr>
 
         </table>
