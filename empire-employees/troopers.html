@@ -17,13 +17,12 @@
       <div>ENTITIES</div>
       <div><a href="troopers.html">troopers</a></div>
       <div><a href="garrisons.html">garrisons</a></div>
-      <div><a href="">loadouts</a></div>
-      <div><a href="">ships</a></div>
-      <div><a href="">droids</a></div>
+      <div><a href="loadouts.html">loadouts</a></div>
+      <div><a href="ships.html">ships</a></div>
+      <div><a href="droids.html">droids</a></div>
       <br>
       <div>COMPOSITES</div>
-      <div><a href="">ships_troopers</a></div>
-      <div><a href="">ships_droids</a></div>
+      <div><a href="manifests.html">manifests</a></div>
     </ul>
   </div>
 
@@ -36,9 +35,23 @@
             <form action="" id="trooper_add">             
                 <div class="form_input">
 
-                    <input type="text" value="trooper id">
-                    <input type="text" value="garrison">                    
-                    <input type="text" value="loadout">
+                    <legend><strong>Add a new trooper</strong></legend>  
+
+                    <Label>
+                        <input type="text"> id
+                    </Label>
+    
+                    <br>
+                    <Label>
+                        <input type="text"> garrison
+                    </Label>
+    
+                    <br>
+                    <Label>
+                        <input type="text"> loadout
+                    </Label>
+    
+                    <br>
 
                 </div>
 
@@ -50,11 +63,23 @@
         <br>
 
         <div class="table">
-            <form action="" id="trooper_filter">             
+            <form action="" id="garrison_filter">             
                 <div class="form_input">
 
-                    <input type="text" value="garrison">
-                    <input type="text" value="ship">                    
+                    <legend><strong>Filter by garrison</strong></legend>  
+
+
+                    <Label>
+                        <input type="text"> garrison
+                    </Label>
+    
+                    <br>
+                    <Label>
+                        <input type="text"> ship
+                    </Label>
+    
+                    <br>
+
                     
 
                 </div>
@@ -67,10 +92,17 @@
         <br>
 
         <div class="table">
-            <form action="" id="trooper_delete">             
+            <form action="" id="trooper_filter">             
                 <div class="form_input">
 
-                    <input type="text" value="trooper id">                
+                    <legend><strong>Filter by trooper id</strong></legend>  
+
+
+                    <Label>
+                        <input type="text"> trooper
+                    </Label>
+    
+                    <br>              
                     
 
                 </div>
@@ -86,7 +118,12 @@
             <form action="" id="trooper_garrison_change">             
                 <div class="form_input">
 
-                    <input type="text" value="garrison">
+                    <legend><strong>Change garrison assignment</strong></legend>  
+
+                    <Label>
+                        <input type="text"> garrison
+                    </Label>
+    
                     
                     <br>
 
@@ -111,6 +148,31 @@
             </form>
         </div>
 
+        <br>
+
+        <div class="table">
+            <form action="" id="trooper_delete">             
+                <div class="form_input">
+
+                    <legend><strong>Delete trooper (RIP)</strong></legend>  
+
+
+                    <Label>
+                        <input type="text"> id
+                    </Label>
+    
+                    <br>              
+                    
+
+                </div>
+
+                <div><button>delete</button></div>
+                
+            </form>
+        </div>
+
+        <br>
+
     </div>
 
 
@@ -118,7 +180,7 @@
         <table>
             <tr>
                 <th>id</th>
-                <th>garrison.name</th>
+                <th>garrison</th>
                 <th>loadout</th>
             </tr>
             
