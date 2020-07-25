@@ -15,6 +15,7 @@ CREATE TABLE ships (
 
 
 CREATE TABLE droids (
+  foo=bar
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
