@@ -67,10 +67,24 @@ ALTER TABLE troopers
 --------------------------------------------------
 -- ***** ships_troopers relationships *****
 
+ALTER TABLE ships_troopers
+  ADD FOREIGN KEY (ship)
+  REFERENCES ships(id);
+
+ALTER TABLE ships_troopers
+  ADD FOREIGN KEY (trooper)
+  REFERENCES troopers(id);
 
 --------------------------------------------------
 -- ***** ships_droids relationships *****
 
+ALTER TABLE ships_droids
+  ADD FOREIGN KEY (ship)
+  REFERENCES ships(id);
+
+ALTER TABLE ships_droids
+  ADD FOREIGN KEY (droid)
+  REFERENCES droids(id);
 
 -------------------------------------------------------------------------------
 -- ***** Initial Data *****
