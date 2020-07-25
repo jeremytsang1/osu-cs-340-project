@@ -13,6 +13,12 @@ CREATE TABLE garrisons (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+INSERT INTO `garrisons` (`name`, `capacity`) VALUES
+("Tatooine", 10000),
+("Coruscant", 100000),
+("Kashyyk", 5000);
+
+
 DROP TABLE IF EXISTS loadouts;
 CREATE TABLE loadouts (
   id INT AUTO_INCREMENT,
@@ -21,12 +27,11 @@ CREATE TABLE loadouts (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS ships;
 INSERT INTO `loadouts` (`blaster`, `detonator`) VALUES
 ("EL-16", "Thermal"),
-("E-11", "Fragmentation"),;
+("E-11", "Fragmentation");
 
-
+DROP TABLE IF EXISTS ships;
 CREATE TABLE ships (
   id int auto_increment not NULL PRIMARY KEY,
   type varchar(255) not NULL
