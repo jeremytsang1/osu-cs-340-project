@@ -115,3 +115,13 @@ INSERT INTO `droids` (`id`, `type`) VALUES
 
 
 INSERT INTO `troopers` (`id`, `type`) VALUES
+
+INSERT INTO `ships_droids` (`ship`, `droid`) VALUES
+(1, 2),
+(2, 1),
+(3, 3);
+
+INSERT INTO `ships_troopers` (`ship`, `trooper`) VALUES
+(2, 2187),
+(3, 2199),
+(1, 2191);
