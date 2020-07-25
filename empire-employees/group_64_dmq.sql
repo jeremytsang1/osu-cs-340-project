@@ -78,5 +78,6 @@ INSERT INTO `ships_droids` (`ship`, `droid`) VALUES
 
 SELECT *
     FROM ships
-    WHERE ship = (:shipInput);
+    WHERE ship = (:shipInput) OR droid = (:droidInput);
 
+DELETE FROM `ships_droids` WHERE ship = :shipInput OR :droidInput;
