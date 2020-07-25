@@ -33,7 +33,8 @@ DELETE FROM `troopers` WHERE id=:idInput;
 -------------------------------------------------------------------------------
 -- garrisons page
 
-SELECT * FROM garrisons;
+SELECT * 
+    FROM garrisons;
 
 INSERT INTO `garrisons` (`id`, `name`, `capacity`) VALUES
 (:idInput, :nameInput, :capacityInput);
@@ -60,11 +61,22 @@ INSERT INTO `ships` (`id`, `type`) VALUES
 
 -------------------------------------------------------------------------------
 -- droids page
-SELECT * FROM droids;
+SELECT * 
+    FROM droids;
+
 INSERT INTO `droids` (`type`) VALUES
     (:typeInput);
 
 
 -------------------------------------------------------------------------------
 -- manifests page
+SELECT *
+    FROM ships;
+
+INSERT INTO `ships_droids` (`ship`, `droid`) VALUES
+    (:shipInput, :droidInput);
+
+SELECT *
+    FROM ships
+    WHERE ship = (:shipInput);
 
