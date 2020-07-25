@@ -1,14 +1,22 @@
 -------------------------------------------------------------------------------
 -- ***** Create Tables *****
 
+SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS troopers;
+DROP TABLE IF EXISTS garrisons;
+DROP TABLE IF EXISTS loadouts;
+DROP TABLE IF EXISTS ships;
+DROP TABLE IF EXISTS droids;
+DROP TABLE IF EXISTS ships_troopers;
+DROP TABLE IF EXISTS ships_droids;
+SET FOREIGN_KEY_CHECKS = 1;
+
 CREATE TABLE troopers (
   id int auto_increment not NULL PRIMARY KEY,
   garrison int,
   loadout int not NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS garrisons;
 CREATE TABLE garrisons (
   id INT AUTO_INCREMENT,
   name VARCHAR(255) NOT NULL,
@@ -16,7 +24,6 @@ CREATE TABLE garrisons (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS loadouts;
 CREATE TABLE loadouts (
   id INT AUTO_INCREMENT,
   blaster VARCHAR(255) NOT NULL,
@@ -24,26 +31,22 @@ CREATE TABLE loadouts (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS ships;
 CREATE TABLE ships (
   id int auto_increment not NULL PRIMARY KEY,
   type varchar(255) not NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS droids;
 CREATE TABLE droids (
   id int auto_increment not NULL PRIMARY KEY,
   type varchar(255) not NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS ships_troopers;
 CREATE TABLE ships_troopers (
   ship INT NOT NULL,
   trooper INT NOT NULL,
   PRIMARY KEY (ship, trooper)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS ships_droids;
 CREATE TABLE ships_droids (
   ship INT NOT NULL,
   droid INT NOT NULL,
