@@ -4,7 +4,7 @@ CREATE TABLE troopers (
 
 CREATE TABLE garrisons (
   Hello world
-  Kyle Bell
+  Kyle Bell Jeremy
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
