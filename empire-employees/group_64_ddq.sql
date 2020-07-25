@@ -92,11 +92,11 @@ ALTER TABLE ships_droids
 -------------------------------------------------------------------------------
 -- ***** Initial Data *****
 
-INSERT INTO `garrisons` (`name`, `capacity`) VALUES
-("Tatooine", 10000),
-("Coruscant", 100000),
-("Kashyyk", 5000);
+INSERT INTO `garrisons` (id, `name`, `capacity`) VALUES
+(1, "Tatooine", 10000),
+(2, "Coruscant", 100000),
+(3, "Kashyyk", 5000);
 
-INSERT INTO `loadouts` (`blaster`, `detonator`) VALUES
-("EL-16", "Thermal"),
-("E-11", "Fragmentation");
+INSERT INTO `loadouts` (`id`, `blaster`, `detonator`) VALUES
+(1, "EL-16", "Thermal"),
+(2, "E-11", "Fragmentation");
