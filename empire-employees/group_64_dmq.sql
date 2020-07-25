@@ -69,25 +69,24 @@ INSERT INTO `droids` (`type`) VALUES
 
 -------------------------------------------------------------------------------
 -- manifests page
+
+--------------------------------------------------
+-- ships_troopers
+SELECT * FROM ships_troopers;
+
+-- Adding a trooper to a ship
+INSERT INTO `ships_troopers` (`ship`, `trooper`) VALUES
+(:shipInput, :trooperInput);
+
+-- Removing a trooper from a ship
+DELETE FROM `ships_troopers` WHERE ship=:shipInput AND trooper=:trooperInput;
+
+--------------------------------------------------
+-- ships_droids
 SELECT *
     FROM ships;
 
 INSERT INTO `ships_droids` (`ship`, `droid`) VALUES
     (:shipInput, :droidInput);
 
-SELECT *
-    FROM ships
-    WHERE ship = (:shipInput) OR droid = (:droidInput);
-
 DELETE FROM `ships_droids` WHERE ship = :shipInput OR :droidInput;
-
---------------------------------------------------
--- ships droids
-SELECT * FROM ships_droids;
-
--- Adding a droid to a ship
-INSERT INTO `ships_droids` (`ship`, `droid`) VALUES
-(:shipInput, :droidInput);
-
--- Removing a droid from a ship
-DELETE FROM `ships_droids` WHERE ship=:shipInput AND droid=:droidInput;
