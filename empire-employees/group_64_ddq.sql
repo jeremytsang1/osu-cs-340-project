@@ -76,7 +76,8 @@ ALTER TABLE ships_troopers
 
 ALTER TABLE ships_troopers
   ADD FOREIGN KEY (trooper)
-  REFERENCES troopers(id);
+  REFERENCES troopers(id)
+  ON DELETE CASCADE;
 
 --------------------------------------------------
 -- ***** ships_droids relationships *****
