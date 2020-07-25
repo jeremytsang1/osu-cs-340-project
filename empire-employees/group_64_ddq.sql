@@ -3,6 +3,7 @@ CREATE TABLE troopers (
 
 
 CREATE TABLE garrisons (
+  Hello world
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
