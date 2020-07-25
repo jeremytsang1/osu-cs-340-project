@@ -8,6 +8,7 @@ CREATE TABLE garrisons (
 
 
 CREATE TABLE loadouts (
+  abc
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
