@@ -1,6 +1,13 @@
 -------------------------------------------------------------------------------
 -- troopers
 
+SELECT *
+  FROM troopers;
+
+INSERT INTO `troopers` (`id`, `garrison`, `loadout`) VALUES
+ (:idInput, :garrisonInput, :loadoutInput);
+
+
 
 -------------------------------------------------------------------------------
 -- garrisons page
