@@ -5,6 +5,9 @@
 -------------------------------------------------------------------------------
 -- garrisons page
 
+SELECT * FROM garrisons;
+
+INSERT INTO `garrisons` (`id`, `name`, `capacity`) VALUES (:idInput, :nameInput, :capacityInput);
 
 -------------------------------------------------------------------------------
 -- loadouts page
@@ -13,6 +16,9 @@
 -------------------------------------------------------------------------------
 -- ships page
 
+SELECT * FROM ships;
+
+INSERT INTO `ships` (`id`, `type`) VALUES (:idInput, :typeInput);
 
 -------------------------------------------------------------------------------
 -- droids page
