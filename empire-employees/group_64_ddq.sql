@@ -18,14 +18,14 @@ CREATE TABLE troopers (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE garrisons (
-  id INT AUTO_INCREMENT,
+  id INT AUTO_INCREMENT NOT NULL,
   name VARCHAR(255) NOT NULL,
   capacity INT(11) NOT NULL,
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE loadouts (
-  id INT AUTO_INCREMENT,
+  id INT AUTO_INCREMENT NOT NULL,
   blaster VARCHAR(255) NOT NULL,
   detonator VARCHAR(11) NOT NULL,
   PRIMARY KEY (id)
@@ -76,7 +76,8 @@ ALTER TABLE ships_troopers
 
 ALTER TABLE ships_troopers
   ADD FOREIGN KEY (trooper)
-  REFERENCES troopers(id);
+  REFERENCES troopers(id)
+  ON DELETE CASCADE;
 
 --------------------------------------------------
 -- ***** ships_droids relationships *****
