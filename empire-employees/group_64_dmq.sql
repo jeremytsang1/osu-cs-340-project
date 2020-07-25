@@ -7,6 +7,10 @@ SELECT *
 INSERT INTO `troopers` (`id`, `garrison`, `loadout`) VALUES
  (:idInput, :garrisonInput, :loadoutInput);
 
+SELECT * 
+    FROM troopers
+    WHERE garrison = (garrisonForm);
+
 
 
 -------------------------------------------------------------------------------
@@ -46,3 +50,4 @@ INSERT INTO `droids` (`type`) VALUES
 
 -------------------------------------------------------------------------------
 -- manifests page
+
