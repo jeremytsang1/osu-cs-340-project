@@ -8,6 +8,13 @@
 
 -------------------------------------------------------------------------------
 -- loadouts page
+SELECT * FROM loadouts;
+    INSERT INTO `loadouts` (`blaster`, `detonator`) VALUES
+    (:blasterInput, :detonatorInput);
+
+UPDATE loadouts 
+    SET blaster = :blasterInput, detonator = :detonatorInput
+    WHERE id = (:loadoutForm);
 
 
 -------------------------------------------------------------------------------
@@ -16,6 +23,9 @@
 
 -------------------------------------------------------------------------------
 -- droids page
+SELECT * FROM droids;
+INSERT INTO `droids` (`type`) VALUES
+    (:typeInput);
 
 
 -------------------------------------------------------------------------------
