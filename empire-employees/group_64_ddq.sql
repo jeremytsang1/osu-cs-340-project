@@ -109,8 +109,8 @@ INSERT INTO `ships` (`id`, `type`) VALUES
 (3, "TIE Fighter");
 
 INSERT INTO `droids` (`id`, `type`) VALUES
-(1, "Protocol");
-(2, "Astromech");
+(1, "Protocol"),
+(2, "Astromech"),
 (3, "Hunter-Killer");
 
 
