@@ -52,8 +52,9 @@ CREATE TABLE ships_droids (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 ALTER TABLE troopers
-  FOREIGN KEY troopers(garrison)
-  REFERENCES garrisons(id)
+  ADD FOREIGN KEY (garrison)
+  REFERENCES garrisons(id);
 
-  -- FOREIGN KEY loadout
-  -- REFERENCES loadouts(id)
+ALTER TABLE troopers
+  ADD FOREIGN KEY (loadout)
+  REFERENCES loadouts(id);
