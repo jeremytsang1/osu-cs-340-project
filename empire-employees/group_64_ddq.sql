@@ -1,3 +1,6 @@
+-------------------------------------------------------------------------------
+-- ***** Create Tables *****
+
 DROP TABLE IF EXISTS troopers;
 CREATE TABLE troopers (
   id int auto_increment not NULL PRIMARY KEY,
@@ -13,12 +16,6 @@ CREATE TABLE garrisons (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `garrisons` (`name`, `capacity`) VALUES
-("Tatooine", 10000),
-("Coruscant", 100000),
-("Kashyyk", 5000);
-
-
 DROP TABLE IF EXISTS loadouts;
 CREATE TABLE loadouts (
   id INT AUTO_INCREMENT,
@@ -26,10 +23,6 @@ CREATE TABLE loadouts (
   detonator VARCHAR(11) NOT NULL,
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-INSERT INTO `loadouts` (`blaster`, `detonator`) VALUES
-("EL-16", "Thermal"),
-("E-11", "Fragmentation");
 
 DROP TABLE IF EXISTS ships;
 CREATE TABLE ships (
@@ -57,6 +50,9 @@ CREATE TABLE ships_droids (
   PRIMARY KEY (ship, droid)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-------------------------------------------------------------------------------
+-- ***** Relationships *****
+
 ALTER TABLE troopers
   ADD FOREIGN KEY (garrison)
   REFERENCES garrisons(id);
@@ -64,3 +60,14 @@ ALTER TABLE troopers
 ALTER TABLE troopers
   ADD FOREIGN KEY (loadout)
   REFERENCES loadouts(id);
+
+-------------------------------------------------------------------------------
+-- ***** Initial Data *****
+INSERT INTO `garrisons` (`name`, `capacity`) VALUES
+("Tatooine", 10000),
+("Coruscant", 100000),
+("Kashyyk", 5000);
+
+INSERT INTO `loadouts` (`blaster`, `detonator`) VALUES
+("EL-16", "Thermal"),
+("E-11", "Fragmentation");
