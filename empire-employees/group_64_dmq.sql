@@ -7,7 +7,7 @@ SELECT *
 INSERT INTO `troopers` (`id`, `garrison`, `loadout`) VALUES
  (:idInput, :garrisonInput, :loadoutInput);
 
-
+DELETE FROM `troopers` WHERE id=:idInput;
 
 -------------------------------------------------------------------------------
 -- garrisons page
