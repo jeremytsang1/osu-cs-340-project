@@ -113,5 +113,9 @@ INSERT INTO `droids` (`id`, `type`) VALUES
 (2, "Astromech"),
 (3, "Hunter-Killer");
 
-
-INSERT INTO `troopers` (`id`, `type`) VALUES
+INSERT INTO `troopers` (`id`, `garrison`, `loadout`) VALUES
+(2187, NULL, 1),
+(2188, 1, 2),
+(2189, 2, 3),
+(2190, 3, 3),
+(2191, 3, 3);
