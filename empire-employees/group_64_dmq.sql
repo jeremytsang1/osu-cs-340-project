@@ -8,6 +8,12 @@ INSERT INTO `troopers` (`id`, `garrison`, `loadout`) VALUES
  (:idInput, :garrisonInput, :loadoutInput);
 
 
+-- Filter by trooper id
+SELECT *
+  FROM troopers;
+WHERE id=:idInput;
+
+
 -- Change garrison Assignment: moving to another garrison radio button
 UPDATE troopers
    SET garrison=:garrisonInput
