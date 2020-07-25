@@ -7,6 +7,17 @@ SELECT *
 INSERT INTO `troopers` (`id`, `garrison`, `loadout`) VALUES
  (:idInput, :garrisonInput, :loadoutInput);
 
+
+-- Change garrison Assignment: moving to another garrison radio button
+UPDATE troopers
+   SET garrison=:garrisonInput
+ WHERE id=:idInput;
+
+-- Change garrison Assignment: removing from current garrison radio button
+UPDATE troopers
+   SET garrison=NULL
+ WHERE id=:idInput;
+
 DELETE FROM `troopers` WHERE id=:idInput;
 
 -------------------------------------------------------------------------------
