@@ -45,10 +45,16 @@ CREATE TABLE droids (
 
 DROP TABLE IF EXISTS ships_troopers;
 CREATE TABLE ships_troopers (
+  ship INT NOT NULL,
+  trooper INT NOT NULL,
+  PRIMARY KEY (ship, trooper)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS ships_droids;
 CREATE TABLE ships_droids (
+  ship INT NOT NULL,
+  droid INT NOT NULL,
+  PRIMARY KEY (ship, droid)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 ALTER TABLE troopers
