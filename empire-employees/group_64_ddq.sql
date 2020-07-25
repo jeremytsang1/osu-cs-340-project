@@ -3,13 +3,10 @@ CREATE TABLE troopers (
 
 
 CREATE TABLE garrisons (
-  Hello world
-  Kyle Bell Jeremy
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE loadouts (
-  abc
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -18,7 +15,6 @@ CREATE TABLE ships (
 
 
 CREATE TABLE droids (
-  foo=bar
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
