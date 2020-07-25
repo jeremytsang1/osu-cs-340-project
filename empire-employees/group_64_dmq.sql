@@ -1,5 +1,5 @@
 -------------------------------------------------------------------------------
--- troopers
+-- troopers page
 
 SELECT *
   FROM troopers;
@@ -11,12 +11,10 @@ SELECT *
     FROM troopers
     WHERE garrison = (garrisonForm);
 
-
 -- Filter by trooper id
 SELECT *
   FROM troopers;
 WHERE id=:idInput;
-
 
 -- Change garrison Assignment: moving to another garrison radio button
 UPDATE troopers
@@ -28,6 +26,7 @@ UPDATE troopers
    SET garrison=NULL
  WHERE id=:idInput;
 
+-- Deleting troopers (RIP)
 DELETE FROM `troopers` WHERE id=:idInput;
 
 -------------------------------------------------------------------------------
@@ -81,3 +80,14 @@ SELECT *
     WHERE ship = (:shipInput) OR droid = (:droidInput);
 
 DELETE FROM `ships_droids` WHERE ship = :shipInput OR :droidInput;
+
+--------------------------------------------------
+-- ships droids
+SELECT * FROM ships_droids;
+
+-- Adding a droid to a ship
+INSERT INTO `ships_droids` (`ship`, `droid`) VALUES
+(:shipInput, :droidInput);
+
+-- Removing a droid from a ship
+DELETE FROM `ships_droids` WHERE ship=:shipInput AND droid=:droidInput;
