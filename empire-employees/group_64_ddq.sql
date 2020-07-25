@@ -99,4 +99,18 @@ INSERT INTO `garrisons` (id, `name`, `capacity`) VALUES
 
 INSERT INTO `loadouts` (`id`, `blaster`, `detonator`) VALUES
 (1, "EL-16", "Thermal"),
-(2, "E-11", "Fragmentation");
+(2, "E-11", "Sonic"),
+(3, "DC-15A", "Sonic");
+
+INSERT INTO `ships` (`id`, `type`) VALUES
+(1, "Star Destroyer"),
+(2, "AT-AT"),
+(3, "TIE Fighter");
+
+INSERT INTO `droids` (`id`, `type`) VALUES
+(1, "Protocol");
+(2, "Astromech");
+(3, "Hunter-Killer");
+
+
+INSERT INTO `troopers` (`id`, `type`) VALUES
