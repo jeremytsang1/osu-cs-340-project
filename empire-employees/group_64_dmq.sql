@@ -67,3 +67,13 @@ INSERT INTO `droids` (`type`) VALUES
 -------------------------------------------------------------------------------
 -- manifests page
 
+--------------------------------------------------
+-- ships droids
+SELECT * FROM ships_droids;
+
+-- Adding a droid to a ship
+INSERT INTO `ships_droids` (`ship`, `droid`) VALUES
+(:shipInput, :droidInput);
+
+-- Removing a droid from a ship
+DELETE FROM `ships_droids` WHERE ship=:shipInput AND droid=:droidInput;
