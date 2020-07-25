@@ -53,6 +53,9 @@ CREATE TABLE ships_droids (
 -------------------------------------------------------------------------------
 -- ***** Relationships *****
 
+--------------------------------------------------
+-- ***** troopers Relationships *****
+
 ALTER TABLE troopers
   ADD FOREIGN KEY (garrison)
   REFERENCES garrisons(id);
@@ -61,8 +64,17 @@ ALTER TABLE troopers
   ADD FOREIGN KEY (loadout)
   REFERENCES loadouts(id);
 
+--------------------------------------------------
+-- ***** ships_troopers relationships *****
+
+
+--------------------------------------------------
+-- ***** ships_droids relationships *****
+
+
 -------------------------------------------------------------------------------
 -- ***** Initial Data *****
+
 INSERT INTO `garrisons` (`name`, `capacity`) VALUES
 ("Tatooine", 10000),
 ("Coruscant", 100000),
