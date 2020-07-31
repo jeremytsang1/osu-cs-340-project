@@ -186,3 +186,6 @@ dist
 
 # Ignore generated Emacs Lisp files.
 *.el
+
+# SQL file for scratch work
+*tmp.sql
