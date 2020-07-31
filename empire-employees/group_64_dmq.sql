@@ -24,6 +24,10 @@ SELECT *
   FROM troopers;
 WHERE id=:idInput;
 
+-- Populate dropdown with possible garrisons to switch to move the trooper to.
+SELECT id, name
+  FROM garrisons; -- use backticks on `name` (SQL keyword)
+
 -- Change garrison Assignment: moving to another garrison radio button
 UPDATE troopers
    SET garrison=:garrisonInput
