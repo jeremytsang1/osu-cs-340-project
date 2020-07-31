@@ -1,8 +1,15 @@
 -------------------------------------------------------------------------------
 -- troopers page
 
-SELECT *
-  FROM troopers;
+-- Display the trooper data in a table.
+SELECT troopers.id AS "troopers.id",
+       garrisons.name,
+       loadouts.id AS "loadouts.id",
+       loadouts.blaster,
+       loadouts.detonator
+  FROM troopers
+	 INNER JOIN loadouts ON troopers.loadout=loadouts.id
+	 INNER JOIN garrisons ON troopers.garrison=garrisons.id;
 
 INSERT INTO `troopers` (`id`, `garrison`, `loadout`) VALUES
  (:idInput, :garrisonInput, :loadoutInput);
