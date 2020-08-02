@@ -1,134 +1,95 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="static/style.css">
-    <title>Empire Employees - Loadouts</title>
-  </head>
-  <body>
-    
-    <div class="title_bar">Empire Employees</div>
+<div class="page_info">
+  <!-- Form: Adding a new loadout to the database -->
+  <div class="table">
+    <form action="" id="loadout_add">
 
-    <div class="menu">
-      <ul>
-        <div><a href="index.html">Home</a></div>
-        <br>
-        <div>ENTITIES</div>
-        <div><a href="troopers.html">Troopers</a></div>
-        <div><a href="garrisons.html">Garrisons</a></div>
-        <div><a href="loadouts.html">Loadouts</a></div>
-        <div><a href="ships.html">Ships</a></div>
-        <div><a href="droids.html">Droids</a></div>
-        <br>
-        <div>M:M TABLES</div>
-        <div><a href="manifests.html">Manifests</a></div>
-      </ul>
-    </div>
+      <legend><strong>Add a new Loadout</strong></legend>
 
-    <h1>Loadouts</h1>
-    
+      <!-- input fields -->
+      <div class="form_input">
+	<!-- blaster adding field -->
+        <div>
+	  <label>
+	    <input type="text">
+	    Blaster ID
+	  </label>
+	</div>
 
-
-    <div class="page_info">
-
-
-      <!-- Form: Adding a new loadout to the database -->
-      <div class="table">
-        <form action="" id="loadout_add">
-
-	  <legend><strong>Add a new Loadout</strong></legend>
-
-	  <!-- input fields -->
-	  <div class="form_input">
-	    <!-- blaster adding field -->
-            <div>
-	      <label>
-		<input type="text">
-		Blaster ID
-	      </label>
-	    </div>
-
-	    <!-- detonator adding field -->
-            <div>
-	      <label>
-		<input type="text">
-		Detonator ID
-	      </label>
-	    </div>
-          </div>
-
-	  <!-- Adding button -->
-          <div><button>add</button></div>
-
-        </form>
+	<!-- detonator adding field -->
+        <div>
+	  <label>
+	    <input type="text">
+	    Detonator ID
+	  </label>
+	</div>
       </div>
 
-      <br/>
+      <!-- Adding button -->
+      <div><button>add</button></div>
 
-      <!-- Form: Updating a loadouts attributes -->
-      <div class="table">
-        <form action="" id="loadout_add">
-	  <legend><strong>Update an existing Loadout</strong></legend>
+    </form>
+  </div>
+</div>
 
-	  <!-- input fields -->
-	  <div class="form_input">
-	    <!-- field for id of loadout to update -->
-            <div>
-	      <label>
-		<input type="text">
-		Loadout ID
-	      </label>
-	    </div>
+<br/>
 
-	    <!-- blaster updating field -->
-            <div>
-	      <label>
-		<input type="text">
-		Blaster ID
-	      </label>
-	    </div>
+<!-- Form: Updating a loadouts attributes -->
+<div class="table">
+  <form action="" id="loadout_add">
+    <legend><strong>Update an existing Loadout</strong></legend>
 
-	    <!-- detonator updating field -->
-            <div>
-	      <label>
-		<input type="text">
-		Detonator ID
-	      </label>
-	    </div>
-          </div>
-
-	  <!-- Updating button -->
-          <div><button>update</button></div>
-
-        </form>
+    <!-- input fields -->
+    <div class="form_input">
+      <!-- field for id of loadout to update -->
+      <div>
+	<label>
+	  <input type="text">
+	  Loadout ID
+	</label>
       </div>
 
+      <!-- blaster updating field -->
+      <div>
+	<label>
+	  <input type="text">
+	  Blaster ID
+	</label>
+      </div>
+
+      <!-- detonator updating field -->
+      <div>
+	<label>
+	  <input type="text">
+	  Detonator ID
+	</label>
+      </div>
     </div>
 
+    <!-- Updating button -->
+    <div><button>update</button></div>
 
-    <div class="db">
-      <table>
-        <tr>
-          <th>Loadout ID</th>
-          <th>Blaster</th>
-          <th>Detonator</th>
-        </tr>
-        
-        <tr>
-          <td>100</td>
-          <td>EL-16</td>
-          <td>Thermal</td>
-        </tr>
+  </form>
+</div>
 
-        <tr>
-          <td>101</td>
-          <td>E-11</td>
-          <td>Fragmentation</td>
-        </tr>
-      </table>
-    </div>
-    </div>
+<div class="db">
+  <table>
+    <tr>
+      <th>Loadout ID</th>
+      <th>Blaster</th>
+      <th>Detonator</th>
+    </tr>
 
-  </body>
-</html>
+    <tr>
+      <td>100</td>
+      <td>EL-16</td>
+      <td>Thermal</td>
+    </tr>
+
+    <tr>
+      <td>101</td>
+      <td>E-11</td>
+      <td>Fragmentation</td>
+    </tr>
+  </table>
+</div>
+</div>
