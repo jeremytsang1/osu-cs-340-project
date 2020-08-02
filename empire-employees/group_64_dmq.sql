@@ -1,7 +1,7 @@
 -------------------------------------------------------------------------------
--- troopers page
+-- TROOPERS PAGE
 
--- Display the trooper data in a table.
+-- display the trooper data in a table
 SELECT troopers.id AS `trooperID`,
        garrisons.id AS `garrisonID`,
        garrisons.name AS `garrisonName`,
@@ -12,95 +12,113 @@ SELECT troopers.id AS `trooperID`,
 	 INNER JOIN loadouts ON troopers.loadout=loadouts.id
 	 INNER JOIN garrisons ON troopers.garrison=garrisons.id;
 
+-- add new trooper
 INSERT INTO `troopers` (`id`, `garrison`, `loadout`) VALUES
  (:idInput, :garrisonInput, :loadoutInput);
 
--- Filter by garrison id
+-- filter by garrison id
 SELECT * 
     FROM troopers
     WHERE garrison = (garrisonForm);
 
--- Filter by trooper id
+-- filter by trooper id
 SELECT *
   FROM troopers;
 WHERE id=:idInput;
 
--- Populate dropdown with possible garrisons to switch to move the trooper to.
+-- populate dropdown with possible garrisons to switch to move the trooper to
 SELECT id, name
   FROM garrisons; -- use backticks on `name` (SQL keyword)
 
--- Change garrison Assignment: moving to another garrison radio button
+-- change garrison Assignment: moving to another garrison radio button
 UPDATE troopers
    SET garrison=:garrisonInput
  WHERE id=:idInput;
 
--- Change garrison Assignment: removing from current garrison radio button
+-- change garrison Assignment: removing from current garrison radio button
 UPDATE troopers
    SET garrison=NULL
  WHERE id=:idInput;
 
--- Deleting troopers (RIP)
+-- delete an existing trooper (RIP)
 DELETE FROM `troopers` WHERE id=:idInput;
 
 -------------------------------------------------------------------------------
--- garrisons page
+-- GARRISONS PAGE
 
+-- display the garrison data in a table
 SELECT id, name, capacity
   FROM garrisons;
 
+-- Add a new garrison
 INSERT INTO `garrisons` (`id`, `name`, `capacity`) VALUES
 (:idInput, :nameInput, :capacityInput);
 
 -------------------------------------------------------------------------------
--- loadouts page
+-- LOADOUTS PAGE
+
+-- display the loadout data in a table
 SELECT id, blaster, detonator
   FROM loadouts;
 
+-- add a new loadout
 INSERT INTO `loadouts` (`blaster`, `detonator`) VALUES
 (:blasterInput, :detonatorInput);
 
+-- edit an existing loadout
 UPDATE loadouts 
     SET blaster = :blasterInput, detonator = :detonatorInput
     WHERE id = (:loadoutForm);
 
 -------------------------------------------------------------------------------
--- ships page
+-- SHIPS PAGE
 
+-- display the ship data in a table
 SELECT id, type
   FROM ships;
 
+-- add a new ship
 INSERT INTO `ships` (`id`, `type`) VALUES
 (:idInput, :typeInput);
 
 -------------------------------------------------------------------------------
--- droids page
+-- DROIDS PAGE
+
+-- display the droid data in a table.
 SELECT id, type
     FROM droids;
 
+-- add a new droid
 INSERT INTO `droids` (id, `type`) VALUES
 (:idInput, :typeInput);
 
 
 -------------------------------------------------------------------------------
--- manifests page
+-- MANIFESTS PAGE
 
 --------------------------------------------------
 -- ships_troopers
+
+-- display which troopers are on which ships
 SELECT * FROM ships_troopers;
 
--- Adding a trooper to a ship
+-- add a trooper to a ship
 INSERT INTO `ships_troopers` (`ship`, `trooper`) VALUES
 (:shipInput, :trooperInput);
 
--- Removing a trooper from a ship
+-- remove a trooper from a ship
 DELETE FROM `ships_troopers` WHERE ship=:shipInput AND trooper=:trooperInput;
 
 --------------------------------------------------
 -- ships_droids
+
+-- display which droids are on which ships
 SELECT *
     FROM ships;
 
+-- add a droid to a ship
 INSERT INTO `ships_droids` (`ship`, `droid`) VALUES
     (:shipInput, :droidInput);
 
+-- remove a droid from a ship
 DELETE FROM `ships_droids` WHERE ship = :shipInput OR :droidInput;
