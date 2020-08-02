@@ -3,6 +3,7 @@
     handlebars for HTML templates
 */
 
+require('dotenv').config();
 let express = require('express');
 let mysql = require('./dbcon.js');
 let bodyParser = require('body-parser');
