@@ -2,12 +2,12 @@
 -- troopers page
 
 -- Display the trooper data in a table.
-SELECT troopers.id AS `Trooper ID`,
-       garrisons.id AS `Garrison ID`,
-       garrisons.name AS `Garrison Name`,
-       loadouts.id AS `Loadout ID`,
-       loadouts.blaster AS `Blaster`,
-       loadouts.detonator AS `Detonator`
+SELECT troopers.id AS `trooperID`,
+       garrisons.id AS `garrisonID`,
+       garrisons.name AS `garrisonName`,
+       loadouts.id AS `loadoutID`,
+       loadouts.blaster AS `blaster`,
+       loadouts.detonator AS `detonator`
   FROM troopers
 	 INNER JOIN loadouts ON troopers.loadout=loadouts.id
 	 INNER JOIN garrisons ON troopers.garrison=garrisons.id;

@@ -31,6 +31,8 @@ app.set('mysql', mysql);
 // ----------------------------------------------------------------------------
 // Routes WITH Helper functions
 
+app.use('/troopers', require('./troopers.js'));
+
 app.use('/loadouts', require('./loadouts.js'));
 
 app.use('/droids', require('./droids.js'));
