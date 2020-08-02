@@ -1,13 +1,39 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
-    <title>Demo Page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     {{#each jsscripts}}
       <script src="/static/{{this}}"></script>
     {{/each}}
+    <link rel="stylesheet" href="static/style.css">
+    <title>Demo Page</title>
   </head>
   <body>
-    {{{body}}}
+
+    <div class="title_bar">Empire Employees</div>
+
+    <div class="menu">
+      <ul>
+        <div><a href="index.html">Home</a></div>
+        <br>
+        <div>ENTITIES</div>
+        <div><a href="troopers.html">Troopers</a></div>
+        <div><a href="garrisons.html">Garrisons</a></div>
+        <div><a href="loadouts.html">Loadouts</a></div>
+        <div><a href="ships.html">Ships</a></div>
+        <div><a href="droids.html">Droids</a></div>
+        <br>
+        <div>M:M TABLES</div>
+        <div><a href="manifests.html">Manifests</a></div>
+      </ul>
+    </div>
+
+    <div class="page_info">
+      <h1>Demo Page</h1>
+      {{{body}}}
+    </div>
+
   </body>
 </html>
