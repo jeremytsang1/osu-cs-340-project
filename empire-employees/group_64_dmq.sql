@@ -17,14 +17,28 @@ INSERT INTO `troopers` (`id`, `garrison`, `loadout`) VALUES
  (:idInput, :garrisonInput, :loadoutInput);
 
 -- filter by garrison id
-SELECT * 
-    FROM troopers
-    WHERE garrison = (garrisonForm);
+SELECT troopers.id AS `trooperID`,
+       garrisons.id AS `garrisonID`,
+       garrisons.name AS `garrisonName`,
+       loadouts.id AS `loadoutID`,
+       loadouts.blaster AS `blaster`,
+       loadouts.detonator AS `detonator`
+  FROM troopers
+	 INNER JOIN loadouts ON troopers.loadout=loadouts.id
+	 INNER JOIN garrisons ON troopers.garrison=garrisons.id;
+WHERE garrison = (garrisonForm);
 
--- filter by trooper id
-SELECT *
-  FROM troopers;
-WHERE id=:idInput;
+-- filter by ship id
+SELECT troopers.id AS `trooperID`,
+       garrisons.id AS `garrisonID`,
+       garrisons.name AS `garrisonName`,
+       loadouts.id AS `loadoutID`,
+       loadouts.blaster AS `blaster`,
+       loadouts.detonator AS `detonator`
+  FROM troopers
+	 INNER JOIN loadouts ON troopers.loadout=loadouts.id
+	 INNER JOIN garrisons ON troopers.garrison=garrisons.id;
+WHERE garrison = (garrisonForm);
 
 -- populate dropdown with possible garrisons to switch to move the trooper to
 SELECT id, name
