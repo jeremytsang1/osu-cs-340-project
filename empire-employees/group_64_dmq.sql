@@ -40,12 +40,12 @@ SELECT troopers.id AS `trooperID`,
 	 INNER JOIN garrisons ON troopers.garrison=garrisons.id;
 WHERE garrison = (garrisonForm);
 
--- change garrison Assignment: moving to another garrison radio button
+-- change garrison assignment: moving to another garrison radio button
 UPDATE troopers
    SET garrison=:garrisonInput
  WHERE id=:idInput;
 
--- change garrison Assignment: removing from current garrison radio button
+-- change garrison assignment: removing from current garrison radio button
 UPDATE troopers
    SET garrison=NULL
  WHERE id=:idInput;
