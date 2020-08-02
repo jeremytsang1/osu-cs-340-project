@@ -1,0 +1,89 @@
+
+    <div class="page_info_manifests">
+
+
+
+    <div class="table">
+        <form action="" id="ship_trooper">             
+            <div class="form_input">
+
+    	  <legend><strong>Edit Ship or Droid Manifest</strong></legend>
+
+
+                <label>
+                    <input type="text" > Ship ID
+                </label>
+
+                <label>
+                    <input type="number"> Occupant ID                   
+                </label>
+
+                <br>
+
+                <label>
+                    <input type="radio" name="ship_trooper" class="radio_b"> Ship                  
+                </label>
+
+                <label>
+                    <input type="radio" name="ship_trooper" class="radio_b"> Trooper                   
+                </label>
+
+            </div>
+
+            <div><button>add</button></div>
+            <div><button>remove</button></div>
+
+        </form>
+    </div>
+
+
+</div>
+
+
+<div class="db">
+  <legend><strong>M:M between Ships and Troopers</strong></legend>
+  <table>
+    <thead>
+      <tr>
+	<th>Trooper ID</th>
+	<th>Droid ID</th>
+
+      </tr>
+    </thead>
+
+    <tbody>
+      {{#each ships_troopers}}
+	<tr>
+	  <td>{{ship}}</td>
+	  <td>{{trooper}}</td>
+
+	</tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+
+
+<div class="db">
+  <legend><strong>M:M between Ships and Droids</strong></legend>
+  <table>
+    <thead>
+      <tr>
+	<th>Ship ID</th>
+	<th>Droid ID</th>
+
+      </tr>
+    </thead>
+
+    <tbody>
+      {{#each ships_droids}}
+	<tr>
+	  <td>{{ship}}</td>
+	  <td>{{droid}}</td>
+
+	</tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+

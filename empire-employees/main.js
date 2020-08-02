@@ -39,6 +39,7 @@ app.use('/ships', require('./ships.js'));
 
 app.use('/garrisons', require('./garrisons.js'));
 
+app.use('/manifests', require('./manifests.js'));
 
 // ----------------------------------------------------------------------------
 // Routes WITHOUT helper functions.
