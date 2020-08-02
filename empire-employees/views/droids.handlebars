@@ -36,35 +36,20 @@
 
 <div class="db">
   <table>
-    <tr>
-      <th>Droid ID</th>
-      <th>Type</th>
-    </tr>
+    <thead>
+      <tr>
+	<th>Droid ID</th>
+	<th>Type</th>
+      </tr>
+    </thead>
 
-    <tr>
-      <td>3</td>
-      <td>Protocol</td>
-    </tr>
-
-    <tr>
-      <td>4</td>
-      <td>Battle</td>
-    </tr>
-
-    <tr>
-      <td>5</td>
-      <td>Astromech</td>
-    </tr>
-
-    <tr>
-      <td>6</td>
-      <td>Battle</td>
-    </tr>
-
-    <tr>
-      <td>7</td>
-      <td>Medical</td>
-    </tr>
-
+    <tbody>
+      {{#each droids}}
+	<tr>
+	  <td>{{id}}</td>
+	  <td>{{type}}</td>
+	</tr>
+      {{/each}}
+    </tbody>
   </table>
 </div>
