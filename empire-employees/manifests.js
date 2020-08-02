@@ -13,15 +13,15 @@ module.exports = function() {
         complete();
       });
 
-      mysql.pool.query("SELECT ship, droid from ships_droids;", function(error, results, fields) {
+      // mysql.pool.query("SELECT ship, droid from ships_droids;", function(error, results, fields) {
   
-        if (error) {
-            res.write(JSON.stringify(error));
-            res.end();
-        }
-        context.ships_troopers = results;
-        complete();
-      });    
+      //   if (error) {
+      //       res.write(JSON.stringify(error));
+      //       res.end();
+      //   }
+      //   context.ships_droids = results;
+      //   complete();
+      // });    
     }
   
     router.get('/', function(req, res) {
@@ -38,7 +38,7 @@ module.exports = function() {
   
       function complete() {
         callbackCount++;
-        if (callbackCount >= 2) {
+        if (callbackCount >= 1) {
       res.render('manifests', context);
         }
       }
