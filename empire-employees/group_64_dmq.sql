@@ -65,7 +65,7 @@ UPDATE loadouts
 -------------------------------------------------------------------------------
 -- ships page
 
-SELECT *
+SELECT id, type
   FROM ships;
 
 INSERT INTO `ships` (`id`, `type`) VALUES
