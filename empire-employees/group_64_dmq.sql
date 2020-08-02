@@ -72,11 +72,11 @@ INSERT INTO `ships` (`id`, `type`) VALUES
 
 -------------------------------------------------------------------------------
 -- droids page
-SELECT * 
+SELECT id, type
     FROM droids;
 
-INSERT INTO `droids` (`type`) VALUES
-    (:typeInput);
+INSERT INTO `droids` (id, `type`) VALUES
+(:idInput, :typeInput);
 
 
 -------------------------------------------------------------------------------
