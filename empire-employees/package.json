@@ -1,12 +1,12 @@
 {
-  "name": "hello-world",
+  "name": "empire-employees",
   "version": "1.0.0",
-  "description": "Hello world with express and node.js",
+  "description": "Final Project for CS 340",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "OSU",
+  "author": "Kyle Bell and Jeremy Tsang",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.13.3",
