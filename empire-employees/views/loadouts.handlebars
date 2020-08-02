@@ -73,23 +73,23 @@
 
 <div class="db">
   <table>
-    <tr>
-      <th>Loadout ID</th>
-      <th>Blaster</th>
-      <th>Detonator</th>
-    </tr>
+    <thead>
+      <tr>
+	<th>Loadout ID</th>
+	<th>Blaster</th>
+	<th>Detonator</th>
+      </tr>
+    </thead>
 
-    <tr>
-      <td>100</td>
-      <td>EL-16</td>
-      <td>Thermal</td>
-    </tr>
-
-    <tr>
-      <td>101</td>
-      <td>E-11</td>
-      <td>Fragmentation</td>
-    </tr>
+    <tbody>
+      {{#each loadouts}}
+	<tr>
+	  <td>{{id}}</td>
+	  <td>{{blaster}}</td>
+	  <td>{{detonator}}</td>
+	</tr>
+      {{/each}}
+    </tbody>
   </table>
 </div>
 </div>
