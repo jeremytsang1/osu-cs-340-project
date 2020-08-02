@@ -40,16 +40,19 @@
   <table>
     <thead>
       <tr>
-	<th>Ship ID</th>
-	<th>Type</th>
+	<th>Garrison ID</th>
+	<th>Name</th>
+	<th>Capacity</th>
+
       </tr>
     </thead>
 
     <tbody>
-      {{#each ships}}
+      {{#each garrisons}}
 	<tr>
 	  <td>{{id}}</td>
-	  <td>{{type}}</td>
+	  <td>{{name}}</td>
+	  <td>{{capacity}}</td>
 	</tr>
       {{/each}}
     </tbody>
