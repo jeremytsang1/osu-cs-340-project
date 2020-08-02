@@ -11,7 +11,7 @@
         <div>
 	  <label>
 	    <input type="text">
-	    Blaster ID
+	    Blaster
 	  </label>
 	</div>
 
@@ -19,7 +19,7 @@
         <div>
 	  <label>
 	    <input type="text">
-	    Detonator ID
+	    Detonator
 	  </label>
 	</div>
       </div>
@@ -29,67 +29,69 @@
 
     </form>
   </div>
-</div>
 
-<br/>
 
-<!-- Form: Updating a loadouts attributes -->
-<div class="table">
-  <form action="" id="loadout_add">
-    <legend><strong>Update an existing Loadout</strong></legend>
+  <br/>
 
-    <!-- input fields -->
-    <div class="form_input">
-      <!-- field for id of loadout to update -->
-      <div>
-	<label>
-	  <input type="text">
-	  Loadout ID
-	</label>
+  <!-- Form: Updating a loadouts attributes -->
+  <div class="table">
+    <form action="" id="loadout_add">
+      <legend><strong>Update an existing Loadout</strong></legend>
+
+      <!-- input fields -->
+      <div class="form_input">
+	<!-- field for id of loadout to update -->
+	<div>
+	  <label>
+	    <input type="text">
+	    Loadout ID
+	  </label>
+	</div>
+
+	<!-- blaster updating field -->
+	<div>
+	  <label>
+	    <input type="text">
+	    Blaster
+	  </label>
+	</div>
+
+	<!-- detonator updating field -->
+	<div>
+	  <label>
+	    <input type="text">
+	    Detonator
+	  </label>
+	</div>
       </div>
 
-      <!-- blaster updating field -->
-      <div>
-	<label>
-	  <input type="text">
-	  Blaster ID
-	</label>
-      </div>
+      <!-- Updating button -->
+      <div><button>update</button></div>
 
-      <!-- detonator updating field -->
-      <div>
-	<label>
-	  <input type="text">
-	  Detonator ID
-	</label>
-      </div>
-    </div>
+    </form>
+  </div>
 
-    <!-- Updating button -->
-    <div><button>update</button></div>
-
-  </form>
 </div>
 
 <div class="db">
   <table>
-    <tr>
-      <th>Loadout ID</th>
-      <th>Blaster</th>
-      <th>Detonator</th>
-    </tr>
+    <thead>
+      <tr>
+	<th>Loadout ID</th>
+	<th>Blaster</th>
+	<th>Detonator</th>
+      </tr>
+    </thead>
 
-    <tr>
-      <td>100</td>
-      <td>EL-16</td>
-      <td>Thermal</td>
-    </tr>
-
-    <tr>
-      <td>101</td>
-      <td>E-11</td>
-      <td>Fragmentation</td>
-    </tr>
+    <tbody>
+      {{#each loadouts}}
+	<tr>
+	  <td>{{id}}</td>
+	  <td>{{blaster}}</td>
+	  <td>{{detonator}}</td>
+	</tr>
+      {{/each}}
+    </tbody>
   </table>
 </div>
 </div>
