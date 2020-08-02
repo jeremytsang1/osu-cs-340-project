@@ -44,8 +44,8 @@ DELETE FROM `troopers` WHERE id=:idInput;
 -------------------------------------------------------------------------------
 -- garrisons page
 
-SELECT * 
-    FROM garrisons;
+SELECT id, name, capacity
+  FROM garrisons;
 
 INSERT INTO `garrisons` (`id`, `name`, `capacity`) VALUES
 (:idInput, :nameInput, :capacityInput);
