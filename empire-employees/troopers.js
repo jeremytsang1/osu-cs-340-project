@@ -2,14 +2,26 @@ module.exports = function() {
   let express = require('express');
   let router = express.Router();
 
-  function getDroids(res, mysql, context, complete) {
-    mysql.pool.query("SELECT id, type from droids;", function(error, results, fields) {
+  function getTroopers(res, mysql, context, complete) {
+    display_table_query = ("SELECT"
+      + " troopers.id AS `Trooper ID`,"
+      + " garrisons.id AS `Garrison ID`,"
+      + " garrisons.name AS `Garrison Name`,"
+      + " loadouts.id AS `Loadout ID`,"
+      + " loadouts.blaster AS `Blaster`,"
+      + " loadouts.detonator AS `Detonator`"
+      + " FROM troopers"
+      + " INNER JOIN loadouts ON troopers.loadout=loadouts.id"
+      + " INNER JOIN garrisons ON troopers.garrison=garrisons.id;"
+    );
+
+    mysql.pool.query(display_table_query, function(error, results, fields) {
 
       if (error) {
 	res.write(JSON.stringify(error));
 	res.end();
       }
-      context.droids = results;
+      context.troopers = results;
       complete();
     });
   }
@@ -17,19 +29,19 @@ module.exports = function() {
   router.get('/', function(req, res) {
     let callbackCount = 0;
     let context = {
-      title: "Droids",
-      heading: "Droids",
+      title: "Troopers",
+      heading: "Troopers",
       jsscripts: [],
     };
 
     let mysql = req.app.get('mysql');
 
-    getDroids(res, mysql, context, complete);
+    getTroopers(res, mysql, context, complete);
 
     function complete() {
       callbackCount++;
       if (callbackCount >= 1) {
-	res.render('droids', context);
+	res.render('troopers', context);
       }
     }
   });
