@@ -32,9 +32,13 @@ app.set('mysql', mysql);
 // Routes WITH Helper functions
 
 app.use('/loadouts', require('./loadouts.js'));
+
 app.use('/droids', require('./droids.js'));
 
 app.use('/ships', require('./ships.js'));
+
+app.use('/garrisons', require('./garrisons.js'));
+
 
 // ----------------------------------------------------------------------------
 // Routes WITHOUT helper functions.

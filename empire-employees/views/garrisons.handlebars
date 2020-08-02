@@ -1,0 +1,62 @@
+ <div class="page_info">
+
+
+
+    <div class="table">
+        <form action="" id="garrison_add">
+          <div class="form_input">
+
+	    <legend><strong>Add a new Garrison</strong></legend>
+
+                <Label>
+                    <input type="text"> Garrison ID
+                </Label>
+
+                <br>
+
+                <label>
+                    <input type="text"> Name
+                </label>
+
+                <br>
+
+
+                <Label>
+                <input type="text"> Capacity
+                </Label>
+    
+
+            </div>
+
+            <div><button>Add</button></div>
+
+        </form>
+    </div>
+
+</div>
+
+
+<div class="db">
+  <table>
+    <thead>
+      <tr>
+	<th>Garrison ID</th>
+	<th>Name</th>
+	<th>Capacity</th>
+
+      </tr>
+    </thead>
+
+    <tbody>
+      {{#each garrisons}}
+	<tr>
+	  <td>{{id}}</td>
+	  <td>{{name}}</td>
+	  <td>{{capacity}}</td>
+	</tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+
+</div>
