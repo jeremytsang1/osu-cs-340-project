@@ -21,15 +21,19 @@ app.set('mysql', mysql);
 
 // ----------------------------------------------------------------------------
 // TODO: delete initial starter code
+
 // app.use('/people_certs', require('./people_certs.js'));
 // app.use('/people', require('./people.js'));
 // app.use('/planets', require('./planets.js'));
 // app.use('/', express.static('public'));
+
 // ----------------------------------------------------------------------------
+// Routes WITH Helper functions
 
 app.use('/droids', require('./droids.js'));
 
 // ----------------------------------------------------------------------------
+// Routes WITHOUT helper functions.
 
 app.get('/', (req, res) => {
   context = {
@@ -40,6 +44,7 @@ app.get('/', (req, res) => {
 });
 
 // ----------------------------------------------------------------------------
+// Error pages
 
 app.use(function(req,res){
   res.status(404);
@@ -51,6 +56,8 @@ app.use(function(err, req, res, next){
   res.status(500);
   res.render('500');
 });
+
+// ----------------------------------------------------------------------------
 
 app.listen(app.get('port'), function(){
   console.log('Express started on http://localhost:' + app.get('port') + '; press Ctrl-C to terminate.');
