@@ -15,6 +15,7 @@ SELECT troopers.id AS `trooperID`,
 INSERT INTO `troopers` (`id`, `garrison`, `loadout`) VALUES
  (:idInput, :garrisonInput, :loadoutInput);
 
+-- Filter by garrison id
 SELECT * 
     FROM troopers
     WHERE garrison = (garrisonForm);
