@@ -40,10 +40,6 @@ SELECT troopers.id AS `trooperID`,
 	 INNER JOIN garrisons ON troopers.garrison=garrisons.id;
 WHERE garrison = (garrisonForm);
 
--- populate dropdown with possible garrisons to switch to move the trooper to
-SELECT id, name
-  FROM garrisons; -- use backticks on `name` (SQL keyword)
-
 -- change garrison Assignment: moving to another garrison radio button
 UPDATE troopers
    SET garrison=:garrisonInput
