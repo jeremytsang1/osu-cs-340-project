@@ -27,7 +27,13 @@ app.set('mysql', mysql);
 // app.use('/', express.static('public'));
 // ----------------------------------------------------------------------------
 
-app.get('/', (req, res) => res.render('home'));
+app.get('/', (req, res) => {
+  context = {
+    title: "Home",
+    heading: "Hey this is the home page!"
+  };
+  res.render('home', context);
+});
 
 // ----------------------------------------------------------------------------
 
