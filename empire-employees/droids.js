@@ -113,16 +113,17 @@ module.exports = function() {
       res.redirect(`/droids?${query_string}`) // display error messages
     } else { // attempt the INSERT query
       sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
-	if (error) { // failed INSERT query
-	  if (error.code === "ER_DUP_ENTRY") { // INSERT failed from duplicate ID
-	    query_string = `${QUERY_ERROR_FIELD}=NON_UNIQUE_ID`
-	    res.redirect(`/droids?${query_string}`)
-	  } else { // INSERT failed for reason other than duplicate ID
-	    console.log(JSON.stringify(error));
-	    res.write(JSON.stringify(error));
-	    res.end();
-	  }
-	} else {  // successful INSERT query
+	if (error && error.code === "ER_DUP_ENTRY") {
+	  // INSERT failed from duplicate ID
+	  query_string = `${QUERY_ERROR_FIELD}=NON_UNIQUE_ID`
+	  res.redirect(`/droids?${query_string}`)
+	} else if (error) {
+	  // INSERT failed for reason other than duplicate ID
+	  console.log(JSON.stringify(error));
+	  res.write(JSON.stringify(error));
+	  res.end();
+	} else {
+	  // INSERT succeeded
 	  res.redirect('/droids');
 	}
       });
