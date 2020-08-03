@@ -111,7 +111,7 @@ INSERT INTO `ships` (`id`, `type`) VALUES
 INSERT INTO `droids` (`id`, `type`) VALUES
 (1, "Protocol"),
 (2, "Astromech"),
-(3, "Hunter-Killer");
+(3, "Battle");
 
 INSERT INTO `troopers` (`id`, `garrison`, `loadout`) VALUES
 (2187, NULL, 1),
