@@ -25,8 +25,8 @@ SELECT troopers.id AS `trooperID`,
        loadouts.detonator AS `detonator`
   FROM troopers
 	 INNER JOIN loadouts ON troopers.loadout=loadouts.id
-	 INNER JOIN garrisons ON troopers.garrison=garrisons.id;
-WHERE garrison = (garrisonForm);
+	 INNER JOIN garrisons ON troopers.garrison=garrisons.id
+WHERE garrisons.name = (garrisonForm);
 
 -- filter by ship id
 SELECT troopers.id AS `trooperID`,
