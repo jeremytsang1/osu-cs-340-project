@@ -36,6 +36,8 @@ module.exports = function() {
     "Tutor",
   ];
 
+  // --------------------------------------------------------------------------
+
   function getDroids(res, mysql, context, complete) {
     mysql.pool.query("SELECT id, type from droids;", function(error, results, fields) {
 
@@ -47,6 +49,8 @@ module.exports = function() {
       complete();
     });
   }
+
+  // --------------------------------------------------------------------------
 
   /**
    * Determine if user input for droid.id and droid.type are valid.
@@ -64,7 +68,9 @@ module.exports = function() {
     }
   }
 
+  // --------------------------------------------------------------------------
 
+  // display all existing droids
   router.get('/', function(req, res) {
     let callbackCount = 0;
     let context = {
@@ -91,6 +97,8 @@ module.exports = function() {
       }
     }
   });
+
+  // --------------------------------------------------------------------------
 
   // add a new droid to the table
   router.post('/', function(req, res) {
@@ -121,5 +129,6 @@ module.exports = function() {
     }
   });
 
+  // --------------------------------------------------------------------------
   return router;
 }();
