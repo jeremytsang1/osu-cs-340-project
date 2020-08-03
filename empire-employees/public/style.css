@@ -69,9 +69,13 @@ input.radio_b {
     width: 10px;
 }
 
-h1 {
+h1, #error_message {
     /* color: green; */
     margin-left: 180px;
+}
+
+#error_message{
+    color: red;
 }
 
 .db_manifests{
