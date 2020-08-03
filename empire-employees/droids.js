@@ -11,7 +11,7 @@ module.exports = function() {
   const DROID_TYPES = [
     "Assassin",
     "Astromech",
-    "Battel",
+    "Battle",
     "Biological Science",
     "Child Care",
     "Engineering",
@@ -55,7 +55,6 @@ module.exports = function() {
 
     if (req.query.hasOwnProperty(QUERY_ERROR_FIELD)) {
       context.errorMessage = VALIDATION_ERRORS[req.query[QUERY_ERROR_FIELD]];
-      console.log(context.errorMessage);
     }
 
     let mysql = req.app.get('mysql');
