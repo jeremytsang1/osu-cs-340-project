@@ -42,6 +42,7 @@ module.exports = function() {
       title: "Droids",
       heading: "Droids",
       jsscripts: [],
+      droidTypes: DROID_TYPES,
     };
 
     let mysql = req.app.get('mysql');
