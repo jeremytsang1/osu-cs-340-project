@@ -53,9 +53,9 @@ module.exports = function() {
   // --------------------------------------------------------------------------
 
   /**
-   * Determine if user input for droid.id and droid.type are valid.
-   * @param {int} id - user input for the droid.id
-   * @param {string} type - user input for the droid.type
+   * Determine if user input for droids.id and droids.type are valid.
+   * @param {int} id - user input for the droids.id
+   * @param {string} type - user input for the droids.type
    * @return {string} query string field/value pair if invalid else "".
    */
   function validateInputCreateDroid(id, type) {
