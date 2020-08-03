@@ -1,12 +1,13 @@
 module.exports = function() {
   let express = require('express');
   let router = express.Router();
-  const QUERY_ERRORS = {
-    nonuniqueID: "error=nonuniqueID",
-    nonpositiveID: "error=nonpositiveID",
-    tamperedType: "error=tamperedType",
-  };
 
+  const QUERY_ERROR_FIELD = "VALIDATION_ERROR";
+  const VALIDATION_ERRORS = {
+    NON_UNIQUE_ID: "Please enter an ID that is not already taken!",
+    NON_POSITIVE_ID: "Please enter a positive integer for ID!",
+    TAMPERED_TYPE: "Selected droid type is invalid!",
+  };
   const DROID_TYPES = [
     "Assassin",
     "Astromech",
@@ -70,16 +71,16 @@ module.exports = function() {
     let inserts = [req.body.id, req.body.type];
 
     if (req.body.id <= 0) {
-      res.redirect(`/droids?${QUERY_ERRORS.nonpositiveID}`)
+      res.redirect(`/droids?${QUERY_ERROR_FIELD}=NON_POSITIVE_ID`)
     } else if (!DROID_TYPES.includes(req.body.type)) { // validate droid type
       // do not bother saving to database if droid type has been tampered with
-      res.redirect(`/droids?${QUERY_ERRORS.tamperedType}`)
+      res.redirect(`/droids?${QUERY_ERROR_FIELD}=TAMPERED_TYPE`)
     } else { // attempt the INSERT query
       sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
 	if (error) { // failed INSERT query
 	  if (error.code === "ER_DUP_ENTRY") { // Duplicate ID
 	    // redirect if ID was found to be non-unique
-	    res.redirect(`/droids?${QUERY_ERRORS.nonuniqueID}`);
+	    res.redirect(`/droids?${QUERY_ERROR_FIELD}=NON_UNIQUE_ID`);
 	  } else {
 	    // failed for reason other than duplicate ID
 	    console.log(JSON.stringify(error));
