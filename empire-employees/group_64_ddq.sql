@@ -1,4 +1,4 @@
--------------------------------------------------------------------------------
+-- -----------------------------------------------------------------------------
 -- ***** Create Tables *****
 
 SET FOREIGN_KEY_CHECKS = 0;
@@ -53,10 +53,10 @@ CREATE TABLE ships_droids (
   PRIMARY KEY (ship, droid)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--------------------------------------------------------------------------------
+-- -----------------------------------------------------------------------------
 -- ***** Relationships *****
 
---------------------------------------------------
+-- ------------------------------------------------
 -- ***** troopers Relationships *****
 
 ALTER TABLE troopers
@@ -67,7 +67,7 @@ ALTER TABLE troopers
   ADD FOREIGN KEY (loadout)
   REFERENCES loadouts(id);
 
---------------------------------------------------
+-- ------------------------------------------------
 -- ***** ships_troopers relationships *****
 
 ALTER TABLE ships_troopers
@@ -79,7 +79,7 @@ ALTER TABLE ships_troopers
   REFERENCES troopers(id)
   ON DELETE CASCADE;
 
---------------------------------------------------
+-- ------------------------------------------------
 -- ***** ships_droids relationships *****
 
 ALTER TABLE ships_droids
@@ -90,7 +90,7 @@ ALTER TABLE ships_droids
   ADD FOREIGN KEY (droid)
   REFERENCES droids(id);
 
--------------------------------------------------------------------------------
+-- -----------------------------------------------------------------------------
 -- ***** Initial Data *****
 
 INSERT INTO `garrisons` (id, `name`, `capacity`) VALUES
