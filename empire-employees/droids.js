@@ -2,12 +2,17 @@ module.exports = function() {
   let express = require('express');
   let router = express.Router();
 
+  // query parameter name
   const QUERY_ERROR_FIELD = "VALIDATION_ERROR";
+
+  // query parameter values and their corresponding messages to display on the page
   const VALIDATION_ERRORS = {
     NON_UNIQUE_ID: "Please enter an ID that is not already taken!",
     NON_POSITIVE_ID: "Please enter a positive integer for ID!",
     TAMPERED_TYPE: "Selected droid type is invalid!",
   };
+
+  // choices for the drop down menu
   const DROID_TYPES = [
     "Assassin",
     "Astromech",
@@ -48,11 +53,12 @@ module.exports = function() {
     let context = {
       title: "Droids",
       heading: "Droids",
-      jsscripts: [],
-      droidTypes: DROID_TYPES,
-      errorMessage: "",
+      jsscripts: [],           // filenames of scripts to run
+      droidTypes: DROID_TYPES, // options for the dropdown menu
+      errorMessage: "",        // message to place at top of page if input invalid
     };
 
+    // check query string for any invalid input
     if (req.query.hasOwnProperty(QUERY_ERROR_FIELD)) {
       context.errorMessage = VALIDATION_ERRORS[req.query[QUERY_ERROR_FIELD]];
     }
