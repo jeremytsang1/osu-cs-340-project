@@ -48,6 +48,23 @@ module.exports = function() {
     });
   }
 
+  /**
+   * Determine if user input for droid.id and droid.type are valid.
+   * @param {int} id - user input for the droid.id
+   * @param {string} type - user input for the droid.type
+   * @return {string} query string field/value pair if invalid else "".
+   */
+  function validateInputCreateDroid(id, type) {
+    if (id <= 0) {
+      return `${QUERY_ERROR_FIELD}=NON_POSITIVE_ID`;
+    } else if (!DROID_TYPES.includes(req.body.type)) {
+      return `${QUERY_ERROR_FIELD}=TAMPERED_TYPE`;
+    } else {
+      return "";
+    }
+  }
+
+
   router.get('/', function(req, res) {
     let callbackCount = 0;
     let context = {
@@ -81,19 +98,18 @@ module.exports = function() {
     let sql = "INSERT INTO `droids` (id, `type`) VALUE (?, ?);";
     let inserts = [req.body.id, req.body.type];
 
-    if (req.body.id <= 0) {
-      res.redirect(`/droids?${QUERY_ERROR_FIELD}=NON_POSITIVE_ID`)
-    } else if (!DROID_TYPES.includes(req.body.type)) { // validate droid type
-      // do not bother saving to database if droid type has been tampered with
-      res.redirect(`/droids?${QUERY_ERROR_FIELD}=TAMPERED_TYPE`)
+    // validate the user input
+    let query_string = validateInputCreateDroid(insert[0], inserts[1]);
+
+    if (query_string !== "") {
+      res.redirect(`/droids?${query_string}`) // display error messages
     } else { // attempt the INSERT query
       sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
 	if (error) { // failed INSERT query
-	  if (error.code === "ER_DUP_ENTRY") { // Duplicate ID
-	    // redirect if ID was found to be non-unique
-	    res.redirect(`/droids?${QUERY_ERROR_FIELD}=NON_UNIQUE_ID`);
-	  } else {
-	    // failed for reason other than duplicate ID
+	  if (error.code === "ER_DUP_ENTRY") { // INSERT failed from duplicate ID
+	    query_string = `${QUERY_ERROR_FIELD}=NON_UNIQUE_ID`
+	    res.redirect(`/droids?${query_string}`)
+	  } else { // INSERT failed for reason other than duplicate ID
 	    console.log(JSON.stringify(error));
 	    res.write(JSON.stringify(error));
 	    res.end();
