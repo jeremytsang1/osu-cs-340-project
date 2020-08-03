@@ -50,7 +50,13 @@ module.exports = function() {
       heading: "Droids",
       jsscripts: [],
       droidTypes: DROID_TYPES,
+      errorMessage: "",
     };
+
+    if (req.query.hasOwnProperty(QUERY_ERROR_FIELD)) {
+      context.errorMessage = VALIDATION_ERRORS[req.query[QUERY_ERROR_FIELD]];
+      console.log(context.errorMessage);
+    }
 
     let mysql = req.app.get('mysql');
 
