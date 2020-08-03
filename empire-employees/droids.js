@@ -61,7 +61,7 @@ module.exports = function() {
   function validateInputCreateDroid(id, type) {
     if (id <= 0) {
       return `${QUERY_ERROR_FIELD}=NON_POSITIVE_ID`;
-    } else if (!DROID_TYPES.includes(req.body.type)) {
+    } else if (!DROID_TYPES.includes(type)) {
       return `${QUERY_ERROR_FIELD}=TAMPERED_TYPE`;
     } else {
       return "";
@@ -107,7 +107,7 @@ module.exports = function() {
     let inserts = [req.body.id, req.body.type];
 
     // validate the user input
-    let query_string = validateInputCreateDroid(insert[0], inserts[1]);
+    let query_string = validateInputCreateDroid(inserts[0], inserts[1]);
 
     if (query_string !== "") {
       res.redirect(`/droids?${query_string}`) // display error messages
