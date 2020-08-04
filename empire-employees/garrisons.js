@@ -36,6 +36,39 @@ module.exports = function() {
 
   // --------------------------------------------------------------------------
 
+    /**
+   * Determine if user input for garrisons.id and garrisons.type are valid.
+   * @param {int} id - user input for the garrisons.id
+   * @param {name} type - user input for the garrisons.name
+   * @param {capacity} type - user input for the garrisons.capacity
+   * @return {string} query string field/value pairs if invalid else "".
+   */
+  function validateInputCreateGarrison(id, name, capacity) {
+    let reason = "";
+    let offender = "";
+
+    if (name === "") {
+      reason = "EMPTY"
+      offender = USR_INPUT_FIELD["name"]
+    } else if (id <= 0 ) {
+      reason = "NON_POSITIVE";
+      offender = USR_INPUT_FIELD["id"]
+    } else if (capacity <= 0) {
+      reason = "NON_POSITIVE";
+      offender = USR_INPUT_FIELD["capacity"]
+    } else {
+      // input is valid (no reason or offender)
+    }
+
+    if (reason !== "") {
+      return `${QUERY_ERROR_FIELD}=${reason}&${QUERY_OFFENDER_FIELD}=${offender}`;
+    } else {
+      return "";
+    }
+  }
+
+  // --------------------------------------------------------------------------
+
   // display all existing garrisons
   router.get('/', function(req, res) {
     let callbackCount = 0;
