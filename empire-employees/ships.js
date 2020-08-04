@@ -17,11 +17,11 @@ module.exports = function() {
         "AT-AT",
         "AT-ST",
         "TIE Fighter",
-        "Freighter",
-        "Star Destroyer",
         "TIE Bomber",
         "TIE Defemder",
         "TIE Interceptor",
+        "Freighter",
+        "Star Destroyer",
         "Shuttle",
         "Speeder Bike",
         "Death Star"
