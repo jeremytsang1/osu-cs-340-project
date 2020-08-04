@@ -2,7 +2,7 @@ module.exports = function() {
   let express = require('express');
   let router = express.Router();
 
-    // query parameter name
+  // query parameter name
   const QUERY_ERROR_FIELD = "VALIDATION_ERROR";
   const QUERY_OFFENDER_FIELD = "OFFENDER";
   const REPLACEMENT_STRING = "%offender%";
