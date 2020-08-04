@@ -1,7 +1,7 @@
 <div class="page_info">
   <!-- Form: Adding a new loadout to the database -->
   <div class="table">
-    <form action="" id="loadout_add">
+    <form action="/loadouts" method="POST" id="loadout_add">
 
       <legend><strong>Add a new Loadout</strong></legend>
 
@@ -10,25 +10,29 @@
 	<!-- blaster adding field -->
         <div>
 	  <label>
-	    <input type="text">
+	    <select id="loutout_blaster_select" name="type">
+	      {{#each loudoutsBlasters}}
+		<option value="{{this}}">{{this}}</option>
+	      {{/each}}
+	    </select>
 	    Blaster
-	  </label>
-	</div>
-
-	<!-- detonator adding field -->
-        <div>
-	  <label>
-	    <input type="text">
-	    Detonator
 	  </label>
 	</div>
       </div>
 
-      <!-- Adding button -->
-      <div><button>add</button></div>
 
-    </form>
-  </div>
+	<!-- detonator adding field -->
+        <div>
+	  <label>
+	    <select id="loutout_detonator_select" name="type">
+	      {{#each loudoutsDetonators}}
+		<option value="{{this}}">{{this}}</option>
+	      {{/each}}
+	    </select>
+	    Detonator
+	  </label>
+	</div>
+      </div>
 
 
   <br/>
