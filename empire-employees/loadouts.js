@@ -44,13 +44,46 @@ module.exports = function() {
     });
   }
 
+
+  // --------------------------------------------------------------------------
+
+  /**
+   * Determine if user input for loadouts.id and loadouts.type are valid.
+   * @param {int} id - user input for the loadouts.id
+   * @param {string} blaster - user input for the loaouts.blaster
+   * @param {string} detonator - user input for the loaouts.detonator
+   * @return {string} query string field/value pair if invalid else "".
+   */
+  function validateInputCreateLoadout(id, blaster, detonator) {
+    if (id <= 0) {
+      return `${QUERY_ERROR_FIELD}=NON_POSITIVE_ID`;
+    // } else if ((!DETONATOR_TYPES.includes(detonator)) ) {
+    //   return `${QUERY_ERROR_FIELD}=TAMPERED_TYPE`;
+    // } else if (!BLASTER_TYPES.includes(blaster)) {
+    //   return `${QUERY_ERROR_FIELD}=TAMPERED_TYPE`;
+    } else {
+      return "";
+    }
+  }
+
+  // --------------------------------------------------------------------------
+
+  // display all existing loadouts
   router.get('/', function(req, res) {
     let callbackCount = 0;
     let context = {
       title: "Loadouts",
       heading: "Loadouts",
       jsscripts: [],
+      blasterTypes: BLASTER_TYPES,
+      detonatorTypes: DETONATOR_TYPES,
+      errorMessage: "",
     };
+
+    // check query string for any invalid input
+    if (req.query.hasOwnProperty(QUERY_ERROR_FIELD)) {
+      context.errorMessage = VALIDATION_ERRORS[req.query[QUERY_ERROR_FIELD]];
+    }
 
     let mysql = req.app.get('mysql');
 
@@ -63,6 +96,37 @@ module.exports = function() {
       }
     }
   });
+
+  // add a new loadout to the table
+  router.post('/', function(req, res) {
+    let mysql = req.app.get('mysql');
+    let sql = "INSERT INTO `loadouts` (id, `blaster`, `detonator`) VALUE (?, ?, ?);";
+    let inserts = [req.body.id, req.body.blaster, req.body.detonator];
+
+    // validate the user input
+    let query_string = validateInputCreateLoadout(inserts[0], inserts[1], inserts[2]);
+
+    if (query_string !== "") {
+      res.redirect(`/loadouts?${query_string}`) // display error messages
+    } else { // attempt the INSERT query
+      sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
+	if (error && error.code === "ER_DUP_ENTRY") {
+	  // INSERT failed from duplicate ID
+	  query_string = `${QUERY_ERROR_FIELD}=NON_UNIQUE_ID`
+	  res.redirect(`/loadouts?${query_string}`)
+	} else if (error) {
+	  // INSERT failed for reason other than duplicate ID
+	  console.log(JSON.stringify(error));
+	  res.write(JSON.stringify(error));
+	  res.end();
+	} else {
+	  // INSERT succeeded
+	  res.redirect('/loadouts');
+	}
+      });
+    }
+  });
+
 
   return router;
 }();
