@@ -1,7 +1,7 @@
 <div class="page_info">
       <!-- Form: Adding a new ship to the database -->
       <div class="table">
-        <form action="" id="ship_add">
+        <form action="/ships" method="POST" id="ship_add">
 
 	  <legend><strong>Add a new Ship</strong></legend>
 
@@ -10,19 +10,23 @@
 	    <!-- id of ship to add -->
             <div>
 	      <label>
-		<input type="text">
+		<input type="number" name="id" min="1">
 		Ship ID
 	      </label>
 	    </div>
 
 	    <!-- type of ship to add -->
-            <div>
-	      <label>
-		<input type="text">
-		Type
-	      </label>
-	    </div>
-          </div>
+        <div>
+	  <label>
+	    <select id="ship_type_select" name="type">
+	      {{#each shipTypes}}
+		<option value="{{this}}">{{this}}</option>
+	      {{/each}}
+	    </select>
+	    Type
+	  </label>
+	</div>
+      </div>
 
 	  <!-- Adding button -->
           <div><button>add</button></div>
