@@ -1,7 +1,9 @@
 module.exports = function() {
   let express = require('express');
   let router = express.Router();
-  
+
+  // --------------------------------------------------------------------------
+
   function getGarrisons(res, mysql, context, complete) {
     mysql.pool.query("SELECT id, name, capacity from garrisons;", function(error, results, fields) {
 
@@ -14,6 +16,9 @@ module.exports = function() {
     });
   }
 
+  // --------------------------------------------------------------------------
+
+  // display all existing garrisons
   router.get('/', function(req, res) {
     let callbackCount = 0;
     let context = {
