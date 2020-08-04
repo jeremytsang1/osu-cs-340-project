@@ -110,14 +110,15 @@ module.exports = function() {
   router.post('/', function(req, res) {
     let mysql = req.app.get('mysql');
     let sql = "INSERT INTO `troopers` (`id`, `garrison`, `loadout`) VALUES (?, ?, ?)";
-    let inserts = [req.body.id, req.body.name, req.body.capacity];
+    let inserts = [req.body.id, req.body.garrison, req.body.loadout];
+    console.log(`inserts: ${inserts}`);
 
     // validate the user input
-    let query_string = validateInputCreateGarrison(req.body.id, req.body.garrison,
+    let query_string = validateInputCreateTrooper(req.body.id, req.body.garrison,
       req.body.loadout);
 
     if (query_string !== "") {
-      res.redirect(`/garrisons?${query_string}`) // display error messages
+      res.redirect(`/troopers?${query_string}`) // display error messages
     } else { // attempt the INSERT query
       sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
 	if (error && error.code === "ER_DUP_ENTRY") {
@@ -140,7 +141,7 @@ module.exports = function() {
 	  query_string = (
 	    `${QUERY_ERROR_FIELD}=${reason}&` +
 	    `${QUERY_OFFENDER_FIELD}=${offender}`);
-	  res.redirect(`/garrisons?${query_string}`)
+	  res.redirect(`/troopers?${query_string}`)
 	} else if (error) {
 	  // INSERT failed for reason other than duplicate ID
 	  console.log(JSON.stringify(error));
@@ -148,7 +149,7 @@ module.exports = function() {
 	  res.end();
 	} else {
 	  // INSERT succeeded
-	  res.redirect('/garrisons');
+	  res.redirect('/troopers');
 	}
       });
     }
