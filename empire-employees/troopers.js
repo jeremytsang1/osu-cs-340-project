@@ -2,6 +2,26 @@ module.exports = function() {
   let express = require('express');
   let router = express.Router();
 
+  // query parameter name
+  const QUERY_ERROR_FIELD = "VALIDATION_ERROR";
+  const QUERY_OFFENDER_FIELD = "OFFENDER";
+  const REPLACEMENT_STRING = "%offender%";
+
+  // query parameter values and their corresponding messages to display on the page
+  const VALIDATION_ERRORS = {
+    DOES_NOT_EXIST: `The specified ${REPLACEMENT_STRING} could not be found!`,
+    NON_UNIQUE: `Please enter a ${REPLACEMENT_STRING} that is not already taken!`,
+    NON_POSITIVE: `Please enter a positive integer for ${REPLACEMENT_STRING}!`,
+  };
+
+  // property names should be the actual database fields
+  // property values should be the names that show up in the error message
+  let USR_INPUT_FIELDS =  {
+    id: "Trooper ID",
+    garrison: "Garrison ID",
+    loadout: "Loadout ID",
+  };
+
   // --------------------------------------------------------------------------
 
   function getTroopers(res, mysql, context, complete) {
