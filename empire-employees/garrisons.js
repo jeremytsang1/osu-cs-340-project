@@ -76,7 +76,18 @@ module.exports = function() {
       title: "Garrisons",
       heading: "Garrisons",
       jsscripts: [],
+      errorMessage: "",
     };
+
+    // check query string for any invalid input
+    // ASSUMES: if req.query[QUERY_ERROR_FIELD] exists then so does
+    // req.query[QUERY_OFFENDER_FIELD]
+    if (req.query.hasOwnProperty(QUERY_ERROR_FIELD)) {
+      let reason = req.query[QUERY_ERROR_FIELD];
+      context.errorMessage = VALIDATION_ERRORS[reason].replace(
+	REPLACEMENT_STRING, req.query[QUERY_OFFENDER_FIELD]
+      );
+    }
 
     let mysql = req.app.get('mysql');
 
