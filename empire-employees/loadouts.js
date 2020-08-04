@@ -57,10 +57,10 @@ module.exports = function() {
   function validateInputCreateLoadout(id, blaster, detonator) {
     if (id <= 0) {
       return `${QUERY_ERROR_FIELD}=NON_POSITIVE_ID`;
-    // } else if ((!DETONATOR_TYPES.includes(detonator)) ) {
-    //   return `${QUERY_ERROR_FIELD}=TAMPERED_TYPE`;
-    // } else if (!BLASTER_TYPES.includes(blaster)) {
-    //   return `${QUERY_ERROR_FIELD}=TAMPERED_TYPE`;
+    } else if ((!DETONATOR_TYPES.includes(detonator)) ) {
+      return `${QUERY_ERROR_FIELD}=TAMPERED_TYPE`;
+    } else if (!BLASTER_TYPES.includes(blaster)) {
+      return `${QUERY_ERROR_FIELD}=TAMPERED_TYPE`;
     } else {
       return "";
     }

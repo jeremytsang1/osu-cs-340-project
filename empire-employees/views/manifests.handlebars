@@ -1,40 +1,49 @@
+<div class="page_info_manifests">
 
-    <div class="page_info_manifests">
+	<!-- ship adding field -->
+        {{!-- <div>
+	  <label>
+	    <select id="manifests_ship_select" name="ship">
+	      {{#each manifestShip}}
+		<option value="{{this}}">{{this}}</option>
+	      {{/each}}
+	    </select>
+	    Ship ID
+	  </label>
+	</div>
+      </div> --}}
 
+<div class="table">
+<form action="/manifests" method="POST" id="manifest_add">
 
+      <legend><strong>Add a new Manifest</strong></legend>
 
-    <div class="table">
-        <form action="" id="ship_trooper">             
-            <div class="form_input">
+<!-- ship and occupant adding field -->
+<div>
+  <label>
+      <input type="number" name="ship"> Ship ID
+  </label>
 
-    	  <legend><strong>Edit Ship or Droid Manifest</strong></legend>
+  <label>
+      <input type="number" name="occupant"> Occupant ID                   
+  </label>
+</div>
 
+     <label>
+        <input type="radio" name="occupantChoice" class="radio_b" value="trooper"> Trooper                  
+    </label>
 
-                <label>
-                    <input type="text" > Ship ID
-                </label>
+    <label>
+        <input type="radio" name="occupantChoice" class="radio_b" value="droid"> Droid                   
+    </label>
 
-                <label>
-                    <input type="number"> Occupant ID                   
-                </label>
+	
+      {{!-- </div> --}}
 
-                <br>
-
-                <label>
-                    <input type="radio" name="ship_trooper" class="radio_b"> Ship                  
-                </label>
-
-                <label>
-                    <input type="radio" name="ship_trooper" class="radio_b"> Trooper                   
-                </label>
-
-            </div>
-
-            <div><button>add</button></div>
-            <div><button>remove</button></div>
-
-        </form>
-    </div>
+	    <div><button>add</button>
+		</div>
+	</div>
+    </form>
 
 
 </div>
