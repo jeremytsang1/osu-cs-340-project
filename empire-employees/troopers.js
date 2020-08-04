@@ -106,5 +106,54 @@ module.exports = function() {
 
   // --------------------------------------------------------------------------
 
+    // add a new garrison to the table
+  router.post('/', function(req, res) {
+    let mysql = req.app.get('mysql');
+    let sql = "INSERT INTO `troopers` (`id`, `garrison`, `loadout`) VALUES (?, ?, ?)";
+    let inserts = [req.body.id, req.body.name, req.body.capacity];
+
+    // validate the user input
+    let query_string = validateInputCreateGarrison(req.body.id, req.body.garrison,
+      req.body.loadout);
+
+    if (query_string !== "") {
+      res.redirect(`/garrisons?${query_string}`) // display error messages
+    } else { // attempt the INSERT query
+      sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
+	if (error && error.code === "ER_DUP_ENTRY") {
+	  // INSERT failed from duplicate ID
+
+	  // use the error message to determine which key is a duplicate
+	  let msg = error.sqlMessage;
+
+	  // search the error message string for its index of where the
+	  // offending field begins
+	  let idx = msg.lastIndexOf('for key');
+
+	  let reason = "NON_UNIQUE";
+	  let offender = msg.slice(idx + 9, msg.length - 1);
+
+	  // handle the fact that MySQL labels primary key as PRIMARY instead
+	  // of the actual attribute name
+	  offender = (offender === "PRIMARY") ? "id" : offender;
+
+	  query_string = (
+	    `${QUERY_ERROR_FIELD}=${reason}&` +
+	    `${QUERY_OFFENDER_FIELD}=${offender}`);
+	  res.redirect(`/garrisons?${query_string}`)
+	} else if (error) {
+	  // INSERT failed for reason other than duplicate ID
+	  console.log(JSON.stringify(error));
+	  res.write(JSON.stringify(error));
+	  res.end();
+	} else {
+	  // INSERT succeeded
+	  res.redirect('/garrisons');
+	}
+      });
+    }
+  });
+  // ----------------------------------------------------------------------------
+
   return router;
 }();
