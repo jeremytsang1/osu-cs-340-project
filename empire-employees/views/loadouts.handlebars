@@ -7,11 +7,20 @@
 
       <!-- input fields -->
       <div class="form_input">
+
+	<!-- id of loadout to add -->
+        <div>
+	  <label>
+	    <input type="number" name="id" min="1"> <!-- Prevent non-positive values -->
+	    Loadout ID
+	  </label>
+	</div>
+
 	<!-- blaster adding field -->
         <div>
 	  <label>
-	    <select id="loutout_blaster_select" name="type">
-	      {{#each loudoutsBlasters}}
+	    <select id="loutout_blaster_select" name="blaster">
+	      {{#each blasterTypes}}
 		<option value="{{this}}">{{this}}</option>
 	      {{/each}}
 	    </select>
@@ -24,15 +33,21 @@
 	<!-- detonator adding field -->
         <div>
 	  <label>
-	    <select id="loutout_detonator_select" name="type">
-	      {{#each loudoutsDetonators}}
+	    <select id="loutout_detonator_select" name="detonator">
+	      {{#each detonatorTypes}}
 		<option value="{{this}}">{{this}}</option>
 	      {{/each}}
 	    </select>
 	    Detonator
 	  </label>
-	</div>
+	
       </div>
+
+	    <div><button>add</button>
+		</div>
+	</div>
+    </form>
+
 
 
   <br/>
@@ -47,7 +62,7 @@
 	<!-- field for id of loadout to update -->
 	<div>
 	  <label>
-	    <input type="text">
+	    <input type="number">
 	    Loadout ID
 	  </label>
 	</div>
