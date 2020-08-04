@@ -9,8 +9,8 @@ module.exports = function() {
 
   // query parameter values and their corresponding messages to display on the page
   const VALIDATION_ERRORS = {
-    EMPTY: `Please enter a non-empty ${REPLACEMENT_STRING}`,
-    NON_UNIQUE: `Please enter a(n) ${REPLACEMENT_STRING} that is not already taken!`,
+    EMPTY: `Please enter a non-empty ${REPLACEMENT_STRING}!`,
+    NON_UNIQUE: `Please enter a ${REPLACEMENT_STRING} that is not already taken!`,
     NON_POSITIVE: `Please enter a positive integer for ${REPLACEMENT_STRING}!`,
   };
 
