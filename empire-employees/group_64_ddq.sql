@@ -60,22 +60,26 @@ CREATE TABLE ships_droids (
 -- ***** troopers Relationships *****
 
 ALTER TABLE troopers
-  ADD FOREIGN KEY (garrison)
+  ADD CONSTRAINT fk_troopers_garrison
+  FOREIGN KEY (garrison)
   REFERENCES garrisons(id);
 
 ALTER TABLE troopers
-  ADD FOREIGN KEY (loadout)
+  ADD CONSTRAINT fk_troopers_loadout
+  FOREIGN KEY (loadout)
   REFERENCES loadouts(id);
 
 -- ------------------------------------------------
 -- ***** ships_troopers relationships *****
 
 ALTER TABLE ships_troopers
-  ADD FOREIGN KEY (ship)
+  ADD CONSTRAINT fk_ships_troopers_ship
+  FOREIGN KEY (ship)
   REFERENCES ships(id);
 
 ALTER TABLE ships_troopers
-  ADD FOREIGN KEY (trooper)
+  ADD CONSTRAINT fk_ships_troopers_trooper
+  FOREIGN KEY (trooper)
   REFERENCES troopers(id)
   ON DELETE CASCADE;
 
@@ -83,11 +87,13 @@ ALTER TABLE ships_troopers
 -- ***** ships_droids relationships *****
 
 ALTER TABLE ships_droids
-  ADD FOREIGN KEY (ship)
+  ADD CONSTRAINT fk_ships_droids_ship
+  FOREIGN KEY (ship)
   REFERENCES ships(id);
 
 ALTER TABLE ships_droids
-  ADD FOREIGN KEY (droid)
+  ADD CONSTRAINT fk_ships_droids_droid
+  FOREIGN KEY (droid)
   REFERENCES droids(id);
 
 -- -----------------------------------------------------------------------------
