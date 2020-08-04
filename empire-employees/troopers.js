@@ -2,6 +2,8 @@ module.exports = function() {
   let express = require('express');
   let router = express.Router();
 
+  // --------------------------------------------------------------------------
+
   function getTroopers(res, mysql, context, complete) {
     display_table_query = ("SELECT"
       + " troopers.id AS `trooperID`,"
@@ -26,6 +28,9 @@ module.exports = function() {
     });
   }
 
+  // --------------------------------------------------------------------------
+
+  // display all existing troopers
   router.get('/', function(req, res) {
     let callbackCount = 0;
     let context = {
@@ -45,6 +50,8 @@ module.exports = function() {
       }
     }
   });
+
+  // --------------------------------------------------------------------------
 
   return router;
 }();
