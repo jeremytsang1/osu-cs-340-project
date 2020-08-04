@@ -14,7 +14,9 @@ module.exports = function() {
     NON_POSITIVE: `Please enter a positive integer for ${REPLACEMENT_STRING}!`,
   };
 
-  USR_INPUT_FIELD =  {
+  // property names should be the database fields
+  // property values should be the names that show up in the error message
+  let USR_INPUT_FIELDS =  {
     id: "Garrison ID",
     name: "Name",
     capacity: "Capacity",
