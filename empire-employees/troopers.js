@@ -111,7 +111,6 @@ module.exports = function() {
     let mysql = req.app.get('mysql');
     let sql = "INSERT INTO `troopers` (`id`, `garrison`, `loadout`) VALUES (?, ?, ?)";
     let inserts = [req.body.id, req.body.garrison, req.body.loadout];
-    console.log(`inserts: ${inserts}`);
 
     // validate the user input
     let query_string = validateInputCreateTrooper(req.body.id, req.body.garrison,
