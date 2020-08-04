@@ -50,6 +50,39 @@ module.exports = function() {
 
   // --------------------------------------------------------------------------
 
+  /**
+   * Determine if user input the <form> to INSERT a new trooper is valid.
+   * @param {} id - user input for troopers.id
+   * @param {} garrison - user input for troopers.garrison
+   * @param {} loadout - user input for troopers.loadout
+   * @return {string} query string field/value pairs if invalid else "".
+   */
+  function validateInputCreateTrooper(id, garrison, loadout) {
+    let reason = "";
+    let offender = "";
+
+    if (id <= 0 ) {
+      reason = "NON_POSITIVE";
+      offender = "id";
+    } else if (garrison <= 0) {
+      reason = "NON_POSITIVE";
+      offender = "garrison";
+    } else if (loadout <= 0) {
+      reason = "NON_POSITIVE";
+      offender = "loadout";
+    } else {
+      // Input valid
+    }
+
+    if (reason !== "") {
+      return `${QUERY_ERROR_FIELD}=${reason}&${QUERY_OFFENDER_FIELD}=${offender}`;
+    } else {
+      return "";
+    }
+  }
+
+  // --------------------------------------------------------------------------
+
   // display all existing troopers
   router.get('/', function(req, res) {
     let callbackCount = 0;
