@@ -14,7 +14,7 @@ module.exports = function() {
     NON_POSITIVE: `Please enter a positive integer for ${REPLACEMENT_STRING}!`,
   };
 
-  // property names should be the database fields
+  // property names should be the actual database fields
   // property values should be the names that show up in the error message
   let USR_INPUT_FIELDS =  {
     id: "Garrison ID",
@@ -47,17 +47,18 @@ module.exports = function() {
    */
   function validateInputCreateGarrison(id, name, capacity) {
     let reason = "";
-    let offender = "";
+    let offender = "";  // actual field name in the database (property name of
+			// USR_INPUT_FIELDS)
 
     if (name === "") {
       reason = "EMPTY"
-      offender = USR_INPUT_FIELD["name"]
+      offender = "name"
     } else if (id <= 0 ) {
       reason = "NON_POSITIVE";
-      offender = USR_INPUT_FIELD["id"]
+      offender = "id"
     } else if (capacity <= 0) {
       reason = "NON_POSITIVE";
-      offender = USR_INPUT_FIELD["capacity"]
+      offender = "capacity"
     } else {
       // input is valid (no reason or offender)
     }
@@ -84,10 +85,12 @@ module.exports = function() {
     // check query string for any invalid input
     // ASSUMES: if req.query[QUERY_ERROR_FIELD] exists then so does
     // req.query[QUERY_OFFENDER_FIELD]
+    // ASSUMES: if req.query[QUERY_OFFENDER_FIELD] exists then it is a property
+    // of USR_INPUT_FIELDS
     if (req.query.hasOwnProperty(QUERY_ERROR_FIELD)) {
       let reason = req.query[QUERY_ERROR_FIELD];
       context.errorMessage = VALIDATION_ERRORS[reason].replace(
-	REPLACEMENT_STRING, req.query[QUERY_OFFENDER_FIELD]
+	REPLACEMENT_STRING, USR_INPUT_FIELDS[req.query[QUERY_OFFENDER_FIELD]]
       );
     }
 
