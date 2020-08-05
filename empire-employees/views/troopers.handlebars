@@ -1,23 +1,23 @@
 <div class="page_info">
 
   <div class="table">
-    <form action="" id="trooper_add">
+    <form action="/troopers" method="POST" id="trooper_add">
       <div class="form_input">
 
         <legend><strong>Add a new Trooper</strong></legend>
 
         <Label>
-          <input type="text"> Trooper ID
+          <input type="number" name="id" min="1"> Trooper ID
         </Label>
 
         <br>
         <Label>
-          <input type="text"> Garrison ID
+          <input type="number" name="garrison" min="1"> Garrison ID
         </Label>
 
         <br>
         <Label>
-          <input type="text"> Loadout ID
+          <input type="number" name="loadout" min="1"> Loadout ID
         </Label>
 
         <br>
@@ -39,7 +39,7 @@
 
 
         <Label>
-          <input type="text"> Garrison ID
+          <input type="number" min="1"> Garrison ID
         </Label>
 
         <br>
@@ -64,7 +64,7 @@
 
 
         <Label>
-          <input type="text"> Ship ID
+          <input type="number" min="1"> Ship ID
         </Label>
 
         <br>
@@ -86,14 +86,14 @@
         <legend><strong>Change Garrison assignment</strong></legend>
 
         <Label>
-          <input type="text"> Trooper ID
+          <input type="number" min="1"> Trooper ID
         </Label>
 
 
         <br>
 
         <Label>
-          <input type="text"> Garrison ID
+          <input type="number" min="1"> Garrison ID
         </Label>
 
 
@@ -130,7 +130,7 @@
 
 
         <Label>
-          <input type="text"> Trooper ID
+          <input type="number" min="1"> Trooper ID
         </Label>
 
         <br>
@@ -163,14 +163,14 @@
 
     <tbody>
       {{#each troopers}}
-      <tr>
-	<td>{{trooperID}}</td>
-	<td>{{garrisonID}}</td>
-	<td>{{garrisonName}}</td>
-	<td>{{loadoutID}}</td>
-	<td>{{blaster}}</td>
-	<td>{{detonator}}</td>
-      </tr>
+	<tr>
+	  <td>{{trooperID}}</td>
+	  <td>{{garrisonID}}</td>
+	  <td>{{garrisonName}}</td>
+	  <td>{{loadoutID}}</td>
+	  <td>{{blaster}}</td>
+	  <td>{{detonator}}</td>
+	</tr>
       {{/each}}
     </tbody>
   </table>

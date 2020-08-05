@@ -2,7 +2,7 @@ module.exports = function() {
   let express = require('express');
   let router = express.Router();
 
-    // query parameter name
+  // query parameter name
   const QUERY_ERROR_FIELD = "VALIDATION_ERROR";
   const QUERY_OFFENDER_FIELD = "OFFENDER";
   const REPLACEMENT_STRING = "%offender%";
@@ -38,8 +38,9 @@ module.exports = function() {
 
   // --------------------------------------------------------------------------
 
-    /**
-   * Determine if user input for garrisons.id and garrisons.type are valid.
+  /**
+   * Determine if user input for garrisons.id, garrisons.name, and
+   * garrisons.capacity are valid.
    * @param {int} id - user input for the garrisons.id
    * @param {name} type - user input for the garrisons.name
    * @param {capacity} type - user input for the garrisons.capacity
@@ -155,6 +156,8 @@ module.exports = function() {
       });
     }
   });
-  
+
+  // --------------------------------------------------------------------------
+
   return router;
 }();
