@@ -2,15 +2,15 @@ module.exports = function() {
   let express = require('express');
   let router = express.Router();
 
-  // query parameter name
-  const QUERY_ERROR_FIELD = "VALIDATION_ERROR";
-  const QUERY_OFFENDER_FIELD = "OFFENDER";
+  // query parameter names
+  const QUERY_PARAM_NAME_REASON = "REASON";
+  const QUERY_PARAM_NAME_OFFENDER = "OFFENDER";
   const REPLACEMENT_STRING = "%offender%";
 
   // query parameter values and their corresponding messages to display on the page
-  const VALIDATION_ERRORS = {
+  const VALIDATION_MESSAGES = {
     DOES_NOT_EXIST: `The specified ${REPLACEMENT_STRING} could not be found!`,
-    NON_UNIQUE: `Please enter a ${REPLACEMENT_STRING} that is not already taken!`,
+    DUPLICATE: `Please enter a ${REPLACEMENT_STRING} that is not already taken!`,
     NON_POSITIVE: `Please enter a positive integer for ${REPLACEMENT_STRING}!`,
   };
 
@@ -83,7 +83,7 @@ module.exports = function() {
     }
 
     if (reason !== "") {
-      return `${QUERY_ERROR_FIELD}=${reason}&${QUERY_OFFENDER_FIELD}=${offender}`;
+      return `${QUERY_PARAM_NAME_REASON}=${reason}&${QUERY_PARAM_NAME_OFFENDER}=${offender}`;
     } else {
       return "";
     }
@@ -106,10 +106,10 @@ module.exports = function() {
     // req.query[QUERY_OFFENDER_FIELD]
     // ASSUMES: if req.query[QUERY_OFFENDER_FIELD] exists then it is a property
     // of USR_INPUT_FIELDS
-    if (req.query.hasOwnProperty(QUERY_ERROR_FIELD)) {
-      let reason = req.query[QUERY_ERROR_FIELD];
-      context.errorMessage = VALIDATION_ERRORS[reason].replace(
-	REPLACEMENT_STRING, USR_INPUT_FIELDS[req.query[QUERY_OFFENDER_FIELD]]
+    if (req.query.hasOwnProperty(QUERY_PARAM_NAME_REASON)) {
+      let reason = req.query[QUERY_PARAM_NAME_REASON];
+      context.errorMessage = VALIDATION_MESSAGES[reason].replace(
+	REPLACEMENT_STRING, USR_INPUT_FIELDS[req.query[QUERY_PARAM_NAME_OFFENDER]]
       );
     }
 
@@ -153,7 +153,7 @@ module.exports = function() {
 	  // offending field begins
 	  let idx = msg.lastIndexOf('for key');
 
-	  let reason = "NON_UNIQUE";
+	  let reason = "DUPLICATE";
 	  offender = msg.slice(idx + 9, msg.length - 1);
 
 	  // handle the fact that MySQL labels primary key as PRIMARY instead
@@ -161,8 +161,8 @@ module.exports = function() {
 	  offender = (offender === "PRIMARY") ? "id" : offender;
 
 	  queryString = (
-	    `${QUERY_ERROR_FIELD}=${reason}&` +
-	    `${QUERY_OFFENDER_FIELD}=${offender}`);
+	    `${QUERY_PARAM_NAME_REASON}=${reason}&` +
+	    `${QUERY_PARAM_NAME_OFFENDER}=${offender}`);
 	  res.redirect(`/troopers?${queryString}`)
 	} else if (error && error.code === "ER_NO_REFERENCED_ROW_2") {
 	  // INSERT failed because can't find specified foreign key
@@ -177,8 +177,8 @@ module.exports = function() {
 	  }
 
 	  queryString = (
-	    `${QUERY_ERROR_FIELD}=${reason}&` +
-		`${QUERY_OFFENDER_FIELD}=${offender}`);
+	    `${QUERY_PARAM_NAME_REASON}=${reason}&` +
+		`${QUERY_PARAM_NAME_OFFENDER}=${offender}`);
 	  res.redirect(`/troopers?${queryString}`)
 
 	} else if (error) {
