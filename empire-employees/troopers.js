@@ -133,7 +133,7 @@ module.exports = function() {
     let code = error.code;
 
     if (expectedErrorsHandlers.hasOwnProperty(code)) {
-      res.redirect(expectedErrorsHandlers[code]());
+      res.redirect(`troopers?${expectedErrorsHandlers[code]()}`);
     } else {
       console.log(stringifiedError);
       res.write(stringifiedError);
