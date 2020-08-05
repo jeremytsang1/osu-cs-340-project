@@ -22,6 +22,14 @@ module.exports = function() {
     loadout: "Loadout ID",
   };
 
+  // foreign key constraints and their repsective fields
+  // property name: name of the constraint in the DDQ
+  // property value: name of the foreign key
+  let FK_RULES = {
+    fk_troopers_garrison: 'garrison',
+    fk_troopers_loadout: 'loadout'
+  };
+
   // --------------------------------------------------------------------------
 
   function getTroopers(res, mysql, context, complete) {
@@ -156,6 +164,23 @@ module.exports = function() {
 	    `${QUERY_ERROR_FIELD}=${reason}&` +
 	    `${QUERY_OFFENDER_FIELD}=${offender}`);
 	  res.redirect(`/troopers?${query_string}`)
+	} else if (error && error.code === "ER_NO_REFERENCED_ROW_2") {
+	  // INSERT failed because can't find specified foreign key
+	  reason = "DOES_NOT_EXIST"
+
+	  msg = error.sqlMessage;
+
+	  for (let ruleName in FK_RULES) {
+	    if (msg.includes(ruleName)) {
+	      offender = FK_RULES[ruleName];
+	    }
+	  }
+
+	  query_string = (
+	    `${QUERY_ERROR_FIELD}=${reason}&` +
+		`${QUERY_OFFENDER_FIELD}=${offender}`);
+	  res.redirect(`/troopers?${query_string}`)
+
 	} else if (error) {
 	  // INSERT failed for reason other than duplicate ID
 	  console.log(JSON.stringify(error));
