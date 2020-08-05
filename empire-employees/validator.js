@@ -52,7 +52,7 @@ class Validator {
     // TODO: overrwrite for primary keys composed of multiple fields
     let reason = this.constructor.QUERY_PARAM_VALUES_REASON.duplicate;
     let offender = this.primary;
-    return `${this.makeQueryString(reason, offender)}`
+    return this.makeQueryString(reason, offender);
   }
 
   // --------------------------------------------------
