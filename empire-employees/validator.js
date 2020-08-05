@@ -57,7 +57,38 @@ class Validator {
   }
 
   // ----------------------------------------------------------------------------
-  // failed SQL query handlers
+  // validations to perform before performing query
+
+
+  /**
+   * Validate the values coming from the form before performing the SQL query.
+   * @param {[object]} inserts - Array of objects where each object has the
+   * form {field: fieldString, value: valueString} where fieldString is one
+   * this.databaseFields[i].field and valueString is the string directly HTML
+   * <input> tag input by the user. An example `inserts` has the form
+   * [
+   *   {field: 'id', value: req.body.id},
+   *   {field: 'garrison', value: req.body.garrison},
+   *   {field:'loadout', value: req.body.loadout},
+   * ];
+   * @return
+   */
+  validateBeforeQuery(inserts) {
+    let queryString = "";
+
+    // iterate over the inserts to check if any have validation errors
+    for (let i = 0; i < inserts.length && queryString === ""; i++) {
+      queryString = this.validateSingleInsert(inserts[i]);
+
+      // stop iterating if one of the inserts is invalid
+      if (queryString !== "") {
+	return queryString
+      }
+    }
+
+    // no pre-SQL-query validation errors found
+    return queryString;
+  }
 
   // ----------------------------------------------------------------------------
   // failed SQL query handlers
