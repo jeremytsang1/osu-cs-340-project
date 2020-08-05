@@ -124,6 +124,8 @@ module.exports = function() {
     let mysql = req.app.get('mysql');
     let sql = "INSERT INTO `troopers` (`id`, `garrison`, `loadout`) VALUES (?, ?, ?)";
     let inserts = [req.body.id, req.body.garrison, req.body.loadout];
+    let msg = "";
+    let offender = "";
 
     // validate the user input
     let query_string = validateInputCreateTrooper(req.body.id, req.body.garrison,
@@ -137,14 +139,14 @@ module.exports = function() {
 	  // INSERT failed from duplicate ID
 
 	  // use the error message to determine which key is a duplicate
-	  let msg = error.sqlMessage;
+	  msg = error.sqlMessage;
 
 	  // search the error message string for its index of where the
 	  // offending field begins
 	  let idx = msg.lastIndexOf('for key');
 
 	  let reason = "NON_UNIQUE";
-	  let offender = msg.slice(idx + 9, msg.length - 1);
+	  offender = msg.slice(idx + 9, msg.length - 1);
 
 	  // handle the fact that MySQL labels primary key as PRIMARY instead
 	  // of the actual attribute name
