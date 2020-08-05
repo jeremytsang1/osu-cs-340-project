@@ -90,6 +90,36 @@ class Validator {
     return queryString;
   }
 
+  /**
+   * Predicate. Assumes `insert.field` is one of the `this.databaseFields[i].field`.
+   * @param {object} insert - of the form {field: fieldString, value: validString}
+   * @return {string} query string that is empty if insert is valid. Otherwise
+   * contains the reason and the offender.
+   */
+  validateSingleInsert(insert) {
+    let queryString = "";
+    let expected = this.databaseFields.filter(obj => obj.field == insert.field)[0];
+    let reason;
+    let offender = insert.field;
+
+    // check type
+    reason = this.checkType(insert, expected);
+
+    // check if it is one of the predefined values
+    if (reason === "") {
+      reason = checkAllowedValues(insert, expected);
+    }
+
+    // form the query string if we found a reason the insert was invalid
+    if (reason !== "") {
+      queryString = (`${this.QUERY_PARAM_NAME_REASON}=${reason}&` +
+	  `${this.QUERY_PARAM_NAME_OFFENDER}=${offender}`);
+    }
+
+    return queryString;
+  }
+
+
   // ----------------------------------------------------------------------------
   // failed SQL query handlers
   /**
