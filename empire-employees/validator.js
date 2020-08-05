@@ -58,6 +58,21 @@ class Validator {
   // --------------------------------------------------
 
   handleNonexistentFK(res, error, ...rest) {
+    let reason = this.constructor.QUERY_PARAM_VALUES_REASON.nonexistent;
+    let offender = this.findRuleInSQLMessage(error);
+    return this.makeQueryString(reason, offender);
+  }
 
+  // TODO: find less hackey way of finding the constrain name
+  // determine which foreign key constraint is violated
+  // Assumes name is between substrings "CONSTRAINT `" and "` FOREIGN KEY".
+  // WARNING: Depends on the exact format of the SQL error message.
+  findRuleInSQLMessage(error) {
+    let msg = error.sqlMessage;
+    let wordBefore = 'CONSTRAINT \`';
+    let wordAfter = '\` FOREIGN KEY';
+    let substringStart = msg.indexOf(wordBefore) + wordBefore.length;
+    let substringEnd = msg.indexOf(wordAfter);
+    return msg.slice(substringStart, substringEnd);
   }
 }
