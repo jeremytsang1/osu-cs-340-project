@@ -106,7 +106,7 @@ module.exports = function() {
     ];
 
     // validate the user input
-    let queryString = validator.validateBeforeQuery(inserts)
+    let queryString = validator.validateBeforeQuery(inserts);
 
     if (queryString !== "") {
       res.redirect(`/troopers?${queryString}`) // display error messages
