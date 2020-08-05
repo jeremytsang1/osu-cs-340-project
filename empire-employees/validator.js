@@ -108,7 +108,7 @@ class Validator {
 
     // check if it is one of the predefined values
     if (reason === "") {
-      reason = checkAllowedValues(insert, expected);
+      reason = this.checkAllowedValues(insert, expected);
     }
 
     // form the query string if we found a reason the insert was invalid
