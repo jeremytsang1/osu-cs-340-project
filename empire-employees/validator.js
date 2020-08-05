@@ -6,6 +6,10 @@ class Validator {
 
     // the name primary key (as a string)
     this.primary = primary;
+
+    // foreign key constraints and their repsective fields
+    // property name: name of the constraint in the DDQ
+    // property value: name of the foreign key
     this.fkConstraintNames = fkConstraintNames;
   }
 
@@ -53,12 +57,16 @@ class Validator {
   // ----------------------------------------------------------------------------
   // failed SQL query handlers
 
+  // ----------------------------------------------------------------------------
+  // failed SQL query handlers
   /**
-   * Create the query string for error page showing duplicate error message.
+   * Create the query string for error page showing duplicate error
+   * message. Use closure to make sure that `this` refers to the validator
+   * ojbect instead of whoever is calling this function.
    * @param {object} res - Node response object
    * @param {object} error - mysql error object
    * @param {} ...rest - additional parameters if present
-   * @return {string} query string for the duplicate INSERT error
+   * @return {string} query string for the said error
    */
   handleDuplicateInsert(res, error, ...rest) {
     // TODO: overrwrite for primary keys composed of multiple fields
@@ -71,6 +79,15 @@ class Validator {
 
   // --------------------------------------------------
 
+  /**
+   * Create the query string for error page showing nonexistent foreign key
+   * error message. Use closure to make sure that `this` refers to the
+   * validator ojbect instead of whoever is calling this function.
+   * @param {object} res - Node response object
+   * @param {object} error - mysql error object
+   * @param {} ...rest - additional parameters if present
+   * @return {string} query string for the said error
+   */
   handleNonexistentFK(res, error, ...rest) {
     return () => {
       let reason = this.QUERY_PARAM_VALUES_REASON.nonexistent;
