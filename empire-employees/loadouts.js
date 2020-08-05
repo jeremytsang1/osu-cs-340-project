@@ -104,16 +104,16 @@ module.exports = function() {
     let inserts = [req.body.id, req.body.blaster, req.body.detonator];
 
     // validate the user input
-    let query_string = validateInputCreateLoadout(inserts[0], inserts[1], inserts[2]);
+    let queryString = validateInputCreateLoadout(inserts[0], inserts[1], inserts[2]);
 
-    if (query_string !== "") {
-      res.redirect(`/loadouts?${query_string}`) // display error messages
+    if (queryString !== "") {
+      res.redirect(`/loadouts?${queryString}`) // display error messages
     } else { // attempt the INSERT query
       sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
 	if (error && error.code === "ER_DUP_ENTRY") {
 	  // INSERT failed from duplicate ID
-	  query_string = `${QUERY_ERROR_FIELD}=NON_UNIQUE_ID`
-	  res.redirect(`/loadouts?${query_string}`)
+	  queryString = `${QUERY_ERROR_FIELD}=NON_UNIQUE_ID`
+	  res.redirect(`/loadouts?${queryString}`)
 	} else if (error) {
 	  // INSERT failed for reason other than duplicate ID
 	  console.log(JSON.stringify(error));

@@ -112,10 +112,10 @@ const OCCUPANT_CHOICE = [
     let inserts = [req.body.ship, req.body.occupant];
 
     // validate the user input
-    let query_string = validateInputCreateManifest(inserts[0], inserts[1]);
+    let queryString = validateInputCreateManifest(inserts[0], inserts[1]);
 
-    if (query_string !== "") {
-      res.redirect(`/manifests?${query_string}`) // display error messages
+    if (queryString !== "") {
+      res.redirect(`/manifests?${queryString}`) // display error messages
     } else { // attempt the INSERT query
       sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
   // if (error && error.code === "ER_DUP_ENTRY") {
@@ -140,4 +140,3 @@ const OCCUPANT_CHOICE = [
 
   return router;
   }();
-    

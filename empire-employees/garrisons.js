@@ -116,11 +116,11 @@ module.exports = function() {
     let inserts = [req.body.id, req.body.name, req.body.capacity];
 
     // validate the user input
-    let query_string = validateInputCreateGarrison(req.body.id, req.body.name,
+    let queryString = validateInputCreateGarrison(req.body.id, req.body.name,
       req.body.capacity);
 
-    if (query_string !== "") {
-      res.redirect(`/garrisons?${query_string}`) // display error messages
+    if (queryString !== "") {
+      res.redirect(`/garrisons?${queryString}`) // display error messages
     } else { // attempt the INSERT query
       sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
 	if (error && error.code === "ER_DUP_ENTRY") {
@@ -140,10 +140,10 @@ module.exports = function() {
 	  // of the actual attribute name
 	  offender = (offender === "PRIMARY") ? "id" : offender;
 
-	  query_string = (
+	  queryString = (
 	    `${QUERY_ERROR_FIELD}=${reason}&` +
 	    `${QUERY_OFFENDER_FIELD}=${offender}`);
-	  res.redirect(`/garrisons?${query_string}`)
+	  res.redirect(`/garrisons?${queryString}`)
 	} else if (error) {
 	  // INSERT failed for reason other than duplicate ID
 	  console.log(JSON.stringify(error));

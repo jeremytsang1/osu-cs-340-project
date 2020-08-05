@@ -136,11 +136,11 @@ module.exports = function() {
     let offender = "";
 
     // validate the user input
-    let query_string = validateInputCreateTrooper(req.body.id, req.body.garrison,
+    let queryString = validateInputCreateTrooper(req.body.id, req.body.garrison,
       req.body.loadout);
 
-    if (query_string !== "") {
-      res.redirect(`/troopers?${query_string}`) // display error messages
+    if (queryString !== "") {
+      res.redirect(`/troopers?${queryString}`) // display error messages
     } else { // attempt the INSERT query
       sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
 	if (error && error.code === "ER_DUP_ENTRY") {
@@ -160,10 +160,10 @@ module.exports = function() {
 	  // of the actual attribute name
 	  offender = (offender === "PRIMARY") ? "id" : offender;
 
-	  query_string = (
+	  queryString = (
 	    `${QUERY_ERROR_FIELD}=${reason}&` +
 	    `${QUERY_OFFENDER_FIELD}=${offender}`);
-	  res.redirect(`/troopers?${query_string}`)
+	  res.redirect(`/troopers?${queryString}`)
 	} else if (error && error.code === "ER_NO_REFERENCED_ROW_2") {
 	  // INSERT failed because can't find specified foreign key
 	  reason = "DOES_NOT_EXIST"
@@ -176,10 +176,10 @@ module.exports = function() {
 	    }
 	  }
 
-	  query_string = (
+	  queryString = (
 	    `${QUERY_ERROR_FIELD}=${reason}&` +
 		`${QUERY_OFFENDER_FIELD}=${offender}`);
-	  res.redirect(`/troopers?${query_string}`)
+	  res.redirect(`/troopers?${queryString}`)
 
 	} else if (error) {
 	  // INSERT failed for reason other than duplicate ID
