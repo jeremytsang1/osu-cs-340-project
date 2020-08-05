@@ -26,9 +26,11 @@ class Validator {
 
   get QUERY_PARAM_VALUES_REASON() {
     return {
-       duplicate: "duplicate",
+      duplicate: "duplicate",
       nonPositive: "non_positive",
+      emptyField: "empty_field",
       nonexistent: "nonexistent",
+      notInAllowedValues: "not_in_allowed_values",
     };
   }
 
