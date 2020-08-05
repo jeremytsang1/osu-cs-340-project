@@ -103,7 +103,12 @@ const OCCUPANT_CHOICE = [
   // add a new manifest to one of the tables
   router.post('/', function(req, res) {
     let mysql = req.app.get('mysql');
-    let sql = "INSERT INTO `ships_troopers` (`ship`, `trooper`) VALUE (?, ?);";
+    if (req.body.occupantChoice == "trooper") {
+      sql = "INSERT INTO `ships_troopers` (`ship`, `trooper`) VALUE (?, ?);";
+    } else {
+      sql = "INSERT INTO `ships_droids` (`ship`, `droid`) VALUE (?, ?);";
+    }
+
     let inserts = [req.body.ship, req.body.occupant];
 
     // validate the user input
@@ -114,12 +119,14 @@ const OCCUPANT_CHOICE = [
     } else { // attempt the INSERT query
       sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
   // if (error && error.code === "ER_DUP_ENTRY") {
-    // INSERT failed from duplicate ID
+    // // INSERT failed from duplicate ID
     // query_string = `${QUERY_ERROR_FIELD}=NON_UNIQUE_ID`
     // res.redirect(`/manifests?${query_string}`)
   // } 
   if (error) {
     // INSERT failed for reason other than duplicate ID
+    let msg = error.sqlmessage;
+    // document.write(msg);
     console.log(JSON.stringify(error));
     res.write(JSON.stringify(error));
     res.end();
