@@ -95,7 +95,7 @@ module.exports = function() {
 
   // --------------------------------------------------------------------------
 
-    // add a new garrison to the table
+  // add a new trooper to the table
   router.post('/', function(req, res) {
     let mysql = req.app.get('mysql');
     let sql = "INSERT INTO `troopers` (`id`, `garrison`, `loadout`) VALUES (?, ?, ?)";
