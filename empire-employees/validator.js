@@ -120,6 +120,32 @@ class Validator {
     return queryString;
   }
 
+  /**
+   * Run type-specific validation checks on an insert.
+   * @param {object} insert - of the form {field: fieldString, value: validString}
+   * @param {object} expected - an element of the array this.databaseFields.
+   * @return {string} query string that is empty if insert is valid. Otherwise
+   * contains the reason and the offender.
+   */
+  checkType(insert, expected) {
+    switch (expected.type) {
+    case this.INT:
+      // validate that it is actually an integer and it is positive
+      let intToBeValidated = parseInt(insert.value);
+      if (isNaN(intToBeValidated) || intToBeValidated <= 0) {
+	return this.QUERY_PARAM_VALUES_REASON.nonPositive;
+      }
+      break;
+    case this.STRING:
+      // check that the string is non-empty
+      if (insert.value === "") {
+	return this.QUERY_PARAM_VALUES_REASON.emptyField;
+      }
+      break;
+    default:
+      return ""
+    }
+  }
 
   // ----------------------------------------------------------------------------
   // failed SQL query handlers
