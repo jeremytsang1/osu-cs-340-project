@@ -12,24 +12,32 @@ class Validator {
   // ----------------------------------------------------------------------------
   // Constants
 
-  static get REPLACEMENT_STRING() {
+  get REPLACEMENT_STRING() {
     return "%offender%";
   }
 
-  static get QUERY_PARAM_NAME_REASON() {
-    return "REASON";
+  get QUERY_PARAM_NAME_REASON() {
+    return "reason";
   }
 
-  static get QUERY_PARAM_VALUES_REASON() {
+  get QUERY_PARAM_VALUES_REASON() {
     return {
-      duplicate: "DUPLICATE",
-      nonPositive: "NON_POSITIVE",
-      nonexistent: "NONEXISTENT",
+       duplicate: "duplicate",
+      nonPositive: "non_positive",
+      nonexistent: "nonexistent",
     };
   }
 
-  static get QUERY_PARAM_NAME_OFFENDER() {
-    return "OFFENDER";
+  get QUERY_PARAM_NAME_OFFENDER() {
+    return "offender";
+  }
+
+  get INT() {
+    return "int";
+  }
+
+  get STRING() {
+    return "string";
   }
 
   // ----------------------------------------------------------------------------
@@ -37,8 +45,8 @@ class Validator {
 
   makeQueryString(reason, offender) {
     return (
-      `${this.constructor.QUERY_PARAM_NAME_REASON}=${reason}&` +
-      `${this.constructor.QUERY_PARAM_NAME_OFFENDER}=${offender}`
+      `${this.QUERY_PARAM_NAME_REASON}=${reason}&` +
+      `${this.QUERY_PARAM_NAME_OFFENDER}=${offender}`
     );
   }
 
@@ -54,17 +62,21 @@ class Validator {
    */
   handleDuplicateInsert(res, error, ...rest) {
     // TODO: overrwrite for primary keys composed of multiple fields
-    let reason = this.constructor.QUERY_PARAM_VALUES_REASON.duplicate;
-    let offender = this.primary;
-    return this.makeQueryString(reason, offender);
+    return () => {
+      let reason = this.QUERY_PARAM_VALUES_REASON.duplicate;
+      let offender = this.primary;
+      return this.makeQueryString(reason, offender);
+    };
   }
 
   // --------------------------------------------------
 
   handleNonexistentFK(res, error, ...rest) {
-    let reason = this.constructor.QUERY_PARAM_VALUES_REASON.nonexistent;
-    let offender = this.findRuleInSQLMessage(error);
-    return this.makeQueryString(reason, offender);
+    return () => {
+      let reason = this.QUERY_PARAM_VALUES_REASON.nonexistent;
+      let offender = this.findRuleInSQLMessage(error);
+      return this.makeQueryString(reason, offender);
+    }
   }
 
   // TODO: find less hackey way of finding the constrain name
@@ -80,3 +92,5 @@ class Validator {
     return msg.slice(substringStart, substringEnd);
   }
 }
+
+module.exports = Validator

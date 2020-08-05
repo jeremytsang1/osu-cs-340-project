@@ -18,9 +18,9 @@ module.exports = function() {
 
   // query parameter values and their corresponding messages to display on the page
   const VALIDATION_MESSAGES = {
-    DOES_NOT_EXIST: `The specified ${REPLACEMENT_STRING} could not be found!`,
-    DUPLICATE: `Please enter a ${REPLACEMENT_STRING} that is not already taken!`,
-    NON_POSITIVE: `Please enter a positive integer for ${REPLACEMENT_STRING}!`,
+    nonexistent: `The specified ${validator.REPLACEMENT_STRING} could not be found!`,
+    duplicate: `Please enter a ${validator.REPLACEMENT_STRING} that is not already taken!`,
+    non_positive: `Please enter a positive integer for ${validator.REPLACEMENT_STRING}!`,
   };
 
   // property names should be the actual database fields
