@@ -147,6 +147,30 @@ class Validator {
     }
   }
 
+  /**
+   * Check if the insert's value is one of the allowed values. Use mostly for
+   * dropdown menus to make sure options were not tampered with.
+   * @param {object} insert - of the form {field: fieldString, value: validString}
+   * @param {object} expected - an element of the array this.databaseFields.
+   * @return {string} query string that is empty if insert is valid. Otherwise
+   * contains the reason and the offender.
+   */
+  checkAllowedValues(insert, expected) {
+    let reason = "";
+    let valueToCheck = insert.value;
+    let allowedValues = expected.allowedValues;
+
+    // If allowed values is in fact non-empty array and the value to check not
+    // a member then the insert is invalid.
+    if (Array.isArray(allowedValues)
+	&& allowedValues.length !== 0
+	&& !allowedValues.includes(valueToCheck)) {
+      return this.QUERY_PARAM_VALUES_REASON.notInAllowedValues;
+    } else {
+      return "";
+    }
+  }
+
   // ----------------------------------------------------------------------------
   // failed SQL query handlers
   /**
