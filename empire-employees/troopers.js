@@ -133,12 +133,9 @@ module.exports = function() {
     let mysql = req.app.get('mysql');
     let sql = "INSERT INTO `troopers` (`id`, `garrison`, `loadout`) VALUES (?, ?, ?)";
     let inserts = [
-      {field: 'id',
-	value: req.body.id},
-      {field: 'garrison',
-	value: req.body.garrison},
-      {field:'loadout',
-	value: req.body.loadout},
+      {field: 'id', value: req.body.id},
+      {field: 'garrison', value: req.body.garrison},
+      {field:'loadout', value: req.body.loadout},
     ];
 
     // validate the user input
