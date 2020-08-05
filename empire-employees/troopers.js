@@ -1,11 +1,20 @@
 module.exports = function() {
+  const Validator = require('./validator.js');
   let express = require('express');
   let router = express.Router();
 
-  // query parameter names
-  const QUERY_PARAM_NAME_REASON = "REASON";
-  const QUERY_PARAM_NAME_OFFENDER = "OFFENDER";
-  const REPLACEMENT_STRING = "%offender%";
+  let validator = new Validator(
+    "id",
+    [
+      {field: "id", type: Validator.INT, allowedValues: []},
+      {field: "garrison", type: Validator.INT, allowedValues: []},
+      {field: "loadout", type: Validator.INT, allowedValues: []},
+    ],
+    {
+      fk_troopers_garrison: 'garrison',
+      fk_troopers_loadout: 'loadout'
+    },
+  );
 
   // query parameter values and their corresponding messages to display on the page
   const VALIDATION_MESSAGES = {
@@ -20,14 +29,6 @@ module.exports = function() {
     id: "Trooper ID",
     garrison: "Garrison ID",
     loadout: "Loadout ID",
-  };
-
-  // foreign key constraints and their repsective fields
-  // property name: name of the constraint in the DDQ
-  // property value: name of the foreign key
-  let FK_RULES = {
-    fk_troopers_garrison: 'garrison',
-    fk_troopers_loadout: 'loadout'
   };
 
   // --------------------------------------------------------------------------
@@ -106,8 +107,8 @@ module.exports = function() {
     // req.query[QUERY_OFFENDER_FIELD]
     // ASSUMES: if req.query[QUERY_OFFENDER_FIELD] exists then it is a property
     // of USR_INPUT_FIELDS
-    if (req.query.hasOwnProperty(QUERY_PARAM_NAME_REASON)) {
-      let reason = req.query[QUERY_PARAM_NAME_REASON];
+    if (req.query.hasOwnProperty(validator.QUERY_PARAM_NAME_REASON)) {
+      let reason = req.query[validator.QUERY_PARAM_NAME_REASON];
       context.errorMessage = VALIDATION_MESSAGES[reason].replace(
 	REPLACEMENT_STRING, USR_INPUT_FIELDS[req.query[QUERY_PARAM_NAME_OFFENDER]]
       );
@@ -131,69 +132,58 @@ module.exports = function() {
   router.post('/', function(req, res) {
     let mysql = req.app.get('mysql');
     let sql = "INSERT INTO `troopers` (`id`, `garrison`, `loadout`) VALUES (?, ?, ?)";
-    let inserts = [req.body.id, req.body.garrison, req.body.loadout];
-    let msg = "";
-    let offender = "";
+    let inserts = [
+      {field: 'id',
+	value: req.body.id},
+      {field: 'garrison',
+	value: req.body.garrison},
+      {field:'loadout',
+	value: req.body.loadout},
+    ];
 
     // validate the user input
-    let queryString = validateInputCreateTrooper(req.body.id, req.body.garrison,
-      req.body.loadout);
+    let queryString = validator.validateBeforeQuery(inserts)
 
     if (queryString !== "") {
       res.redirect(`/troopers?${queryString}`) // display error messages
     } else { // attempt the INSERT query
-      sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
-	if (error && error.code === "ER_DUP_ENTRY") {
-	  // INSERT failed from duplicate ID
-
-	  // use the error message to determine which key is a duplicate
-	  msg = error.sqlMessage;
-
-	  // search the error message string for its index of where the
-	  // offending field begins
-	  let idx = msg.lastIndexOf('for key');
-
-	  let reason = "DUPLICATE";
-	  offender = msg.slice(idx + 9, msg.length - 1);
-
-	  // handle the fact that MySQL labels primary key as PRIMARY instead
-	  // of the actual attribute name
-	  offender = (offender === "PRIMARY") ? "id" : offender;
-
-	  queryString = (
-	    `${QUERY_PARAM_NAME_REASON}=${reason}&` +
-	    `${QUERY_PARAM_NAME_OFFENDER}=${offender}`);
-	  res.redirect(`/troopers?${queryString}`)
-	} else if (error && error.code === "ER_NO_REFERENCED_ROW_2") {
-	  // INSERT failed because can't find specified foreign key
-	  reason = "DOES_NOT_EXIST"
-
-	  msg = error.sqlMessage;
-
-	  for (let ruleName in FK_RULES) {
-	    if (msg.includes(ruleName)) {
-	      offender = FK_RULES[ruleName];
-	    }
-	  }
-
-	  queryString = (
-	    `${QUERY_PARAM_NAME_REASON}=${reason}&` +
-		`${QUERY_PARAM_NAME_OFFENDER}=${offender}`);
-	  res.redirect(`/troopers?${queryString}`)
-
-	} else if (error) {
-	  // INSERT failed for reason other than duplicate ID
-	  console.log(JSON.stringify(error));
-	  res.write(JSON.stringify(error));
-	  res.end();
-	} else {
-	  // INSERT succeeded
+      mysql.pool.query(sql, inserts.map(elt => elt.value), function (error, results, fields) {
+	if (error) { // query failure
+	  handle_insert_failure(res, error);
+	} else { // query success
 	  res.redirect('/troopers');
 	}
       });
     }
   });
-  // ----------------------------------------------------------------------------
+
+  // --------------------------------------------------
+
+  function validate_before_insert(arg) {
+
+  }
+
+  // --------------------------------------------------
+
+  function handle_insert_failure(res, error) {
+    let stringifiedError = JSON.stringify(error);
+    let expectedErrorsHandlers = { // property names are SQL error codes
+      "ER_DUP_ENTRY": validator.handleDuplicateInsert(res, error),
+      "ER_NO_REFERENCED_ROW_2": validator.handleNonexistentFK(res, error),
+    }
+
+    let code = error.code;
+
+    if (expectedErrorsHandlers.hasOwnProperty(code)) {
+      res.redirect(expectedErrorsHandlers[code]());
+    } else {
+      console.log(stringifiedError);
+      res.write(stringifiedError);
+      res.end();
+    }
+  }
+
+  // --------------------------------------------------------------------------
 
   return router;
 }();

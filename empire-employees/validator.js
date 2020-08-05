@@ -1,6 +1,10 @@
 
 class Validator {
-  constructor(primary, fkConstraintNames) {
+  constructor(databaseFields, primary, fkConstraintNames) {
+    // Array of objects of the form {field: "<name>", type: "<Validator.constructor.INT|Validator.constructor.STR>", allowedValues: [<values>...]}
+    this.databaseFields = databaseFields;
+
+    // the name primary key (as a string)
     this.primary = primary;
     this.fkConstraintNames = fkConstraintNames;
   }
