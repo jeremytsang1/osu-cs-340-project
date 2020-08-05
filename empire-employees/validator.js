@@ -71,7 +71,8 @@ class Validator {
    *   {field: 'garrison', value: req.body.garrison},
    *   {field:'loadout', value: req.body.loadout},
    * ];
-   * @return
+   * @return {string} query string that is empty if insert is valid. Otherwise
+   * contains the reason and the offender.
    */
   validateBeforeQuery(inserts) {
     let queryString = "";
