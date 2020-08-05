@@ -4,12 +4,12 @@ module.exports = function() {
   let router = express.Router();
 
   let validator = new Validator(
-    "id",
     [
       {field: "id", type: Validator.INT, allowedValues: []},
       {field: "garrison", type: Validator.INT, allowedValues: []},
       {field: "loadout", type: Validator.INT, allowedValues: []},
     ],
+    "id",
     {
       fk_troopers_garrison: 'garrison',
       fk_troopers_loadout: 'loadout'
