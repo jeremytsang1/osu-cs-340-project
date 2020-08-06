@@ -18,7 +18,7 @@ module.exports = function() {
         "AT-ST",
         "TIE Fighter",
         "TIE Bomber",
-        "TIE Defemder",
+        "TIE Defender",
         "TIE Interceptor",
         "Freighter",
         "Star Destroyer",
