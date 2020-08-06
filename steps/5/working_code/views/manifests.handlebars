@@ -1,0 +1,100 @@
+<div class="page_info_manifests">
+
+	<!-- ship adding field -->
+        {{!-- <div>
+	  <label>
+	    <select id="manifests_ship_select" name="ship">
+	      {{#each manifestShip}}
+		<option value="{{this}}">{{this}}</option>
+	      {{/each}}
+	    </select>
+	    Ship ID
+	  </label>
+	</div>
+      </div> --}}
+
+<div class="table">
+<form action="/manifests" method="POST" id="manifest_add">
+
+      <legend><strong>Add a new Manifest</strong></legend>
+
+<!-- ship and occupant adding field -->
+<div>
+  <label>
+      <input type="number" name="ship"> Ship ID
+  </label>
+
+  <label>
+      <input type="number" name="occupant"> Occupant ID                   
+  </label>
+</div>
+
+     <label>
+        <input type="radio" name="occupantChoice" class="radio_b" value="trooper"> Trooper                  
+    </label>
+
+    <label>
+        <input type="radio" name="occupantChoice" class="radio_b" value="droid"> Droid                   
+    </label>
+
+	
+      {{!-- </div> --}}
+
+	    <div><button>add</button>
+		</div>
+	</div>
+    </form>
+
+
+</div>
+
+
+<div class="db_manifests">
+  <legend><strong>M:M between Ships and Troopers</strong></legend>
+  <table>
+    <thead>
+      <tr>
+	<th>Ship ID</th>
+	<th>Trooper ID</th>
+
+      </tr>
+    </thead>
+
+    <tbody>
+      {{#each ships_troopers}}
+	<tr>
+	  <td>{{ship}}</td>
+	  <td>{{trooper}}</td>
+
+	</tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+
+
+
+<div class="db_manifests">
+  <legend><strong>M:M between Ships and Droids</strong></legend>
+  <table>
+    <thead>
+      <tr>
+	<th>Ship ID</th>
+	<th>Droid ID</th>
+
+      </tr>
+    </thead>
+
+    <tbody>
+      {{#each ships_droids}}
+	<tr>
+	  <td>{{ship}}</td>
+	  <td>{{droid}}</td>
+
+	</tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+
+</div>

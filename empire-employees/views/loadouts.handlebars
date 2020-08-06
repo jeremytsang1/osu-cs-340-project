@@ -43,7 +43,7 @@
 	
       </div>
 
-	    <div><button>add</button>
+	    <div><button name="postButton" value="add">add</button>
 		</div>
 	</div>
     </form>
@@ -52,41 +52,48 @@
 
   <br/>
 
-  <!-- Form: Updating a loadouts attributes -->
   <div class="table">
-    <form action="" id="loadout_add">
-      <legend><strong>Update an existing Loadout</strong></legend>
-
-      <!-- input fields -->
+    <form action="/loadouts" method="POST" id="loadout_update">
       <div class="form_input">
-	<!-- field for id of loadout to update -->
-	<div>
+		  <legend><strong>Update an existing Loadout</strong></legend>
+	<!-- id of loadout to update -->
+        <div>
 	  <label>
-	    <input type="number">
+	    <input type="number" name="updateID" min="1"> <!-- Prevent non-positive values -->
 	    Loadout ID
 	  </label>
 	</div>
 
-	<!-- blaster updating field -->
-	<div>
+	<!-- blaster update field -->
+        <div>
 	  <label>
-	    <input type="text">
+	    <select id="loutout_blaster_select" name="updateBlaster">
+	      {{#each blasterTypes}}
+		<option value="{{this}}">{{this}}</option>
+	      {{/each}}
+	    </select>
 	    Blaster
 	  </label>
 	</div>
+     
 
-	<!-- detonator updating field -->
-	<div>
+
+	<!-- detonator update field -->
+        <div>
 	  <label>
-	    <input type="text">
+	    <select id="loutout_detonator_select" name="updateDetonator">
+	      {{#each detonatorTypes}}
+		<option value="{{this}}">{{this}}</option>
+	      {{/each}}
+	    </select>
 	    Detonator
 	  </label>
-	</div>
+	
       </div>
 
-      <!-- Updating button -->
-      <div><button>update</button></div>
-
+	    <div><button name="postButton" value="update">update</button>
+		</div>
+	
     </form>
   </div>
 
@@ -112,5 +119,6 @@
       {{/each}}
     </tbody>
   </table>
+</div>
 </div>
 </div>

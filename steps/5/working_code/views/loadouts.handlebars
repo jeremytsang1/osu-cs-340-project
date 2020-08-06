@@ -1,0 +1,116 @@
+<div class="page_info">
+  <!-- Form: Adding a new loadout to the database -->
+  <div class="table">
+    <form action="/loadouts" method="POST" id="loadout_add">
+
+      <legend><strong>Add a new Loadout</strong></legend>
+
+      <!-- input fields -->
+      <div class="form_input">
+
+	<!-- id of loadout to add -->
+        <div>
+	  <label>
+	    <input type="number" name="id" min="1"> <!-- Prevent non-positive values -->
+	    Loadout ID
+	  </label>
+	</div>
+
+	<!-- blaster adding field -->
+        <div>
+	  <label>
+	    <select id="loutout_blaster_select" name="blaster">
+	      {{#each blasterTypes}}
+		<option value="{{this}}">{{this}}</option>
+	      {{/each}}
+	    </select>
+	    Blaster
+	  </label>
+	</div>
+      </div>
+
+
+	<!-- detonator adding field -->
+        <div>
+	  <label>
+	    <select id="loutout_detonator_select" name="detonator">
+	      {{#each detonatorTypes}}
+		<option value="{{this}}">{{this}}</option>
+	      {{/each}}
+	    </select>
+	    Detonator
+	  </label>
+	
+      </div>
+
+	    <div><button>add</button>
+		</div>
+	</div>
+    </form>
+
+
+
+  <br/>
+
+  <!-- Form: Updating a loadouts attributes -->
+  <div class="table">
+    <form action="" id="loadout_add">
+      <legend><strong>Update an existing Loadout</strong></legend>
+
+      <!-- input fields -->
+      <div class="form_input">
+	<!-- field for id of loadout to update -->
+	<div>
+	  <label>
+	    <input type="number">
+	    Loadout ID
+	  </label>
+	</div>
+
+	<!-- blaster updating field -->
+	<div>
+	  <label>
+	    <input type="text">
+	    Blaster
+	  </label>
+	</div>
+
+	<!-- detonator updating field -->
+	<div>
+	  <label>
+	    <input type="text">
+	    Detonator
+	  </label>
+	</div>
+      </div>
+
+      <!-- Updating button -->
+      <div><button>update</button></div>
+
+    </form>
+  </div>
+
+</div>
+
+<div class="db">
+  <table>
+    <thead>
+      <tr>
+	<th>Loadout ID</th>
+	<th>Blaster</th>
+	<th>Detonator</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {{#each loadouts}}
+	<tr>
+	  <td>{{id}}</td>
+	  <td>{{blaster}}</td>
+	  <td>{{detonator}}</td>
+	</tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+</div>
