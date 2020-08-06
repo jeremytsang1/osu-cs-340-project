@@ -1,6 +1,6 @@
 
 class Validator {
-  constructor(databaseFields, primary, fkConstraintNames) {
+  constructor(databaseFields, primary, fkConstraintNames, validationMessages = null) {
     // Array of objects of the form {field: "<name>", type: "<Validator.constructor.INT|Validator.constructor.STR>", allowedValues: [<values>...]}
     this.databaseFields = databaseFields;
 
@@ -11,6 +11,30 @@ class Validator {
     // property name: name of the constraint in the DDQ
     // property value: name of the foreign key
     this.fkConstraintNames = fkConstraintNames;
+
+    // Object where property names are (some) members of
+    if (validationMessages === null) {
+      // Making new properties from values (borrowed from following post
+      // https://stackoverflow.com/a/25333702).
+      this.validationMessages = {
+	// --------------------------------------------------
+	// pre-SQL-query messages
+	[Validator.QUERY_PARAM_VALUES_REASON.emptyField]:
+	`Please enter a value for ${Validator.REPLACEMENT_STRING}!`,
+	[Validator.QUERY_PARAM_VALUES_REASON.nonPositive]:
+	`Please enter a positive integer for ${Validator.REPLACEMENT_STRING}!`,
+	[Validator.QUERY_PARAM_VALUES_REASON.notInAllowedValues]:
+	`Forbidden value chosen for ${Validator.REPLACEMENT_STRING}!`,
+	// --------------------------------------------------
+	// failed-SQL-query messages
+	[Validator.QUERY_PARAM_VALUES_REASON.duplicate]:
+	`Please enter a ${Validator.REPLACEMENT_STRING} that is not already taken!`,
+	[Validator.QUERY_PARAM_VALUES_REASON.nonexistent]:
+	`The specified ${Validator.REPLACEMENT_STRING} could not be found!`,
+      };
+    } else {
+      this.validationMessages = validationMessages;
+    }
   }
 
   // ----------------------------------------------------------------------------
