@@ -38,7 +38,7 @@ class Validator {
     return "offender";
   }
 
-  get INT() {
+  static get INT() {
     return "int";
   }
 
@@ -129,7 +129,7 @@ class Validator {
    */
   checkType(insert, expected) {
     switch (expected.type) {
-    case this.INT:
+    case Validator.INT:
       // validate that it is actually an integer and it is positive
       let intToBeValidated = parseInt(insert.value);
       if (isNaN(intToBeValidated) || intToBeValidated <= 0) {
