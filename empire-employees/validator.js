@@ -156,7 +156,6 @@ class Validator {
    * contains the reason and the offender.
    */
   checkAllowedValues(insert, expected) {
-    let reason = "";
     let valueToCheck = insert.value;
     let allowedValues = expected.allowedValues;
 
