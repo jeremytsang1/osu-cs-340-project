@@ -53,22 +53,29 @@ module.exports = function() {
   }
 
   function getTroopersByGarrison(req, res, mysql, context, complete) {
-    display_table_query = ('SELECT troopers.id AS `trooperID`,'
-	+ ' garrisons.id AS `garrisonID`,'
-	+ ' garrisons.name AS `garrisonName`,'
-	+ ' loadouts.id AS `loadoutID`,'
-	+ ' loadouts.blaster AS `blaster`,'
-	+ ' loadouts.detonator AS `detonator`'
-	+ ' FROM troopers'
-	+ ' INNER JOIN loadouts ON troopers.loadout=loadouts.id'
-	+ ' INNER JOIN garrisons ON troopers.garrison=garrisons.id'
-	+ ' WHERE garrisons.id = (?)'
-	+ ' ORDER BY troopers.id;');
+    let filterKey = req.query.filterKey;
+    let sql = 'SELECT troopers.id AS `trooperID`,'
+	  + ' garrisons.id AS `garrisonID`,'
+	  + ' garrisons.name AS `garrisonName`,'
+	  + ' loadouts.id AS `loadoutID`,'
+	  + ' loadouts.blaster AS `blaster`,'
+	  + ' loadouts.detonator AS `detonator`'
+	  + ' FROM troopers'
+	  + ' INNER JOIN loadouts ON troopers.loadout=loadouts.id'
+	+ ' LEFT JOIN garrisons ON troopers.garrison=garrisons.id'
+	+ ' WHERE '
+
+    if (filterKey == 0) {
+      sql += 'troopers.garrison is NULL'
+    } else {
+      sql += 'garrisons.id= (?)';
+    }
+
+    sql += ' ORDER BY troopers.id';
 
     let inserts = [req.query.filterKey];
 
-    mysql.pool.query(display_table_query, inserts, function(error, results, fields) {
-
+    mysql.pool.query(sql, inserts, function(error, results, fields) {
       if (error) {
 	res.write(JSON.stringify(error));
 	res.end();
