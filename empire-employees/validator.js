@@ -1,6 +1,6 @@
 
 class Validator {
-  constructor(databaseFields, primary, fkConstraintNames, validationMessages = null) {
+  constructor(databaseFields, primary, fkConstraintNames, errorMessages = null) {
     // Array of objects of the form {field: "<name>", type: "<Validator.constructor.INT|Validator.constructor.STR>", allowedValues: [<values>...]}
     this.databaseFields = databaseFields;
 
@@ -13,10 +13,10 @@ class Validator {
     this.fkConstraintNames = fkConstraintNames;
 
     // Object where property names are (some) members of
-    if (validationMessages === null) {
+    if (errorMessages === null) {
       // Making new properties from values (borrowed from following post
       // https://stackoverflow.com/a/25333702).
-      this.validationMessages = {
+      this.errorMessages = {
 	// --------------------------------------------------
 	// pre-SQL-query messages
 	[Validator.QUERY_PARAM_VALUES_REASON.emptyField]:
@@ -33,7 +33,7 @@ class Validator {
 	`The specified ${Validator.REPLACEMENT_STRING} could not be found!`,
       };
     } else {
-      this.validationMessages = validationMessages;
+      this.errorMessages = errorMessages;
     }
   }
 
