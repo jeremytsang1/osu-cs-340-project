@@ -4,7 +4,7 @@ module.exports = function() {
   let router = express.Router();
 
   let validator = new Validator(
-    [
+    [ // argument 0: databaseFields
       {field: "id", type: Validator.INT,
 	friendlyName: "Trooper ID", allowedValues: []},
       {field: "garrison", type: Validator.INT,
@@ -12,11 +12,14 @@ module.exports = function() {
       {field: "loadout", type: Validator.INT,
 	friendlyName: "Loadout ID", allowedValues: []},
     ],
+    // argument 1: primary
     "id",
+    // argument 2: fkConstraintNames
     {
       fk_troopers_garrison: 'garrison',
       fk_troopers_loadout: 'loadout'
     }
+    // argument 3: errorMessages (optional)
   );
 
   // --------------------------------------------------------------------------
