@@ -84,6 +84,18 @@ class Validator {
     );
   }
 
+  /**
+   * Perform a reverse lookup given fieldstring. ASSUMES: fieldString is one of
+   * the this.databaseFields[i].field values
+   * @param {string} fieldString - Name of a field for the given table. For example
+   * if given table is troopers then the field strings are 'id', 'garrison', 'loadout'.
+   * @return {object} corresponding property of this.databaseFields.
+   */
+  lookupDatabaseField(fieldString) {
+    return this.databaseFields.filter(databaseField =>
+      databaseField.field === fieldString)[0];
+  }
+
   // ----------------------------------------------------------------------------
   // validations to perform before performing query
 
