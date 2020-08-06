@@ -124,6 +124,7 @@ module.exports = function() {
       if (error) { // query failure
 	handleFailedQuery(res, error, expectedErrorHandlers, baseRoute);
       } else { // query success
+	console.log(results);
 	res.redirect(baseRoute);
       }
     });
