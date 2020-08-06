@@ -31,6 +31,10 @@ class Validator {
 	`Please enter a ${Validator.REPLACEMENT_STRING} that is not already taken!`,
 	[Validator.QUERY_PARAM_VALUES_REASON.nonexistent]:
 	`The specified ${Validator.REPLACEMENT_STRING} could not be found!`,
+	// --------------------------------------------------
+	// successful-SQL-query messages
+	[Validator.QUERY_PARAM_VALUES_REASON.zeroAffectedRows]:
+	`Zero rows affected!`,
       };
     } else {
       this.errorMessages = errorMessages;
