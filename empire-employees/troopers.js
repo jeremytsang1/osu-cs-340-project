@@ -76,8 +76,8 @@ module.exports = function() {
     // ASSUMES: if req.query[QUERY_OFFENDER_FIELD] exists then it is a property
     // of USR_INPUT_FIELDS
 
-    if (req.query.hasOwnProperty(validator.QUERY_PARAM_NAME_REASON)) {
-      let reason = req.query[validator.QUERY_PARAM_NAME_REASON];
+    if (req.query.hasOwnProperty(Validator.QUERY_PARAM_NAME_REASON)) {
+      let reason = req.query[Validator.QUERY_PARAM_NAME_REASON];
       context.errorMessage = VALIDATION_MESSAGES[reason].replace(
 	REPLACEMENT_STRING, USR_INPUT_FIELDS[req.query[QUERY_PARAM_NAME_OFFENDER]]
       );

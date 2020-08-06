@@ -20,7 +20,7 @@ class Validator {
     return "%offender%";
   }
 
-  get QUERY_PARAM_NAME_REASON() {
+  static get QUERY_PARAM_NAME_REASON() {
     return "reason";
   }
 
@@ -51,7 +51,7 @@ class Validator {
 
   makeQueryString(reason, offender) {
     return (
-      `${this.QUERY_PARAM_NAME_REASON}=${reason}&` +
+      `${Validator.QUERY_PARAM_NAME_REASON}=${reason}&` +
       `${this.QUERY_PARAM_NAME_OFFENDER}=${offender}`
     );
   }
@@ -113,7 +113,7 @@ class Validator {
 
     // form the query string if we found a reason the insert was invalid
     if (reason !== "") {
-      queryString = (`${this.QUERY_PARAM_NAME_REASON}=${reason}&` +
+      queryString = (`${Validator.QUERY_PARAM_NAME_REASON}=${reason}&` +
 	  `${this.QUERY_PARAM_NAME_OFFENDER}=${offender}`);
     }
 
