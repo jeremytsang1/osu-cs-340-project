@@ -100,7 +100,7 @@ module.exports = function() {
   // add a new trooper to the table
   function handleInsert(req, res, mysql) {
     let sql = "INSERT INTO `troopers` (`id`, `garrison`, `loadout`) VALUES (?, ?, ?)";
-    let inserts = [
+    let inserts = [  // must appear in same order as in the query
       {field: 'id', value: req.body.id},
       {field: 'garrison', value: req.body.garrison},
       {field:'loadout', value: req.body.loadout},
