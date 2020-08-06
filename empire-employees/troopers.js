@@ -185,8 +185,9 @@ module.exports = function() {
       if (error) { // query failure
 	handleFailedQuery(res, error, expectedErrorHandlers, baseRoute);
       } else { // query success
-	console.log(results);
-	res.redirect(baseRoute);
+	// console.log(results);
+	let queryString = Validator.handleZeroAffectedRows(results);
+	res.redirect(`${baseRoute}?${queryString}`);
       }
     });
   }
