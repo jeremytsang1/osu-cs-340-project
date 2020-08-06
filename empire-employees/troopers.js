@@ -198,28 +198,12 @@ module.exports = function() {
 
   // ----------------------------------------------------------------------------
 
-    // update a trooper's garrison
+  // remove a trooper from the table
   function handleDelete(req, res, mysql) {
-    let sql;
-    let inserts;
-
-    // decide if the UPDATE is to remove from a garrison or move to
-    // another garrison
-    switch(req.body.updateAction) {
-    case 'remove':
-      sql = "UPDATE troopers SET garrison=NULL WHERE id=?;"
-      inserts = [
-	{field: 'id', value: req.body.id},
-      ];
-      break;
-    case 'move':
-      sql = "UPDATE troopers SET garrison=? WHERE id=?";
-      inserts = [
-	{field: 'garrison', value: req.body.garrison},
-	{field: 'id', value: req.body.id},
-      ];
-      break;
-    }
+    let sql = "DELETE FROM `troopers` WHERE id=?;";
+    let inserts = [
+      {field: 'id', value: req.body.id},
+    ];
 
     // validate the user input
     let queryString = validator.validateBeforeQuery(inserts);  // TODO: change this
