@@ -1,4 +1,5 @@
 module.exports = function() {
+  const BASE_ROUTE = '/troopers';
   const Validator = require('./validator.js');
   let express = require('express');
   let router = express.Router();
@@ -112,9 +113,9 @@ module.exports = function() {
     let queryString = validator.validateBeforeQuery(inserts);
 
     if (queryString !== "") {
-      res.redirect(`/troopers?${queryString}`) // display error messages
+      res.redirect(`${BASE_ROUTE}?${queryString}`) // display error messages
     } else { // attempt the INSERT query
-      attemptQuery(req, res, mysql, sql, inserts, expectedErrorHandlers, '/troopers');
+      attemptQuery(req, res, mysql, sql, inserts, expectedErrorHandlers, BASE_ROUTE);
     }
   }
 
@@ -170,13 +171,13 @@ module.exports = function() {
     let queryString = validator.validateBeforeQuery(inserts);  // TODO: change this
 
     if (queryString !== "") {
-      res.redirect(`/troopers?${queryString}`) // display error messages
+      res.redirect(`${BASE_ROUTE}?${queryString}`) // display error messages
     } else { // attempt the query
       mysql.pool.query(sql, inserts.map(elt => elt.value), function (error, results, fields) {
 	if (error) { // query failure
 	  handleInsertFailure(res, error);  // TODO: change this
 	} else { // query success
-	  res.redirect('/troopers');
+	  res.redirect(BASE_ROUTE);
 	}
       });
     }
@@ -195,13 +196,13 @@ module.exports = function() {
     let queryString = validator.validateBeforeQuery(inserts);  // TODO: change this
 
     if (queryString !== "") {
-      res.redirect(`/troopers?${queryString}`) // display error messages
+      res.redirect(`${BASE_ROUTE}?${queryString}`) // display error messages
     } else { // attempt the query
       mysql.pool.query(sql, inserts.map(elt => elt.value), function (error, results, fields) {
 	if (error) { // query failure
 	  handleInsertFailure(res, error);  // TODO: change this
 	} else { // query success
-	  res.redirect('/troopers');
+	  res.redirect(BASE_ROUTE);
 	}
       });
     }
