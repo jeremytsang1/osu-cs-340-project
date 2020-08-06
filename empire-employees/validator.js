@@ -75,8 +75,15 @@ class Validator {
   }
 
   // ----------------------------------------------------------------------------
-
   // error messages
+
+  /**
+   * Find the appropriate error message and make the offender replacement.
+   * @param {object} req - request object
+   * @return {string} Either "" if no reason was found. Otherwise error message
+   * with its offender placeholder replaced with the offender found in the
+   * query string.
+   */
   getErrorMessage(req) {
     if (req.query.hasOwnProperty(Validator.QUERY_PARAM_NAME_REASON)) {
       // Assumes req.query[Validator.QUERY_PARAM_NAME_OFFENDER] exists
