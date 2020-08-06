@@ -50,7 +50,7 @@ module.exports = function() {
       context.troopers = results;
       complete();
     });
-  }
+  };
 
   function getTroopersByGarrison(req, res, mysql, context, complete) {
     let filterKey = req.query.filterKey;
@@ -85,8 +85,35 @@ module.exports = function() {
     });
   }
 
+  
   function getTroopersByShip(req, res, mysql, context, complete) {
-
+    filterKey = req.query.filterKey;
+    display_table_query = ("SELECT"
+    + " troopers.id AS `trooperID`,"
+    + " garrisons.id AS `garrisonID`,"
+    + " garrisons.name AS `garrisonName`,"
+    + " loadouts.id AS `loadoutID`,"
+    + " loadouts.blaster AS `blaster`,"
+    + " loadouts.detonator AS `detonator`"
+    + " FROM troopers"
+    + " INNER JOIN loadouts ON troopers.loadout=loadouts.id"
+    + " LEFT JOIN garrisons ON troopers.garrison=garrisons.id"
+    + " LEFT JOIN ships_troopers ON troopers.id=ships_troopers.trooper"
+    + " WHERE ships_troopers.ship=" + filterKey
+    + " ORDER BY troopers.id"
+  
+    );
+  
+    mysql.pool.query(display_table_query, function(error, results, fields) {
+  
+      if (error) {
+    res.write(JSON.stringify(error));
+    res.end();
+        }
+      context.troopers = results;
+      complete();
+    });
+    
   }
 
   // --------------------------------------------------------------------------

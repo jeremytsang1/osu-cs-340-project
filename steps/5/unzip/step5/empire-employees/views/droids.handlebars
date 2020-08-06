@@ -1,0 +1,59 @@
+<div class="page_info">
+
+  <!-- Form: Adding a new droid to the database -->
+  <div class="table">
+    <form action="/droids" method="POST" id="droid_add">
+
+      <legend><strong>Add a new Droid</strong></legend>
+
+      <!-- input fields -->
+      <div class="form_input">
+	<!-- id of droid to add -->
+        <div>
+	  <label>
+	    <input type="number" name="id" min="1"> <!-- Prevent non-positive values -->
+	    Droid ID
+	  </label>
+	</div>
+
+	<!-- type of droid to add -->
+        <div>
+	  <label>
+	    <select id="droid_type_select" name="type">
+	      {{#each droidTypes}}
+		<option value="{{this}}">{{this}}</option>
+	      {{/each}}
+	    </select>
+	    Type
+	  </label>
+	</div>
+      </div>
+
+      <!-- Adding button -->
+      <div><button>add</button></div>
+
+    </form>
+  </div>
+
+</div>
+
+
+<div class="db">
+  <table>
+    <thead>
+      <tr>
+	<th>Droid ID</th>
+	<th>Type</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {{#each droids}}
+	<tr>
+	  <td>{{id}}</td>
+	  <td>{{type}}</td>
+	</tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,190 @@
+<div class="page_info">
+
+  <div class="table">
+    <form action="/troopers" method="POST" id="trooper_add">
+      <div class="form_input">
+
+        <legend><strong>Add a new Trooper</strong></legend>
+
+        <Label>
+          <input type="number" name="id" min="1"> Trooper ID
+        </Label>
+
+        <br>
+        <Label>
+          <input type="number" name="garrison" min="1"> Garrison ID
+        </Label>
+
+        <br>
+        <Label>
+          <input type="number" name="loadout" min="1"> Loadout ID
+        </Label>
+
+        <br>
+
+      </div>
+
+      <div><button name="postButton" value="insert">Add</button></div>
+
+    </form>
+  </div>
+
+  <br>
+
+  <div class="table">
+    <form action="" id="garrison_filter">
+      <div class="form_input">
+
+        <legend><strong>Filter by Garrison</strong></legend>
+
+
+        <Label>
+          <input type="number" min="1"> Garrison ID
+        </Label>
+
+        <br>
+
+
+
+
+      </div>
+
+      <div><button>Filter</button></div>
+
+    </form>
+  </div>
+
+  <br>
+
+  <div class="table">
+    <form action="" id="trooper_filter">
+      <div class="form_input">
+
+        <legend><strong>Filter by Ship ID</strong></legend>
+
+
+        <Label>
+          <input type="number" min="1"> Ship ID
+        </Label>
+
+        <br>
+
+
+      </div>
+
+      <div><button>Filter</button></div>
+
+    </form>
+  </div>
+
+  <br>
+
+  <div class="table">
+    <form action="/troopers" method="POST" id="trooper_garrison_change">
+      <div class="form_input">
+
+        <legend><strong>Change Garrison assignment</strong></legend>
+	<p>Note: still having trouble adding an event listner to hide the Garrison ID input when "Remove from garrison" radio button selected.</p>
+        <Label>
+          <input type="number" min="1" name="id"> Trooper ID
+        </Label>
+
+
+        <br>
+
+        <Label>
+          <input type="number" min="1" name="garrison" id="garrisonMoveToField"> Garrison ID
+        </Label>
+
+
+        <br>
+
+      </div>
+
+      <div >
+        <label>
+          <input type="radio" id="radioRemove" class="radio_b" name="updateAction" value="remove" checked>
+          Remove From Garrison
+        </label>
+
+        <label>
+          <input type="radio" id="radioMove" class="radio_b" name="updateAction" value="move">
+          Move To
+        </label>
+
+
+      </div>
+
+      <div><button name="postButton" value="update">Submit</button></div>
+
+    </form>
+  </div>
+
+  <br>
+
+  <div class="table">
+    <form action="/troopers" method="POST" id="trooper_delete">
+      <div class="form_input">
+
+        <legend><strong>Delete Trooper (RIP)</strong></legend>
+
+
+        <Label>
+          <input type="number" name="id" min="1"> Trooper ID
+        </Label>
+
+        <br>
+
+
+      </div>
+
+      <div><button name="postButton" value="delete">Delete</button></div>
+
+    </form></div>
+  </div>
+
+  <br>
+
+</div>
+
+
+<div class="db">
+  <table>
+    <thead>
+      <tr>
+	<th>Trooper ID</th>
+	<th>Garrison ID</th>
+	<th>Garrison Name*</th>
+	<th>Loadout ID</th>
+	<th>Blaster*</th>
+	<th>Detonator*</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {{#each troopers}}
+	<tr>
+	  <td>{{trooperID}}</td>
+	  <td>
+	    {{#if garrisonID}}
+	      {{garrisonID}}
+	    {{else}}
+	      NULL
+	    {{/if}}
+	  </td>
+	  <td>
+	    {{#if garrisonName}}
+	      {{garrisonName}}
+	    {{else}}
+	      No Garrison
+	    {{/if}}
+	  </td>
+	  <td>{{loadoutID}}</td>
+	  <td>{{blaster}}</td>
+	  <td>{{detonator}}</td>
+	</tr>
+      {{/each}}
+    </tbody>
+  </table>
+  *Not an attribute of trooper (attribute from a table troopers references).
+</div>
