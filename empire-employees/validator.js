@@ -205,7 +205,7 @@ class Validator {
   handleNonexistentFK(res, error, ...rest) {
     return () => {
       let reason = this.QUERY_PARAM_VALUES_REASON.nonexistent;
-      let offender = this.findRuleInSQLMessage(error);
+      let offender = this.fkConstraintNames[this.findRuleInSQLMessage(error)];
       return this.makeQueryString(reason, offender);
     }
   }
