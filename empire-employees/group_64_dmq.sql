@@ -10,7 +10,8 @@ SELECT troopers.id AS `trooperID`,
        loadouts.detonator AS `detonator`
   FROM troopers
 	 INNER JOIN loadouts ON troopers.loadout=loadouts.id
-	 LEFT JOIN garrisons ON troopers.garrison=garrisons.id;
+	 LEFT JOIN garrisons ON troopers.garrison=garrisons.id
+ ORDER BY troopers.id;
 
 -- add new trooper
 INSERT INTO `troopers` (`id`, `garrison`, `loadout`) VALUES
@@ -26,7 +27,8 @@ SELECT troopers.id AS `trooperID`,
   FROM troopers
 	 INNER JOIN loadouts ON troopers.loadout=loadouts.id
 	 INNER JOIN garrisons ON troopers.garrison=garrisons.id
-WHERE garrisons.name = (garrisonForm);
+ WHERE garrisons.name = (garrisonForm)
+ ORDER BY troopers.id;
 
 -- filter by ship id
 SELECT troopers.id AS `trooperID`,
@@ -43,7 +45,8 @@ SELECT troopers.id AS `trooperID`,
      FROM troopers AS trooper_subq
 	    INNER JOIN ships_troopers ON ships_troopers.trooper = trooper_subq.id
     WHERE ships_troopers.ship=:shipIDInput
- );
+ )
+ ORDER BY troopers.id;
 
 -- change garrison assignment: moving to another garrison radio button
 UPDATE troopers
