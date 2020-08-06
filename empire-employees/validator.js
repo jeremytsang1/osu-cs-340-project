@@ -59,6 +59,9 @@ class Validator {
       // failed-SQL-query reasons
       duplicate: "duplicate",
       nonexistent: "nonexistent",
+      // --------------------------------------------------
+      // successful-SQL-query reasons
+      zeroAffectedRows: "zero_affected_rows"
     };
   }
 
@@ -289,6 +292,14 @@ class Validator {
     let substringStart = msg.indexOf(wordBefore) + wordBefore.length;
     let substringEnd = msg.indexOf(wordAfter);
     return msg.slice(substringStart, substringEnd);
+  }
+
+  // --------------------------------------------------------------------------
+  // successful-SQL-query handlers
+  static handleZeroAffectedRows(results) {
+    return (results.affectedRows === 0)
+	? Validator.makeQueryString(Validator.QUERY_PARAM_VALUES_REASON.zeroAffectedRows, "")
+	: "";
   }
 }
 
