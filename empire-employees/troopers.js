@@ -16,11 +16,17 @@ module.exports = function() {
     }
   );
 
+  // Making new properties from values borrowed from following post
+  // https://stackoverflow.com/a/25333702
+
   // query parameter values and their corresponding messages to display on the page
   const VALIDATION_MESSAGES = {
-    nonexistent: `The specified ${Validator.REPLACEMENT_STRING} could not be found!`,
-    duplicate: `Please enter a ${Validator.REPLACEMENT_STRING} that is not already taken!`,
-    non_positive: `Please enter a positive integer for ${Validator.REPLACEMENT_STRING}!`,
+    [Validator.QUERY_PARAM_VALUES_REASON.nonexistent]:
+    `The specified ${Validator.REPLACEMENT_STRING} could not be found!`,
+    [Validator.QUERY_PARAM_VALUES_REASON.duplicate]:
+    `Please enter a ${Validator.REPLACEMENT_STRING} that is not already taken!`,
+    [Validator.QUERY_PARAM_VALUES_REASON.nonPositive]:
+    `Please enter a positive integer for ${Validator.REPLACEMENT_STRING}!`
   };
 
   // property names should be the actual database fields

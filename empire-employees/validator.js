@@ -24,7 +24,7 @@ class Validator {
     return "reason";
   }
 
-  get QUERY_PARAM_VALUES_REASON() {
+  static get QUERY_PARAM_VALUES_REASON() {
     return {
       duplicate: "duplicate",
       nonPositive: "non_positive",
@@ -133,13 +133,13 @@ class Validator {
       // validate that it is actually an integer and it is positive
       let intToBeValidated = parseInt(insert.value);
       if (isNaN(intToBeValidated) || intToBeValidated <= 0) {
-	return this.QUERY_PARAM_VALUES_REASON.nonPositive;
+	return Validator.QUERY_PARAM_VALUES_REASON.nonPositive;
       }
       break;
     case Validator.STRING:
       // check that the string is non-empty
       if (insert.value === "") {
-	return this.QUERY_PARAM_VALUES_REASON.emptyField;
+	return Validator.QUERY_PARAM_VALUES_REASON.emptyField;
       }
       break;
     default:
@@ -164,7 +164,7 @@ class Validator {
     if (Array.isArray(allowedValues)
 	&& allowedValues.length !== 0
 	&& !allowedValues.includes(valueToCheck)) {
-      return this.QUERY_PARAM_VALUES_REASON.notInAllowedValues;
+      return Validator.QUERY_PARAM_VALUES_REASON.notInAllowedValues;
     } else {
       return "";
     }
@@ -184,7 +184,7 @@ class Validator {
   handleDuplicateInsert(res, error, ...rest) {
     // TODO: overrwrite for primary keys composed of multiple fields
     return () => {
-      let reason = this.QUERY_PARAM_VALUES_REASON.duplicate;
+      let reason = Validator.QUERY_PARAM_VALUES_REASON.duplicate;
       let offender = this.primary;
       return this.makeQueryString(reason, offender);
     };
@@ -203,7 +203,7 @@ class Validator {
    */
   handleNonexistentFK(res, error, ...rest) {
     return () => {
-      let reason = this.QUERY_PARAM_VALUES_REASON.nonexistent;
+      let reason = Validator.QUERY_PARAM_VALUES_REASON.nonexistent;
       let offender = this.fkConstraintNames[this.findRuleInSQLMessage(error)];
       return this.makeQueryString(reason, offender);
     }
