@@ -149,6 +149,7 @@ module.exports = function() {
   function handleUpdate(req, res, mysql) {
     let sql;
     let inserts;
+    let expectedErrorHandlers;
 
     // decide if the UPDATE is to remove from a garrison or move to
     // another garrison
@@ -158,6 +159,7 @@ module.exports = function() {
       inserts = [
 	{field: 'id', value: req.body.id},
       ];
+      expectedErrorHandlers = {};
       break;
     case 'move':
       sql = "UPDATE troopers SET garrison=? WHERE id=?";
@@ -165,23 +167,19 @@ module.exports = function() {
 	{field: 'garrison', value: req.body.garrison},
 	{field: 'id', value: req.body.id},
       ];
+      expectedErrorHandlers = {
+	"ER_NO_REFERENCED_ROW_2": validator.handleNonexistentFK()
+      };
       break;
     }
 
     // validate the user input
-    let queryString = validator.validateBeforeQuery(inserts);  // TODO: change this
+    let queryString = validator.validateBeforeQuery(inserts);
 
-    if (queryString !== "") {
-      res.redirect(`${BASE_ROUTE}?${queryString}`) // display error messages
+    if (queryString !== "") { // display error messages
+      res.redirect(`${BASE_ROUTE}?${queryString}`)
     } else { // attempt the query
-      mysql.pool.query(sql, inserts.map(elt => elt.value), function (error, results, fields) {
-	if (error) { // query failure
-	  handleInsertFailure(res, error);  // TODO: change this
-	} else { // query success
-	  res.redirect(BASE_ROUTE);
-	}
-      });
-    }
+      attemptQuery(req, res, mysql, sql, inserts, expectedErrorHandlers, BASE_ROUTE);}
   }
 
   // ----------------------------------------------------------------------------
