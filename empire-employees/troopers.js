@@ -78,10 +78,10 @@ module.exports = function() {
 
     switch (filter) {
     case "garrison":  // filtering by garrison
-      getTroopersByGarrison(res, mysql, context, complete);
+      getTroopersByGarrison(req, res, mysql, context, complete);
       break;
     case "ship":      // filtering by ship
-      getTroopersByShip(res, mysql, context, complete);
+      getTroopersByShip(req, res, mysql, context, complete);
       break;
     default:          // no filtering
       getTroopers(res, mysql, context, complete);
