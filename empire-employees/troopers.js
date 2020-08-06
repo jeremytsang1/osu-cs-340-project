@@ -43,7 +43,7 @@ module.exports = function() {
       + " loadouts.detonator AS `detonator`"
       + " FROM troopers"
       + " INNER JOIN loadouts ON troopers.loadout=loadouts.id"
-      + " INNER JOIN garrisons ON troopers.garrison=garrisons.id;"
+      + " LEFT JOIN garrisons ON troopers.garrison=garrisons.id;"
     );
 
     mysql.pool.query(display_table_query, function(error, results, fields) {
