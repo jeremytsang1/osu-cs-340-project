@@ -123,14 +123,14 @@
   <br>
 
   <div class="table">
-    <form action="" id="trooper_delete">
+    <form action="/troopers" method="POST" id="trooper_delete">
       <div class="form_input">
 
         <legend><strong>Delete Trooper (RIP)</strong></legend>
 
 
         <Label>
-          <input type="number" min="1"> Trooper ID
+          <input type="number" name="id" min="1"> Trooper ID
         </Label>
 
         <br>
@@ -138,9 +138,9 @@
 
       </div>
 
-      <div><button>Delete</button></div>
+      <div><button name="postButton" value="delete">Delete</button></div>
 
-    </form>
+    </form></div>
   </div>
 
   <br>
