@@ -111,7 +111,7 @@ module.exports = function() {
     } else { // attempt the INSERT query
       mysql.pool.query(sql, inserts.map(elt => elt.value), function (error, results, fields) {
 	if (error) { // query failure
-	  handle_insert_failure(res, error);
+	  handleInsertFailure(res, error);
 	} else { // query success
 	  res.redirect('/troopers');
 	}
@@ -119,7 +119,7 @@ module.exports = function() {
     }
   }
 
-  function handle_insert_failure(res, error) {
+  function handleInsertFailure(res, error) {
     let stringifiedError = JSON.stringify(error);
     let expectedErrorsHandlers = { // property names are SQL error codes
       "ER_DUP_ENTRY": validator.handleDuplicateInsert(res, error),
@@ -170,7 +170,7 @@ module.exports = function() {
     } else { // attempt the query
       mysql.pool.query(sql, inserts.map(elt => elt.value), function (error, results, fields) {
 	if (error) { // query failure
-	  handle_insert_failure(res, error);  // TODO: change this
+	  handleInsertFailure(res, error);  // TODO: change this
 	} else { // query success
 	  res.redirect('/troopers');
 	}
@@ -195,7 +195,7 @@ module.exports = function() {
     } else { // attempt the query
       mysql.pool.query(sql, inserts.map(elt => elt.value), function (error, results, fields) {
 	if (error) { // query failure
-	  handle_insert_failure(res, error);  // TODO: change this
+	  handleInsertFailure(res, error);  // TODO: change this
 	} else { // query success
 	  res.redirect('/troopers');
 	}
