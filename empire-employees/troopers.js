@@ -53,9 +53,32 @@ module.exports = function() {
   };
 
   function getTroopersByGarrison(req, res, mysql, context, complete) {
+    display_table_query = ('SELECT troopers.id AS `trooperID`,'
+	+ ' garrisons.id AS `garrisonID`,'
+	+ ' garrisons.name AS `garrisonName`,'
+	+ ' loadouts.id AS `loadoutID`,'
+	+ ' loadouts.blaster AS `blaster`,'
+	+ ' loadouts.detonator AS `detonator`'
+	+ ' FROM troopers'
+	+ ' INNER JOIN loadouts ON troopers.loadout=loadouts.id'
+	+ ' INNER JOIN garrisons ON troopers.garrison=garrisons.id'
+	+ ' WHERE garrisons.id = (?)'
+	+ ' ORDER BY troopers.id;');
 
-  };
+    let inserts = [req.query.filterKey];
 
+    mysql.pool.query(display_table_query, inserts, function(error, results, fields) {
+
+      if (error) {
+	res.write(JSON.stringify(error));
+	res.end();
+      }
+      context.troopers = results;
+      complete();
+    });
+  }
+
+  
   function getTroopersByShip(req, res, mysql, context, complete) {
     filterKey = req.query.filterKey;
     display_table_query = ("SELECT"
@@ -71,19 +94,18 @@ module.exports = function() {
     + " LEFT JOIN ships_troopers ON troopers.id=ships_troopers.trooper"
     + " WHERE ships_troopers.ship=" + filterKey
     + " ORDER BY troopers.id"
-
-  );
-
-  mysql.pool.query(display_table_query, function(error, results, fields) {
-
-    if (error) {
-  res.write(JSON.stringify(error));
-  res.end();
-      }
-    context.troopers = results;
-    complete();
-  });
-
+  
+    );
+  
+    mysql.pool.query(display_table_query, function(error, results, fields) {
+  
+      if (error) {
+    res.write(JSON.stringify(error));
+    res.end();
+        }
+      context.troopers = results;
+      complete();
+    });
     
   }
 
