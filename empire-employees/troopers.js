@@ -52,11 +52,11 @@ module.exports = function() {
     });
   }
 
-  getTroopersByGarrison(req, res, mysql, context, complete) {
+  function getTroopersByGarrison(req, res, mysql, context, complete) {
 
   }
 
-  getTroopersByShip(req, res, mysql, context, complete) {
+  function getTroopersByShip(req, res, mysql, context, complete) {
 
   }
 
