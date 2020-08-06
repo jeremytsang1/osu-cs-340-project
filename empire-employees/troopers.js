@@ -55,7 +55,7 @@ module.exports = function() {
       title: "Troopers",
       heading: "Troopers",
       jsscripts: [],
-      errorMessage: "" // validator.getErrorMessage(req),
+      errorMessage: validator.getErrorMessage(req),
     };
 
     let mysql = req.app.get('mysql');

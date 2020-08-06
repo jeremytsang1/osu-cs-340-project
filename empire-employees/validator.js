@@ -75,6 +75,29 @@ class Validator {
   }
 
   // ----------------------------------------------------------------------------
+
+  // error messages
+  getErrorMessage(req) {
+    if (req.query.hasOwnProperty(Validator.QUERY_PARAM_NAME_REASON)) {
+      // Assumes req.query[Validator.QUERY_PARAM_NAME_OFFENDER] exists
+
+      // given a reason (from POST request), find its error message
+      let reasonValue = req.query[Validator.QUERY_PARAM_NAME_REASON];
+      let errorMessage = this.errorMessages[reasonValue];
+
+      // given the offender (from POST request), find its friendly name
+      let offender = req.query[Validator.QUERY_PARAM_NAME_OFFENDER];
+      let databaseField = this.lookupDatabaseField(offender)
+      let friendlyName = databaseField.friendlyName;   // assumed provided in constructor
+
+      // insert the friendly name into the error message
+      return errorMessage.replace(Validator.REPLACEMENT_STRING, friendlyName);
+    } else {
+      return "";
+    }
+  }
+
+  // ----------------------------------------------------------------------------
   // utilities
 
   makeQueryString(reason, offender) {
