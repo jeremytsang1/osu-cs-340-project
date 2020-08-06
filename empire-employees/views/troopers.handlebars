@@ -80,7 +80,7 @@
   <br>
 
   <div class="table">
-    <form action="" id="trooper_garrison_change">
+    <form action="/troopers" method="POST" id="trooper_garrison_change">
       <div class="form_input">
 
         <legend><strong>Change Garrison assignment</strong></legend>
@@ -93,7 +93,7 @@
         <br>
 
         <Label>
-          <input type="number" min="1" name="garrison"> Garrison ID
+          <input type="number" min="1" name="garrison" id="garrisonMoveToField"> Garrison ID
         </Label>
 
 
@@ -103,12 +103,12 @@
 
       <div >
         <label>
-          <input type="radio" class="radio_b" name="move">
+          <input type="radio" id="radioRemove" class="radio_b" name="updateAction" value="remove" checked>
           Remove From Garrison
         </label>
 
         <label>
-          <input type="radio" class="radio_b" name="move">
+          <input type="radio" id="radioMove" class="radio_b" name="updateAction" value="move">
           Move To
         </label>
 
