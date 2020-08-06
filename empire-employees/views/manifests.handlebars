@@ -14,7 +14,7 @@
       </div> --}}
 
 <div class="table">
-<form action="/manifests" method="POST" id="manifest_add">
+<form action="/manifests" method="POST" id="manifest">
 
       <legend><strong>Add a new Manifest</strong></legend>
 
@@ -42,7 +42,9 @@
 	
       {{!-- </div> --}}
 
-	    <div><button>add</button>
+	    <div><button name="postButton" value="add">add</button>
+		</div>
+    <div><button name="postButton" value="remove">remove</button>
 		</div>
 	</div>
     </form>
