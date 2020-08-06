@@ -103,34 +103,38 @@ module.exports = function() {
       {field:'loadout', value: req.body.loadout},
     ];
 
+    let expectedErrorHandlers = { // property names are SQL error codes
+      "ER_DUP_ENTRY": validator.handleDuplicateInsert(),
+      "ER_NO_REFERENCED_ROW_2": validator.handleNonexistentFK(),
+    };
+
     // validate the user input
     let queryString = validator.validateBeforeQuery(inserts);
 
     if (queryString !== "") {
       res.redirect(`/troopers?${queryString}`) // display error messages
     } else { // attempt the INSERT query
-      mysql.pool.query(sql, inserts.map(elt => elt.value), function (error, results, fields) {
-	if (error) { // query failure
-	  handleInsertFailure(res, error);
-	} else { // query success
-	  res.redirect('/troopers');
-	}
-      });
+      attemptQuery(req, res, mysql, sql, inserts, expectedErrorHandlers, '/troopers');
     }
   }
 
-  function handleInsertFailure(res, error) {
-    let stringifiedError = JSON.stringify(error);
-    let expectedErrorsHandlers = { // property names are SQL error codes
-      "ER_DUP_ENTRY": validator.handleDuplicateInsert(res, error),
-      "ER_NO_REFERENCED_ROW_2": validator.handleNonexistentFK(res, error),
-    }
+  function attemptQuery(req, res, mysql, sql, inserts, expectedErrorHandlers, baseRoute) {
+    mysql.pool.query(sql, inserts.map(elt => elt.value), (error, results, fields) => {
+      if (error) { // query failure
+	handleFailedQuery(res, error, expectedErrorHandlers, baseRoute);
+      } else { // query success
+	res.redirect(baseRoute);
+      }
+    });
+  }
 
+  function handleFailedQuery(res, error, expectedErrorHandlers, baseRoute) {
     let code = error.code;
 
-    if (expectedErrorsHandlers.hasOwnProperty(code)) {
-      res.redirect(`troopers?${expectedErrorsHandlers[code]()}`);
-    } else {
+    if (expectedErrorHandlers.hasOwnProperty(code)) {  // error was expected
+      res.redirect(`${baseRoute}?${expectedErrorHandlers[code](res, error)}`);
+    } else {                                           // error was unepected
+      let stringifiedError = JSON.stringify(error);
       console.log(stringifiedError);
       res.write(stringifiedError);
       res.end();
