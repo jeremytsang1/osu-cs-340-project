@@ -106,8 +106,10 @@ module.exports = function() {
       break;
     case "update":
       handleUpdate(req, res, mysql);
+      break;
     case "delete":
       handleDelete(req, res, mysql);
+      break;
     }
   });
 
