@@ -93,7 +93,7 @@ module.exports = function() {
     }
   });
 
-  // --------------------------------------------------
+  // ----------------------------------------------------------------------------
 
   // add a new trooper to the table
   function handleInsert(req, res, mysql) {
@@ -116,30 +116,6 @@ module.exports = function() {
       res.redirect(`${BASE_ROUTE}?${queryString}`) // display error messages
     } else { // attempt the INSERT query
       attemptQuery(req, res, mysql, sql, inserts, expectedErrorHandlers, BASE_ROUTE);
-    }
-  }
-
-  function attemptQuery(req, res, mysql, sql, inserts, expectedErrorHandlers, baseRoute) {
-    mysql.pool.query(sql, inserts.map(elt => elt.value), (error, results, fields) => {
-      if (error) { // query failure
-	handleFailedQuery(res, error, expectedErrorHandlers, baseRoute);
-      } else { // query success
-	console.log(results);
-	res.redirect(baseRoute);
-      }
-    });
-  }
-
-  function handleFailedQuery(res, error, expectedErrorHandlers, baseRoute) {
-    let code = error.code;
-
-    if (expectedErrorHandlers.hasOwnProperty(code)) {  // error was expected
-      res.redirect(`${baseRoute}?${expectedErrorHandlers[code](res, error)}`);
-    } else {                                           // error was unepected
-      let stringifiedError = JSON.stringify(error);
-      console.log(stringifiedError);
-      res.write(stringifiedError);
-      res.end();
     }
   }
 
@@ -182,7 +158,7 @@ module.exports = function() {
       attemptQuery(req, res, mysql, sql, inserts, expectedErrorHandlers, BASE_ROUTE);}
   }
 
-  // ----------------------------------------------------------------------------
+  // --------------------------------------------------
 
   // remove a trooper from the table
   function handleDelete(req, res, mysql) {
@@ -199,6 +175,32 @@ module.exports = function() {
       res.redirect(`${BASE_ROUTE}?${queryString}`) // display error messages
     } else {
       attemptQuery(req, res, mysql, sql, inserts, expectedErrorHandlers, BASE_ROUTE);
+    }
+  }
+
+  // ----------------------------------------------------------------------------
+
+  function attemptQuery(req, res, mysql, sql, inserts, expectedErrorHandlers, baseRoute) {
+    mysql.pool.query(sql, inserts.map(elt => elt.value), (error, results, fields) => {
+      if (error) { // query failure
+	handleFailedQuery(res, error, expectedErrorHandlers, baseRoute);
+      } else { // query success
+	console.log(results);
+	res.redirect(baseRoute);
+      }
+    });
+  }
+
+  function handleFailedQuery(res, error, expectedErrorHandlers, baseRoute) {
+    let code = error.code;
+
+    if (expectedErrorHandlers.hasOwnProperty(code)) {  // error was expected
+      res.redirect(`${baseRoute}?${expectedErrorHandlers[code](res, error)}`);
+    } else {                                           // error was unepected
+      let stringifiedError = JSON.stringify(error);
+      console.log(stringifiedError);
+      res.write(stringifiedError);
+      res.end();
     }
   }
 
