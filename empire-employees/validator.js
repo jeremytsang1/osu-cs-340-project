@@ -107,7 +107,7 @@ class Validator {
   // ----------------------------------------------------------------------------
   // utilities
 
-  makeQueryString(reason, offender) {
+  static makeQueryString(reason, offender) {
     return (
       `${Validator.QUERY_PARAM_NAME_REASON}=${reason}&` +
       `${Validator.QUERY_PARAM_NAME_OFFENDER}=${offender}`
@@ -183,7 +183,7 @@ class Validator {
 
     // form the query string if we found a reason the insert was invalid
     if (reason !== "") {
-      queryString = this.makeQueryString(reason, offender);
+      queryString = Validator.makeQueryString(reason, offender);
     }
 
     return queryString;
@@ -255,7 +255,7 @@ class Validator {
     return (res, error, ...rest) => {
       let reason = Validator.QUERY_PARAM_VALUES_REASON.duplicate;
       let offender = this.primary;
-      return this.makeQueryString(reason, offender);
+      return Validator.makeQueryString(reason, offender);
     };
   }
 
@@ -274,7 +274,7 @@ class Validator {
     return (res, error, ...rest) => {
       let reason = Validator.QUERY_PARAM_VALUES_REASON.nonexistent;
       let offender = this.fkConstraintNames[this.findRuleInSQLMessage(error)];
-      return this.makeQueryString(reason, offender);
+      return Validator.makeQueryString(reason, offender);
     }
   }
 
