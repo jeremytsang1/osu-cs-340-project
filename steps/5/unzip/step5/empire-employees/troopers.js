@@ -1,29 +1,35 @@
 module.exports = function() {
-  const BASE_ROUTE = '/troopers';
   const Validator = require('./validator.js');
-  const attemptQuery = require('./queryHelpers.js');
   let express = require('express');
   let router = express.Router();
 
   let validator = new Validator(
-    // argument 0: databaseFields
     [
-      {field: "id", type: Validator.INT,
-	friendlyName: "Trooper ID", allowedValues: []},
-      {field: "garrison", type: Validator.INT,
-	friendlyName: "Garrison ID", allowedValues: []},
-      {field: "loadout", type: Validator.INT,
-	friendlyName: "Loadout ID", allowedValues: []},
+      {field: "id", type: Validator.INT, allowedValues: []},
+      {field: "garrison", type: Validator.INT, allowedValues: []},
+      {field: "loadout", type: Validator.INT, allowedValues: []},
     ],
-    // argument 1: primary
     "id",
-    // argument 2: fkConstraintNames
     {
       fk_troopers_garrison: 'garrison',
       fk_troopers_loadout: 'loadout'
-    }
-    // argument 3: errorMessages (optional)
+    },
   );
+
+  // query parameter values and their corresponding messages to display on the page
+  const VALIDATION_MESSAGES = {
+    nonexistent: `The specified ${validator.REPLACEMENT_STRING} could not be found!`,
+    duplicate: `Please enter a ${validator.REPLACEMENT_STRING} that is not already taken!`,
+    non_positive: `Please enter a positive integer for ${validator.REPLACEMENT_STRING}!`,
+  };
+
+  // property names should be the actual database fields
+  // property values should be the names that show up in the error message
+  let USR_INPUT_FIELDS =  {
+    id: "Trooper ID",
+    garrison: "Garrison ID",
+    loadout: "Loadout ID",
+  };
 
   // --------------------------------------------------------------------------
 
@@ -50,41 +56,6 @@ module.exports = function() {
       context.troopers = results;
       complete();
     });
-  };
-
-  function getTroopersByGarrison(req, res, mysql, context, complete) {
-
-  };
-
-  function getTroopersByShip(req, res, mysql, context, complete) {
-    filterKey = req.query.filterKey;
-    display_table_query = ("SELECT"
-    + " troopers.id AS `trooperID`,"
-    + " garrisons.id AS `garrisonID`,"
-    + " garrisons.name AS `garrisonName`,"
-    + " loadouts.id AS `loadoutID`,"
-    + " loadouts.blaster AS `blaster`,"
-    + " loadouts.detonator AS `detonator`"
-    + " FROM troopers"
-    + " INNER JOIN loadouts ON troopers.loadout=loadouts.id"
-    + " LEFT JOIN garrisons ON troopers.garrison=garrisons.id"
-    + " LEFT JOIN ships_troopers ON troopers.id=ships_troopers.trooper"
-    + " WHERE ships_troopers.ship=" + filterKey
-    + " ORDER BY troopers.id"
-
-  );
-
-  mysql.pool.query(display_table_query, function(error, results, fields) {
-
-    if (error) {
-  res.write(JSON.stringify(error));
-  res.end();
-      }
-    context.troopers = results;
-    complete();
-  });
-
-    
   }
 
   // --------------------------------------------------------------------------
@@ -96,23 +67,24 @@ module.exports = function() {
       title: "Troopers",
       heading: "Troopers",
       jsscripts: [],
-      errorMessage: validator.getErrorMessage(req),
+      errorMessage: "",
     };
+
+    // check query string for any invalid input
+    // ASSUMES: if req.query[QUERY_ERROR_FIELD] exists then so does
+    // req.query[QUERY_OFFENDER_FIELD]
+    // ASSUMES: if req.query[QUERY_OFFENDER_FIELD] exists then it is a property
+    // of USR_INPUT_FIELDS
+    if (req.query.hasOwnProperty(validator.QUERY_PARAM_NAME_REASON)) {
+      let reason = req.query[validator.QUERY_PARAM_NAME_REASON];
+      context.errorMessage = VALIDATION_MESSAGES[reason].replace(
+	REPLACEMENT_STRING, USR_INPUT_FIELDS[req.query[QUERY_PARAM_NAME_OFFENDER]]
+      );
+    }
 
     let mysql = req.app.get('mysql');
 
-    let filter = req.query.filter;
-
-    switch (filter) {
-    case "garrison":  // filtering by garrison
-      getTroopersByGarrison(req, res, mysql, context, complete);
-      break;
-    case "ship":      // filtering by ship
-      getTroopersByShip(req, res, mysql, context, complete);
-      break;
-    default:          // no filtering
-      getTroopers(res, mysql, context, complete);
-    }
+    getTroopers(res, mysql, context, complete);
 
     function complete() {
       callbackCount++;
@@ -134,36 +106,53 @@ module.exports = function() {
       break;
     case "update":
       handleUpdate(req, res, mysql);
-      break;
     case "delete":
       handleDelete(req, res, mysql);
-      break;
     }
   });
 
-  // ----------------------------------------------------------------------------
+  // --------------------------------------------------
 
   // add a new trooper to the table
   function handleInsert(req, res, mysql) {
     let sql = "INSERT INTO `troopers` (`id`, `garrison`, `loadout`) VALUES (?, ?, ?)";
-    let inserts = [  // must appear in same order as in the query
+    let inserts = [
       {field: 'id', value: req.body.id},
       {field: 'garrison', value: req.body.garrison},
       {field:'loadout', value: req.body.loadout},
     ];
 
-    let expectedErrorHandlers = { // property names are SQL error codes
-      "ER_DUP_ENTRY": validator.handleDuplicateInsert(),
-      "ER_NO_REFERENCED_ROW_2": validator.handleNonexistentFK(),
-    };
-
     // validate the user input
     let queryString = validator.validateBeforeQuery(inserts);
 
     if (queryString !== "") {
-      res.redirect(`${BASE_ROUTE}?${queryString}`) // display error messages
+      res.redirect(`/troopers?${queryString}`) // display error messages
     } else { // attempt the INSERT query
-      attemptQuery(req, res, mysql, sql, inserts, expectedErrorHandlers, BASE_ROUTE);
+      mysql.pool.query(sql, inserts.map(elt => elt.value), function (error, results, fields) {
+	if (error) { // query failure
+	  handle_insert_failure(res, error);
+	} else { // query success
+	  res.redirect('/troopers');
+	}
+      });
+    }
+  }
+
+  function handle_insert_failure(res, error) {
+    let stringifiedError = JSON.stringify(error);
+    let expectedErrorsHandlers = { // property names are SQL error codes
+      "ER_DUP_ENTRY": validator.handleDuplicateInsert(res, error),
+      "ER_NO_REFERENCED_ROW_2": validator.handleNonexistentFK(res, error),
+    }
+
+    let code = error.code;
+
+    if (expectedErrorsHandlers.hasOwnProperty(code)) {
+      res.redirect(`troopers?${expectedErrorsHandlers[code]()}`);
+    } else {
+      console.log(stringifiedError);
+      res.write(stringifiedError);
+      res.end();
     }
   }
 
@@ -173,7 +162,6 @@ module.exports = function() {
   function handleUpdate(req, res, mysql) {
     let sql;
     let inserts;
-    let expectedErrorHandlers;
 
     // decide if the UPDATE is to remove from a garrison or move to
     // another garrison
@@ -183,7 +171,6 @@ module.exports = function() {
       inserts = [
 	{field: 'id', value: req.body.id},
       ];
-      expectedErrorHandlers = {};
       break;
     case 'move':
       sql = "UPDATE troopers SET garrison=? WHERE id=?";
@@ -191,22 +178,26 @@ module.exports = function() {
 	{field: 'garrison', value: req.body.garrison},
 	{field: 'id', value: req.body.id},
       ];
-      expectedErrorHandlers = {
-	"ER_NO_REFERENCED_ROW_2": validator.handleNonexistentFK()
-      };
       break;
     }
 
     // validate the user input
-    let queryString = validator.validateBeforeQuery(inserts);
+    let queryString = validator.validateBeforeQuery(inserts);  // TODO: change this
 
-    if (queryString !== "") { // display error messages
-      res.redirect(`${BASE_ROUTE}?${queryString}`)
+    if (queryString !== "") {
+      res.redirect(`/troopers?${queryString}`) // display error messages
     } else { // attempt the query
-      attemptQuery(req, res, mysql, sql, inserts, expectedErrorHandlers, BASE_ROUTE);}
+      mysql.pool.query(sql, inserts.map(elt => elt.value), function (error, results, fields) {
+	if (error) { // query failure
+	  handle_insert_failure(res, error);  // TODO: change this
+	} else { // query success
+	  res.redirect('/troopers');
+	}
+      });
+    }
   }
 
-  // --------------------------------------------------
+  // ----------------------------------------------------------------------------
 
   // remove a trooper from the table
   function handleDelete(req, res, mysql) {
@@ -214,18 +205,22 @@ module.exports = function() {
     let inserts = [
       {field: 'id', value: req.body.id},
     ];
-    let expectedErrorHandlers = {};
 
     // validate the user input
-    let queryString = validator.validateBeforeQuery(inserts);
+    let queryString = validator.validateBeforeQuery(inserts);  // TODO: change this
 
     if (queryString !== "") {
-      res.redirect(`${BASE_ROUTE}?${queryString}`) // display error messages
-    } else {
-      attemptQuery(req, res, mysql, sql, inserts, expectedErrorHandlers, BASE_ROUTE);
+      res.redirect(`/troopers?${queryString}`) // display error messages
+    } else { // attempt the query
+      mysql.pool.query(sql, inserts.map(elt => elt.value), function (error, results, fields) {
+	if (error) { // query failure
+	  handle_insert_failure(res, error);  // TODO: change this
+	} else { // query success
+	  res.redirect('/troopers');
+	}
+      });
     }
   }
 
-  // ----------------------------------------------------------------------------
   return router;
 }();
