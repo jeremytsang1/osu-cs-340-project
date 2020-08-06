@@ -98,6 +98,19 @@ module.exports = function() {
   // add a new trooper to the table
   router.post('/', function(req, res) {
     let mysql = req.app.get('mysql');
+
+    switch (req.body['postButton']) {
+    case "insert":
+      handleInsert(req, res, mysql);
+      break;
+    case "update":
+      handleUpdate(req, res, mysql);
+    }
+  });
+
+  // --------------------------------------------------
+
+  function handleInsert(req, res, mysql) {
     let sql = "INSERT INTO `troopers` (`id`, `garrison`, `loadout`) VALUES (?, ?, ?)";
     let inserts = [
       {field: 'id', value: req.body.id},
@@ -119,9 +132,8 @@ module.exports = function() {
 	}
       });
     }
-  });
+  }
 
-  // --------------------------------------------------
 
   function handle_insert_failure(res, error) {
     let stringifiedError = JSON.stringify(error);
