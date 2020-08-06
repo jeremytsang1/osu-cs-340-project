@@ -13,7 +13,7 @@ module.exports = function() {
     {
       fk_troopers_garrison: 'garrison',
       fk_troopers_loadout: 'loadout'
-    },
+    }
   );
 
   // query parameter values and their corresponding messages to display on the page
