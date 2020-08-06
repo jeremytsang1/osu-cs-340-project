@@ -1,16 +1,9 @@
 module.exports = function() {
+  const BASE_ROUTE = '/droids';
+  const Validator = require('./validator.js');
+  const attemptQuery = require('./queryHelpers.js');
   let express = require('express');
   let router = express.Router();
-
-  // query parameter name
-  const QUERY_ERROR_FIELD = "VALIDATION_ERROR";
-
-  // query parameter values and their corresponding messages to display on the page
-  const VALIDATION_ERRORS = {
-    NON_UNIQUE_ID: "Please enter an ID that is not already taken!",
-    NON_POSITIVE_ID: "Please enter a positive integer for ID!",
-    TAMPERED_TYPE: "Selected droid type is invalid!",
-  };
 
   // choices for the drop down menu
   const DROID_TYPES = [
@@ -33,8 +26,29 @@ module.exports = function() {
     "Protocol",
     "Security",
     "Servant",
-    "Tutor",
+    "Tutor"
   ];
+
+  let validator = new Validator(
+    [ // argument 0: databaseFields
+      {field: "id", type: Validator.INT,
+	friendlyName: "Droid ID", allowedValues: []},
+      {field: "type", type: Validator.STRING,
+	friendlyName: "Type", allowedValues: DROID_TYPES}
+    ],
+    // argument 1: primary
+    "id",
+    // argument 2: fkConstraintNames
+    {}
+    // argument 3: errorMessages (optional)
+  );
+
+  // query parameter values and their corresponding messages to display on the page
+  const VALIDATION_ERRORS = {
+    NON_UNIQUE_ID: "Please enter an ID that is not already taken!",
+    NON_POSITIVE_ID: "Please enter a positive integer for ID!",
+    TAMPERED_TYPE: "Selected droid type is invalid!",
+  };
 
   // --------------------------------------------------------------------------
 
@@ -52,24 +66,6 @@ module.exports = function() {
 
   // --------------------------------------------------------------------------
 
-  /**
-   * Determine if user input for droids.id and droids.type are valid.
-   * @param {int} id - user input for the droids.id
-   * @param {string} type - user input for the droids.type
-   * @return {string} query string field/value pair if invalid else "".
-   */
-  function validateInputCreateDroid(id, type) {
-    if (id <= 0) {
-      return `${QUERY_ERROR_FIELD}=NON_POSITIVE_ID`;
-    } else if (!DROID_TYPES.includes(type)) {
-      return `${QUERY_ERROR_FIELD}=TAMPERED_TYPE`;
-    } else {
-      return "";
-    }
-  }
-
-  // --------------------------------------------------------------------------
-
   // display all existing droids
   router.get('/', function(req, res) {
     let callbackCount = 0;
@@ -77,14 +73,9 @@ module.exports = function() {
       title: "Droids",
       heading: "Droids",
       jsscripts: [],           // filenames of scripts to run
+      errorMessage: validator.getErrorMessage(req),
       droidTypes: DROID_TYPES, // options for the dropdown menu
-      errorMessage: "",        // message to place at top of page if input invalid
     };
-
-    // check query string for any invalid input
-    if (req.query.hasOwnProperty(QUERY_ERROR_FIELD)) {
-      context.errorMessage = VALIDATION_ERRORS[req.query[QUERY_ERROR_FIELD]];
-    }
 
     let mysql = req.app.get('mysql');
 
@@ -104,29 +95,22 @@ module.exports = function() {
   router.post('/', function(req, res) {
     let mysql = req.app.get('mysql');
     let sql = "INSERT INTO `droids` (id, `type`) VALUE (?, ?);";
-    let inserts = [req.body.id, req.body.type];
+    let inserts = [  // must appear in same order as in the query
+      {field: 'id', value: req.body.id},
+      {field: 'type', value: req.body.type},
+    ];
+
+    let expectedErrorHandlers = { // property names are SQL error codes
+      "ER_DUP_ENTRY": validator.handleDuplicateInsert(),
+    };
 
     // validate the user input
-    let queryString = validateInputCreateDroid(inserts[0], inserts[1]);
+    let queryString = validator.validateBeforeQuery(inserts);
 
     if (queryString !== "") {
-      res.redirect(`/droids?${queryString}`) // display error messages
+      res.redirect(`${BASE_ROUTE}?${queryString}`) // display error messages
     } else { // attempt the INSERT query
-      sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
-	if (error && error.code === "ER_DUP_ENTRY") {
-	  // INSERT failed from duplicate ID
-	  queryString = `${QUERY_ERROR_FIELD}=NON_UNIQUE_ID`
-	  res.redirect(`/droids?${queryString}`)
-	} else if (error) {
-	  // INSERT failed for reason other than duplicate ID
-	  console.log(JSON.stringify(error));
-	  res.write(JSON.stringify(error));
-	  res.end();
-	} else {
-	  // INSERT succeeded
-	  res.redirect('/droids');
-	}
-      });
+      attemptQuery(req, res, mysql, sql, inserts, expectedErrorHandlers, BASE_ROUTE);
     }
   });
 
