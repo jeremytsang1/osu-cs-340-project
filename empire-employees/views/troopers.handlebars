@@ -165,8 +165,20 @@
       {{#each troopers}}
 	<tr>
 	  <td>{{trooperID}}</td>
-	  <td>{{garrisonID}}</td>
-	  <td>{{garrisonName}}</td>
+	  <td>
+	    {{#if garrisonID}}
+	      {{garrisonID}}
+	    {{else}}
+	      NULL
+	    {{/if}}
+	  </td>
+	  <td>
+	    {{#if garrisonName}}
+	      {{garrisonName}}
+	    {{else}}
+	      No Garrison
+	    {{/if}}
+	  </td>
 	  <td>{{loadoutID}}</td>
 	  <td>{{blaster}}</td>
 	  <td>{{detonator}}</td>
