@@ -95,7 +95,7 @@ module.exports = function() {
 
   // --------------------------------------------------------------------------
 
-  // add a new trooper to the table
+  // Handling POST requests
   router.post('/', function(req, res) {
     let mysql = req.app.get('mysql');
 
@@ -110,6 +110,7 @@ module.exports = function() {
 
   // --------------------------------------------------
 
+  // add a new trooper to the table
   function handleInsert(req, res, mysql) {
     let sql = "INSERT INTO `troopers` (`id`, `garrison`, `loadout`) VALUES (?, ?, ?)";
     let inserts = [
@@ -133,7 +134,6 @@ module.exports = function() {
       });
     }
   }
-
 
   function handle_insert_failure(res, error) {
     let stringifiedError = JSON.stringify(error);
