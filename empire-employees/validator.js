@@ -16,7 +16,7 @@ class Validator {
   // ----------------------------------------------------------------------------
   // Constants
 
-  get REPLACEMENT_STRING() {
+  static get REPLACEMENT_STRING() {
     return "%offender%";
   }
 

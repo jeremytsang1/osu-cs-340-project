@@ -18,9 +18,9 @@ module.exports = function() {
 
   // query parameter values and their corresponding messages to display on the page
   const VALIDATION_MESSAGES = {
-    nonexistent: `The specified ${validator.REPLACEMENT_STRING} could not be found!`,
-    duplicate: `Please enter a ${validator.REPLACEMENT_STRING} that is not already taken!`,
-    non_positive: `Please enter a positive integer for ${validator.REPLACEMENT_STRING}!`,
+    nonexistent: `The specified ${Validator.REPLACEMENT_STRING} could not be found!`,
+    duplicate: `Please enter a ${Validator.REPLACEMENT_STRING} that is not already taken!`,
+    non_positive: `Please enter a positive integer for ${Validator.REPLACEMENT_STRING}!`,
   };
 
   // property names should be the actual database fields
@@ -75,6 +75,7 @@ module.exports = function() {
     // req.query[QUERY_OFFENDER_FIELD]
     // ASSUMES: if req.query[QUERY_OFFENDER_FIELD] exists then it is a property
     // of USR_INPUT_FIELDS
+
     if (req.query.hasOwnProperty(validator.QUERY_PARAM_NAME_REASON)) {
       let reason = req.query[validator.QUERY_PARAM_NAME_REASON];
       context.errorMessage = VALIDATION_MESSAGES[reason].replace(
