@@ -102,7 +102,9 @@ class Validator {
       // given the offender (from POST request), find its friendly name
       let offender = req.query[Validator.QUERY_PARAM_NAME_OFFENDER];
       let databaseField = this.lookupDatabaseField(offender)
-      let friendlyName = databaseField.friendlyName;   // assumed provided in constructor
+      let friendlyName = (databaseField !== null)
+	  ? databaseField.friendlyName // assumed provided in constructor
+	  : "no friendly name";
 
       // insert the friendly name into the error message
       return errorMessage.replace(Validator.REPLACEMENT_STRING, friendlyName);
@@ -126,11 +128,14 @@ class Validator {
    * the this.databaseFields[i].field values
    * @param {string} fieldString - Name of a field for the given table. For example
    * if given table is troopers then the field strings are 'id', 'garrison', 'loadout'.
-   * @return {object} corresponding property of this.databaseFields.
+   * @return {object} corresponding property of this.databaseFields. If not
+   * found returns null.
    */
   lookupDatabaseField(fieldString) {
-    return this.databaseFields.filter(databaseField =>
-      databaseField.field === fieldString)[0];
+    let results = this.databaseFields.filter(databaseField =>
+      databaseField.field === fieldString);
+
+    return (results.length === 1) ? results[0] : null;
   }
 
   // ----------------------------------------------------------------------------
