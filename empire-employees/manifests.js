@@ -105,7 +105,7 @@ const OCCUPANT_CHOICE = [
     let mysql = req.app.get('mysql');
     if (req.body.occupantChoice == "trooper") {
       sql = "INSERT INTO `ships_troopers` (`ship`, `trooper`) VALUE (?, ?);";
-    } else {
+    } else if (req.body.occupantChoice == "droid") {
       sql = "INSERT INTO `ships_droids` (`ship`, `droid`) VALUE (?, ?);";
     }
 
