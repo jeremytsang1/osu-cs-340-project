@@ -6,7 +6,8 @@ module.exports = function() {
   let router = express.Router();
 
   let validator = new Validator(
-    [ // argument 0: databaseFields
+    // argument 0: databaseFields
+    [
       {field: "id", type: Validator.INT,
 	friendlyName: "Trooper ID", allowedValues: []},
       {field: "garrison", type: Validator.INT,
