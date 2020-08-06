@@ -16,27 +16,6 @@ module.exports = function() {
     }
   );
 
-  // Making new properties from values borrowed from following post
-  // https://stackoverflow.com/a/25333702
-
-  // query parameter values and their corresponding messages to display on the page
-  const VALIDATION_MESSAGES = {
-    [Validator.QUERY_PARAM_VALUES_REASON.nonexistent]:
-    `The specified ${Validator.REPLACEMENT_STRING} could not be found!`,
-    [Validator.QUERY_PARAM_VALUES_REASON.duplicate]:
-    `Please enter a ${Validator.REPLACEMENT_STRING} that is not already taken!`,
-    [Validator.QUERY_PARAM_VALUES_REASON.nonPositive]:
-    `Please enter a positive integer for ${Validator.REPLACEMENT_STRING}!`
-  };
-
-  // property names should be the actual database fields
-  // property values should be the names that show up in the error message
-  let USR_INPUT_FIELDS =  {
-    id: "Trooper ID",
-    garrison: "Garrison ID",
-    loadout: "Loadout ID",
-  };
-
   // --------------------------------------------------------------------------
 
   function getTroopers(res, mysql, context, complete) {
@@ -73,21 +52,8 @@ module.exports = function() {
       title: "Troopers",
       heading: "Troopers",
       jsscripts: [],
-      errorMessage: "",
+      errorMessage: "" // validator.getErrorMessage(req),
     };
-
-    // check query string for any invalid input
-    // ASSUMES: if req.query[QUERY_ERROR_FIELD] exists then so does
-    // req.query[QUERY_OFFENDER_FIELD]
-    // ASSUMES: if req.query[QUERY_OFFENDER_FIELD] exists then it is a property
-    // of USR_INPUT_FIELDS
-
-    if (req.query.hasOwnProperty(Validator.QUERY_PARAM_NAME_REASON)) {
-      let reason = req.query[Validator.QUERY_PARAM_NAME_REASON];
-      context.errorMessage = VALIDATION_MESSAGES[reason].replace(
-	REPLACEMENT_STRING, USR_INPUT_FIELDS[req.query[QUERY_PARAM_NAME_OFFENDER]]
-      );
-    }
 
     let mysql = req.app.get('mysql');
 
