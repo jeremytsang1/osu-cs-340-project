@@ -7,7 +7,8 @@ function attemptQuery(req, res, mysql, sql, inserts, expectedErrorHandlers, base
     } else { // query success
       // console.log(results);
       let queryString = Validator.handleZeroAffectedRows(results);
-      res.redirect(`${baseRoute}?${queryString}`);
+      queryString = (queryString === "") ? queryString : `?${queryString}`
+      res.redirect(`${baseRoute}${queryString}`); // NOTE: '?' not harded coded
     }
   });
 }
