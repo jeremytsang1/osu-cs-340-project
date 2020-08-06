@@ -113,8 +113,7 @@ class Validator {
 
     // form the query string if we found a reason the insert was invalid
     if (reason !== "") {
-      queryString = (`${Validator.QUERY_PARAM_NAME_REASON}=${reason}&` +
-	  `${this.QUERY_PARAM_NAME_OFFENDER}=${offender}`);
+      queryString = this.makeQueryString(reason, offender);
     }
 
     return queryString;
