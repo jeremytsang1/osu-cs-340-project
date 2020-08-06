@@ -34,7 +34,7 @@ class Validator {
     };
   }
 
-  get QUERY_PARAM_NAME_OFFENDER() {
+  static get QUERY_PARAM_NAME_OFFENDER() {
     return "offender";
   }
 
@@ -52,7 +52,7 @@ class Validator {
   makeQueryString(reason, offender) {
     return (
       `${Validator.QUERY_PARAM_NAME_REASON}=${reason}&` +
-      `${this.QUERY_PARAM_NAME_OFFENDER}=${offender}`
+      `${Validator.QUERY_PARAM_NAME_OFFENDER}=${offender}`
     );
   }
 
