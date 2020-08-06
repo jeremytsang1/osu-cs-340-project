@@ -198,7 +198,7 @@ class Validator {
   }
 
   // ----------------------------------------------------------------------------
-  // failed SQL query handlers
+  // failed-SQL-query handlers
   /**
    * Create the query string for error page showing duplicate error
    * message. Use closure to make sure that `this` refers to the validator
