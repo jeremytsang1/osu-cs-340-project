@@ -143,8 +143,8 @@ class Validator {
       }
       break;
     default:
-      return ""
     }
+    return "";
   }
 
   /**
