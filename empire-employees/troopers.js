@@ -190,22 +190,18 @@ module.exports = function() {
     let inserts = [
       {field: 'id', value: req.body.id},
     ];
+    let expectedErrorHandlers = {};
 
     // validate the user input
-    let queryString = validator.validateBeforeQuery(inserts);  // TODO: change this
+    let queryString = validator.validateBeforeQuery(inserts);
 
     if (queryString !== "") {
       res.redirect(`${BASE_ROUTE}?${queryString}`) // display error messages
-    } else { // attempt the query
-      mysql.pool.query(sql, inserts.map(elt => elt.value), function (error, results, fields) {
-	if (error) { // query failure
-	  handleInsertFailure(res, error);  // TODO: change this
-	} else { // query success
-	  res.redirect(BASE_ROUTE);
-	}
-      });
+    } else {
+      attemptQuery(req, res, mysql, sql, inserts, expectedErrorHandlers, BASE_ROUTE);
     }
   }
 
+  // ----------------------------------------------------------------------------
   return router;
 }();
