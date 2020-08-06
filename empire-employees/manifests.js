@@ -146,10 +146,10 @@ const OCCUPANT_CHOICE = [
         mysql = req.app.get('mysql');
   
         if (req.body.occupantChoice == "trooper") {
-          sql = "DELETE FROM ships_troopers where ship = " + req.body.ship + " && " + "trooper = " +(req.body.occupant) + ";";
+          sql = "DELETE FROM ships_troopers where ship = ? && trooper = ?;";
         } 
         else if (req.body.occupantChoice == "droid") {
-          sql = "DELETE FROM ships_droids where ship = " + req.body.ship + " && " + "droid = " + (req.body.occupant) + " ;";
+          sql = "DELETE FROM ships_droids where ship = ? && droid = ?;";
         }
   
         let inserts = [req.body.ship, req.body.occupant];
