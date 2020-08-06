@@ -26,11 +26,15 @@ class Validator {
 
   static get QUERY_PARAM_VALUES_REASON() {
     return {
-      duplicate: "duplicate",
-      nonPositive: "non_positive",
+      // --------------------------------------------------
+      // pre-SQL-query reasons
       emptyField: "empty_field",
-      nonexistent: "nonexistent",
+      nonPositive: "non_positive",
       notInAllowedValues: "not_in_allowed_values",
+      // --------------------------------------------------
+      // failed-SQL-query reasons
+      duplicate: "duplicate",
+      nonexistent: "nonexistent",
     };
   }
 
