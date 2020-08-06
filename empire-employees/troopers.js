@@ -5,9 +5,12 @@ module.exports = function() {
 
   let validator = new Validator(
     [
-      {field: "id", type: Validator.INT, allowedValues: []},
-      {field: "garrison", type: Validator.INT, allowedValues: []},
-      {field: "loadout", type: Validator.INT, allowedValues: []},
+      {field: "id", type: Validator.INT,
+	friendlyName: "Trooper ID", allowedValues: []},
+      {field: "garrison", type: Validator.INT,
+	friendlyName: "Garrison ID", allowedValues: []},
+      {field: "loadout", type: Validator.INT,
+	friendlyName: "Loadout ID", allowedValues: []},
     ],
     "id",
     {
