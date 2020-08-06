@@ -42,7 +42,7 @@ class Validator {
     return "int";
   }
 
-  get STRING() {
+  static get STRING() {
     return "string";
   }
 
@@ -136,7 +136,7 @@ class Validator {
 	return this.QUERY_PARAM_VALUES_REASON.nonPositive;
       }
       break;
-    case this.STRING:
+    case Validator.STRING:
       // check that the string is non-empty
       if (insert.value === "") {
 	return this.QUERY_PARAM_VALUES_REASON.emptyField;
