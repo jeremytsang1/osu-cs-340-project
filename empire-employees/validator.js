@@ -250,9 +250,9 @@ class Validator {
    * @param {} ...rest - additional parameters if present
    * @return {string} query string for the said error
    */
-  handleDuplicateInsert(res, error, ...rest) {
+  handleDuplicateInsert() {
     // TODO: overrwrite for primary keys composed of multiple fields
-    return () => {
+    return (res, error, ...rest) => {
       let reason = Validator.QUERY_PARAM_VALUES_REASON.duplicate;
       let offender = this.primary;
       return this.makeQueryString(reason, offender);
@@ -270,8 +270,8 @@ class Validator {
    * @param {} ...rest - additional parameters if present
    * @return {string} query string for the said error
    */
-  handleNonexistentFK(res, error, ...rest) {
-    return () => {
+  handleNonexistentFK() {
+    return (res, error, ...rest) => {
       let reason = Validator.QUERY_PARAM_VALUES_REASON.nonexistent;
       let offender = this.fkConstraintNames[this.findRuleInSQLMessage(error)];
       return this.makeQueryString(reason, offender);
