@@ -52,6 +52,14 @@ module.exports = function() {
     });
   }
 
+  getTroopersByGarrison(res, mysql, context, complete) {
+
+  }
+
+  getTroopersByShip(res, mysql, context, complete) {
+
+  }
+
   // --------------------------------------------------------------------------
 
   // display all existing troopers
@@ -66,7 +74,18 @@ module.exports = function() {
 
     let mysql = req.app.get('mysql');
 
-    getTroopers(res, mysql, context, complete);
+    let filter = req.query.filter;
+
+    switch (filter) {
+    case "garrison":  // filtering by garrison
+      getTroopersByGarrison(res, mysql, context, complete);
+      break;
+    case "ship":      // filtering by ship
+      getTroopersByShip(res, mysql, context, complete);
+      break;
+    default:          // no filtering
+      getTroopers(res, mysql, context, complete);
+    }
 
     function complete() {
       callbackCount++;

@@ -32,14 +32,14 @@
   <br>
 
   <div class="table">
-    <form action="" id="garrison_filter">
+    <form action="/troopers" method="GET" id="garrison_filter">
       <div class="form_input">
 
         <legend><strong>Filter by Garrison</strong></legend>
 
 
         <Label>
-          <input type="number" min="1"> Garrison ID
+          <input type="number" min="1" name="filter" value="garrison"> Garrison ID
         </Label>
 
         <br>
@@ -57,14 +57,14 @@
   <br>
 
   <div class="table">
-    <form action="" id="trooper_filter">
+    <form action="/troopers" method="GET" id="trooper_filter">
       <div class="form_input">
 
         <legend><strong>Filter by Ship ID</strong></legend>
 
 
         <Label>
-          <input type="number" min="1"> Ship ID
+          <input type="number" min="1" name="filter" value="ship"> Ship ID
         </Label>
 
         <br>
