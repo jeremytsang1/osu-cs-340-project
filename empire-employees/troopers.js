@@ -153,7 +153,36 @@ module.exports = function() {
     }
   }
 
-  // --------------------------------------------------------------------------
+  // --------------------------------------------------
+
+  // let sql = "UPDATE troopers SET garrison=? WHERE id=?";
+
+  // update a trooper's garrison
+  function handleUpdate(req, res, mysql) {
+    let sql = "INSERT INTO `troopers` (`id`, `garrison`, `loadout`) VALUES (?, ?, ?)";
+    let inserts = [
+      {field: 'id', value: req.body.id},
+      {field: 'garrison', value: req.body.garrison},
+      {field:'loadout', value: req.body.loadout},
+    ];
+
+    // validate the user input
+    let queryString = validator.validateBeforeQuery(inserts);
+
+    if (queryString !== "") {
+      res.redirect(`/troopers?${queryString}`) // display error messages
+    } else { // attempt the INSERT query
+      mysql.pool.query(sql, inserts.map(elt => elt.value), function (error, results, fields) {
+	if (error) { // query failure
+	  handle_insert_failure(res, error);
+	} else { // query success
+	  res.redirect('/troopers');
+	}
+      });
+    }
+  }
+
+  // ----------------------------------------------------------------------------
 
   return router;
 }();
