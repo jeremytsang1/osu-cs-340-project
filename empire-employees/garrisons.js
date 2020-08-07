@@ -113,6 +113,8 @@ module.exports = function() {
     }
   });
 
+  // --------------------------------------------------------------------------
+
   function handleInsert(req, res, mysql) {
     let sql = "INSERT INTO `garrisons` (`id`, `name`, `capacity`) VALUES (?, ?, ?);";
 

@@ -38,7 +38,7 @@ module.exports = function() {
     // argument 3: errorMessages (optional)
   );
 
- // --------------------------------------------------------------------------
+ // ---------------------------------------------------------------------------
 
 
   function getLoadouts(res, mysql, context, complete) {
@@ -80,6 +80,8 @@ module.exports = function() {
     }
   });
 
+  // --------------------------------------------------------------------------
+
   router.post('/', function(req, res) {
     let mysql = req.app.get('mysql');
 
@@ -92,6 +94,8 @@ module.exports = function() {
       break;
     }
   });
+
+  // --------------------------------------------------------------------------
 
   function handleInsert(req, res, mysql) {
     let sql = "INSERT INTO `loadouts` (id, `blaster`, `detonator`) VALUE (?, ?, ?);";
@@ -116,6 +120,8 @@ module.exports = function() {
     }
   }
 
+  // --------------------------------------------------
+
   function handleUpdate(req, res, mysql) {
     let sql = "UPDATE loadouts SET blaster=?, detonator=? WHERE id=?;";
 
@@ -138,6 +144,8 @@ module.exports = function() {
       attemptQuery(req, res, mysql, sql, inserts, expectedErrorHandlers, BASE_ROUTE);
     }
   }
+
+  // --------------------------------------------------------------------------
 
   return router;
 }();
