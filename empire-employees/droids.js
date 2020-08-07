@@ -87,6 +87,17 @@ module.exports = function() {
   // add a new droid to the table
   router.post('/', function(req, res) {
     let mysql = req.app.get('mysql');
+
+    switch (req.body['postButton']) {
+    case "insert":
+      handleInsert(req, res, mysql);
+      break;
+    }
+  });
+
+  // --------------------------------------------------------------------------
+
+  function handleInsert(req, res, mysql) {
     let sql = "INSERT INTO `droids` (id, `type`) VALUE (?, ?);";
     let inserts = [  // must appear in same order as in the query
       {field: 'id', value: req.body.id},
@@ -105,7 +116,7 @@ module.exports = function() {
     } else { // attempt the INSERT query
       attemptQuery(req, res, mysql, sql, inserts, expectedErrorHandlers, BASE_ROUTE);
     }
-  });
+  }
 
   // --------------------------------------------------------------------------
 
