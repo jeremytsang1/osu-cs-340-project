@@ -1,26 +1,31 @@
 module.exports = function() {
+  const BASE_ROUTE = '/garrisons';
+  const Validator = require('./validator.js');
+  const attemptQuery = require('./queryHelpers.js');
   let express = require('express');
   let router = express.Router();
 
-  // query parameter name
-  const QUERY_ERROR_FIELD = "VALIDATION_ERROR";
-  const QUERY_OFFENDER_FIELD = "OFFENDER";
-  const REPLACEMENT_STRING = "%offender%";
+  let validator = new Validator(
+    [ // argument 0: databaseFields
+      {field: "id", type: Validator.INT,
+	friendlyName: "Garrison ID", allowedValues: []},
+      {field: "name", type: Validator.STRING,
+	friendlyName: "Name", allowedValues: []},
+      {field: "capacity", type: Validator.INT,
+	friendlyName: "Capacity", allowedValues: []}
+    ],
+    // argument 1: primary
+    "id",
+    // argument 2: fkConstraintNames
+    {}
+    // argument 3: errorMessages (optional)
+  );
 
-  // query parameter values and their corresponding messages to display on the page
-  const VALIDATION_ERRORS = {
-    EMPTY: `Please enter a non-empty ${REPLACEMENT_STRING}!`,
-    NON_UNIQUE: `Please enter a ${REPLACEMENT_STRING} that is not already taken!`,
-    NON_POSITIVE: `Please enter a positive integer for ${REPLACEMENT_STRING}!`,
-  };
-
-  // property names should be the actual database fields
-  // property values should be the names that show up in the error message
-  let USR_INPUT_FIELDS =  {
-    id: "Garrison ID",
-    name: "Name",
-    capacity: "Capacity",
-  };
+  // set custom error message
+  validator.setErrorMessage(
+    Validator.QUERY_PARAM_VALUES_REASON.duplicate,
+    "Garrison ID and Name must be unique!" // Hardcoded
+  );
 
   // --------------------------------------------------------------------------
 
@@ -80,20 +85,8 @@ module.exports = function() {
       title: "Garrisons",
       heading: "Garrisons",
       jsscripts: [],
-      errorMessage: "",
+      errorMessage: validator.getErrorMessage(req),
     };
-
-    // check query string for any invalid input
-    // ASSUMES: if req.query[QUERY_ERROR_FIELD] exists then so does
-    // req.query[QUERY_OFFENDER_FIELD]
-    // ASSUMES: if req.query[QUERY_OFFENDER_FIELD] exists then it is a property
-    // of USR_INPUT_FIELDS
-    if (req.query.hasOwnProperty(QUERY_ERROR_FIELD)) {
-      let reason = req.query[QUERY_ERROR_FIELD];
-      context.errorMessage = VALIDATION_ERRORS[reason].replace(
-	REPLACEMENT_STRING, USR_INPUT_FIELDS[req.query[QUERY_OFFENDER_FIELD]]
-      );
-    }
 
     let mysql = req.app.get('mysql');
 
@@ -112,50 +105,36 @@ module.exports = function() {
   // add a new garrison to the table
   router.post('/', function(req, res) {
     let mysql = req.app.get('mysql');
-    let sql = "INSERT INTO `garrisons` (`id`, `name`, `capacity`) VALUES (?, ?, ?);";
-    let inserts = [req.body.id, req.body.name, req.body.capacity];
 
-    // validate the user input
-    let queryString = validateInputCreateGarrison(req.body.id, req.body.name,
-      req.body.capacity);
-
-    if (queryString !== "") {
-      res.redirect(`/garrisons?${queryString}`) // display error messages
-    } else { // attempt the INSERT query
-      sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
-	if (error && error.code === "ER_DUP_ENTRY") {
-	  // INSERT failed from duplicate ID
-
-	  // use the error message to determine which key is a duplicate
-	  let msg = error.sqlMessage;
-
-	  // search the error message string for its index of where the
-	  // offending field begins
-	  let idx = msg.lastIndexOf('for key');
-
-	  let reason = "NON_UNIQUE";
-	  let offender = msg.slice(idx + 9, msg.length - 1);
-
-	  // handle the fact that MySQL labels primary key as PRIMARY instead
-	  // of the actual attribute name
-	  offender = (offender === "PRIMARY") ? "id" : offender;
-
-	  queryString = (
-	    `${QUERY_ERROR_FIELD}=${reason}&` +
-	    `${QUERY_OFFENDER_FIELD}=${offender}`);
-	  res.redirect(`/garrisons?${queryString}`)
-	} else if (error) {
-	  // INSERT failed for reason other than duplicate ID
-	  console.log(JSON.stringify(error));
-	  res.write(JSON.stringify(error));
-	  res.end();
-	} else {
-	  // INSERT succeeded
-	  res.redirect('/garrisons');
-	}
-      });
+    switch (req.body['postButton']) {
+    case "insert":
+      handleInsert(req, res, mysql);
+      break;
     }
   });
+
+  function handleInsert(req, res, mysql) {
+    let sql = "INSERT INTO `garrisons` (`id`, `name`, `capacity`) VALUES (?, ?, ?);";
+
+    let inserts = [  // must appear in same order as in the query
+      {field: 'id', value: req.body.id},
+      {field: 'name', value: req.body.name},
+      {field: 'capacity', value: req.body.capacity},
+    ];
+
+    let expectedErrorHandlers = { // property names are SQL error codes
+      "ER_DUP_ENTRY": validator.handleDuplicateInsert(),
+    };
+
+    // validate the user input
+    let queryString = validator.validateBeforeQuery(inserts);
+
+    if (queryString !== "") {
+      res.redirect(`${BASE_ROUTE}?${queryString}`) // display error messages
+    } else { // attempt the INSERT query
+      attemptQuery(req, res, mysql, sql, inserts, expectedErrorHandlers, BASE_ROUTE);
+    }
+  }
 
   // --------------------------------------------------------------------------
 

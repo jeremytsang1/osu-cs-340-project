@@ -42,6 +42,14 @@ class Validator {
   }
 
   // ----------------------------------------------------------------------------
+  // setters
+
+  setErrorMessage(reason, message) {
+    this.errorMessages[reason] = message;
+  }
+
+  // getters
+  // ----------------------------------------------------------------------------
   // Constants
 
   static get REPLACEMENT_STRING() {

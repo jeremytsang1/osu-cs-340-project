@@ -43,13 +43,6 @@ module.exports = function() {
     // argument 3: errorMessages (optional)
   );
 
-  // query parameter values and their corresponding messages to display on the page
-  const VALIDATION_ERRORS = {
-    NON_UNIQUE_ID: "Please enter an ID that is not already taken!",
-    NON_POSITIVE_ID: "Please enter a positive integer for ID!",
-    TAMPERED_TYPE: "Selected droid type is invalid!",
-  };
-
   // --------------------------------------------------------------------------
 
   function getDroids(res, mysql, context, complete) {
