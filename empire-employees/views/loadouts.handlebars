@@ -43,7 +43,7 @@
 	
       </div>
 
-	    <div><button name="postButton" value="add">add</button>
+	    <div><button name="postButton" value="insert">add</button>
 		</div>
 	
     </form>
@@ -61,7 +61,7 @@
 	<!-- id of loadout to update -->
         <div>
 	  <label>
-	    <input type="number" name="updateID" min="1"> <!-- Prevent non-positive values -->
+	    <input type="number" name="id" min="1"> <!-- Prevent non-positive values -->
 	    Loadout ID
 	  </label>
 	</div>
@@ -69,7 +69,7 @@
 	<!-- blaster update field -->
         <div>
 	  <label>
-	    <select id="loutout_blaster_select" name="updateBlaster">
+	    <select id="loutout_blaster_select" name="blaster">
 	      {{#each blasterTypes}}
 		<option value="{{this}}">{{this}}</option>
 	      {{/each}}
@@ -83,7 +83,7 @@
 	<!-- detonator update field -->
         <div>
 	  <label>
-	    <select id="loutout_detonator_select" name="updateDetonator">
+	    <select id="loutout_detonator_select" name="detonator">
 	      {{#each detonatorTypes}}
 		<option value="{{this}}">{{this}}</option>
 	      {{/each}}
