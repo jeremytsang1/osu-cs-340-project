@@ -27,9 +27,9 @@ module.exports = function() {
       {field: "id", type: Validator.INT,
 	friendlyName: "Loadout ID", allowedValues: []},
       {field: "blaster", type: Validator.STRING,
-	friendlyName: "Blaster", allowedValues: []},
+	friendlyName: "Blaster", allowedValues: BLASTER_TYPES},
       {field: "detonator", type: Validator.STRING,
-	friendlyName: "Detonator", allowedValues: []},
+	friendlyName: "Detonator", allowedValues: DETONATOR_TYPES},
     ],
     // argument 1: primary
     "id",
