@@ -1,26 +1,28 @@
 module.exports = function() {
+  const BASE_ROUTE = '/garrisons';
+  const Validator = require('./validator.js');
+  const attemptQuery = require('./queryHelpers.js');
   let express = require('express');
   let router = express.Router();
 
-  // query parameter name
-  const QUERY_ERROR_FIELD = "VALIDATION_ERROR";
-  const QUERY_OFFENDER_FIELD = "OFFENDER";
-  const REPLACEMENT_STRING = "%offender%";
+  let express = require('express');
+  let router = express.Router();
 
-  // query parameter values and their corresponding messages to display on the page
-  const VALIDATION_ERRORS = {
-    EMPTY: `Please enter a non-empty ${REPLACEMENT_STRING}!`,
-    NON_UNIQUE: `Please enter a ${REPLACEMENT_STRING} that is not already taken!`,
-    NON_POSITIVE: `Please enter a positive integer for ${REPLACEMENT_STRING}!`,
-  };
-
-  // property names should be the actual database fields
-  // property values should be the names that show up in the error message
-  let USR_INPUT_FIELDS =  {
-    id: "Garrison ID",
-    name: "Name",
-    capacity: "Capacity",
-  };
+  let validator = new Validator(
+    [ // argument 0: databaseFields
+      {field: "id", type: Validator.INT,
+	friendlyName: "Garrison ID", allowedValues: []},
+      {field: "name", type: Validator.STRING,
+	friendlyName: "Name", allowedValues: []},
+      {field: "capacity", type: Validator.INT,
+	friendlyName: "Capacity", allowedValues: []}
+    ],
+    // argument 1: primary
+    "id",
+    // argument 2: fkConstraintNames
+    {}
+    // argument 3: errorMessages (optional)
+  );
 
   // --------------------------------------------------------------------------
 
