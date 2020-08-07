@@ -4,6 +4,10 @@ var removeButton = document.getElementById("radioRemove");
 
 var moveButton = document.getElementById("radioMove");
 
+if(removeButton.checked) {
+    garrisonField.style.visibility = "hidden";
+};
+
 removeButton.addEventListener("click", function() {
     radioRemove.checked = true;
     radioMove.checked = false;
