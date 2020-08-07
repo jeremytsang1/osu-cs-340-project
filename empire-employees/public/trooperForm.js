@@ -9,13 +9,9 @@ if(removeButton.checked) {
 };
 
 removeButton.addEventListener("click", function() {
-    radioRemove.checked = true;
-    radioMove.checked = false;
     garrisonField.style.visibility = "hidden";
 });
 
 moveButton.addEventListener("click", function() {
-    radioRemove.checked = false;
-    radioMove.checked = true;
     garrisonField.style.visibility = "visible";
 });
