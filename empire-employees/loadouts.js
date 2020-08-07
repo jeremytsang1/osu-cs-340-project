@@ -90,78 +90,111 @@ module.exports = function() {
     }
   });
 
-  // add a new loadout to the table
   router.post('/', function(req, res) {
     let mysql = req.app.get('mysql');
 
-    updateID = req.body.updateID;
-    updateBlaster = req.body.updateBlaster;
-    updateDetonator = req.body.updateDetonator;
-
-// ======== if the add button is selected
-    if ((req.body.postButton == "add")) {
-      sql = "INSERT INTO `loadouts` (id, `blaster`, `detonator`) VALUE (?, ?, ?);";
-      inserts = [req.body.id, req.body.blaster, req.body.detonator];
-  
-      // validate the user input
-      queryString = validateInputCreateLoadout(inserts[0], inserts[1], inserts[2]);
-  
-      if (queryString !== "") {
-        res.redirect(`/loadouts?${queryString}`) // display error messages
-      } else { // attempt the INSERT query
-        sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
-    if (error && error.code === "ER_DUP_ENTRY") {
-      // INSERT failed from duplicate ID
-      queryString = `${QUERY_ERROR_FIELD}=NON_UNIQUE_ID`
-      res.redirect(`/loadouts?${queryString}`)
-    } else if (error) {
-      // INSERT failed for reason other than duplicate ID
-      console.log(JSON.stringify(error));
-      res.write(JSON.stringify(error));
-      res.end();
-    } else {
-      // INSERT succeeded
-      res.redirect('/loadouts');
+    switch (req.body['postButton']) {
+    case "insert":
+      handleInsert(req, res, mysql);
+      break;
+    case "update":
+      handleUpdate(req, res, mysql);
+      break;
     }
-        });
-      }
-    }
-    
-    
-// ======== if the update button is selected
-    else if ((req.body.postButton == "update")) {
-      sql = "UPDATE `loadouts` set `blaster` = '" + String(updateBlaster) + "' , `detonator` = '" + String(updateDetonator) + "' where id = " + String(updateID) + ";";
+  });
 
-      // (id, `blaster`, `detonator`) VALUE (?, ?, ?);";
-      // let inserts = [req.body.id, req.body.blaster, req.body.detonator];
-  
-      // validate the user input
-      let queryString = validateInputCreateLoadout(updateID, updateBlaster, updateDetonator);
-  
-      if (queryString !== "") {
-        res.redirect(`/loadouts?${queryString}`) // display error messages
-      } else { // attempt the INSERT query
-        sql = mysql.pool.query(sql, [updateID, updateBlaster, updateDetonator], function (error, results, fields) {
-    if (error && error.code === "ER_DUP_ENTRY") {
-      // INSERT failed from duplicate ID
-      queryString = `${QUERY_ERROR_FIELD}=NON_UNIQUE_ID`
-      res.redirect(`/loadouts?${queryString}`)
-    } else if (error) {
-      // INSERT failed for reason other than duplicate ID
-      console.log(JSON.stringify(error));
-      res.write(JSON.stringify(error));
-      res.end();
-    } else {
-      // INSERT succeeded
-      res.redirect('/loadouts');
+  function handleInsert(req, res, mysql) {
+    let sql = "INSERT INTO `loadouts` (id, `blaster`, `detonator`) VALUE (?, ?, ?);";
+
+    let inserts = [  // must appear in same order as in the query
+      {field: 'id', value: req.body.id},
+      {field: 'blaster', value: req.body.blaster},
+      {field: 'detonator', value: req.body.detonator},
+    ];
+
+    let expectedErrorHandlers = { // property names are SQL error codes
+      "ER_DUP_ENTRY": validator.handleDuplicateInsert(),
+    };
+
+    // validate the user input
+    let queryString = validator.validateBeforeQuery(inserts);
+
+    if (queryString !== "") {
+      res.redirect(`${BASE_ROUTE}?${queryString}`) // display error messages
+    } else { // attempt the INSERT query
+      attemptQuery(req, res, mysql, sql, inserts, expectedErrorHandlers, BASE_ROUTE);
     }
-        });
-      }
-    }
-    })
+  }
+
+  // add a new loadout to the table
+//   router.post('/', function(req, res) {
+//     let mysql = req.app.get('mysql');
+
+//     updateID = req.body.updateID;
+//     updateBlaster = req.body.updateBlaster;
+//     updateDetonator = req.body.updateDetonator;
+
+// // ======== if the add button is selected
+//     if ((req.body.postButton == "add")) {
+//       sql = "INSERT INTO `loadouts` (id, `blaster`, `detonator`) VALUE (?, ?, ?);";
+n//       inserts = [req.body.id, req.body.blaster, req.body.detonator];
+
+//       // validate the user input
+//       queryString = validateInputCreateLoadout(inserts[0], inserts[1], inserts[2]);
+
+//       if (queryString !== "") {
+//         res.redirect(`/loadouts?${queryString}`) // display error messages
+//       } else { // attempt the INSERT query
+//         sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
+//     if (error && error.code === "ER_DUP_ENTRY") {
+//       // INSERT failed from duplicate ID
+//       queryString = `${QUERY_ERROR_FIELD}=NON_UNIQUE_ID`
+//       res.redirect(`/loadouts?${queryString}`)
+//     } else if (error) {
+//       // INSERT failed for reason other than duplicate ID
+//       console.log(JSON.stringify(error));
+//       res.write(JSON.stringify(error));
+//       res.end();
+//     } else {
+//       // INSERT succeeded
+//       res.redirect('/loadouts');
+//     }
+//         });
+//       }
+//     }
 
 
-;
+// // ======== if the update button is selected
+//     else if ((req.body.postButton == "update")) {
+//       sql = "UPDATE `loadouts` set `blaster` = '" + String(updateBlaster) + "' , `detonator` = '" + String(updateDetonator) + "' where id = " + String(updateID) + ";";
+
+//       // (id, `blaster`, `detonator`) VALUE (?, ?, ?);";
+//       // let inserts = [req.body.id, req.body.blaster, req.body.detonator];
+
+//       // validate the user input
+//       let queryString = validateInputCreateLoadout(updateID, updateBlaster, updateDetonator);
+
+//       if (queryString !== "") {
+//         res.redirect(`/loadouts?${queryString}`) // display error messages
+//       } else { // attempt the INSERT query
+//         sql = mysql.pool.query(sql, [updateID, updateBlaster, updateDetonator], function (error, results, fields) {
+//     if (error && error.code === "ER_DUP_ENTRY") {
+//       // INSERT failed from duplicate ID
+//       queryString = `${QUERY_ERROR_FIELD}=NON_UNIQUE_ID`
+//       res.redirect(`/loadouts?${queryString}`)
+//     } else if (error) {
+//       // INSERT failed for reason other than duplicate ID
+//       console.log(JSON.stringify(error));
+//       res.write(JSON.stringify(error));
+//       res.end();
+//     } else {
+//       // INSERT succeeded
+//       res.redirect('/loadouts');
+//     }
+//         });
+//       }
+//     }
+//     });
 
 
   return router;
