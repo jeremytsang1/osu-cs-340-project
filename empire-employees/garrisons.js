@@ -5,9 +5,6 @@ module.exports = function() {
   let express = require('express');
   let router = express.Router();
 
-  let express = require('express');
-  let router = express.Router();
-
   let validator = new Validator(
     [ // argument 0: databaseFields
       {field: "id", type: Validator.INT,
@@ -102,50 +99,36 @@ module.exports = function() {
   // add a new garrison to the table
   router.post('/', function(req, res) {
     let mysql = req.app.get('mysql');
-    let sql = "INSERT INTO `garrisons` (`id`, `name`, `capacity`) VALUES (?, ?, ?);";
-    let inserts = [req.body.id, req.body.name, req.body.capacity];
 
-    // validate the user input
-    let queryString = validateInputCreateGarrison(req.body.id, req.body.name,
-      req.body.capacity);
-
-    if (queryString !== "") {
-      res.redirect(`/garrisons?${queryString}`) // display error messages
-    } else { // attempt the INSERT query
-      sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
-	if (error && error.code === "ER_DUP_ENTRY") {
-	  // INSERT failed from duplicate ID
-
-	  // use the error message to determine which key is a duplicate
-	  let msg = error.sqlMessage;
-
-	  // search the error message string for its index of where the
-	  // offending field begins
-	  let idx = msg.lastIndexOf('for key');
-
-	  let reason = "NON_UNIQUE";
-	  let offender = msg.slice(idx + 9, msg.length - 1);
-
-	  // handle the fact that MySQL labels primary key as PRIMARY instead
-	  // of the actual attribute name
-	  offender = (offender === "PRIMARY") ? "id" : offender;
-
-	  queryString = (
-	    `${QUERY_ERROR_FIELD}=${reason}&` +
-	    `${QUERY_OFFENDER_FIELD}=${offender}`);
-	  res.redirect(`/garrisons?${queryString}`)
-	} else if (error) {
-	  // INSERT failed for reason other than duplicate ID
-	  console.log(JSON.stringify(error));
-	  res.write(JSON.stringify(error));
-	  res.end();
-	} else {
-	  // INSERT succeeded
-	  res.redirect('/garrisons');
-	}
-      });
+    switch (req.body['postButton']) {
+    case "insert":
+      handleInsert(req, res, mysql);
+      break;
     }
   });
+
+  function handleInsert(req, res, mysql) {
+    let sql = "INSERT INTO `garrisons` (`id`, `name`, `capacity`) VALUES (?, ?, ?);";
+
+    let inserts = [  // must appear in same order as in the query
+      {field: 'id', value: req.body.id},
+      {field: 'name', value: req.body.name},
+      {field: 'capacity', value: req.body.capacity},
+    ];
+
+    let expectedErrorHandlers = { // property names are SQL error codes
+      "ER_DUP_ENTRY": validator.handleDuplicateInsert(),
+    };
+
+    // validate the user input
+    let queryString = validator.validateBeforeQuery(inserts);
+
+    if (queryString !== "") {
+      res.redirect(`${BASE_ROUTE}?${queryString}`) // display error messages
+    } else { // attempt the INSERT query
+      attemptQuery(req, res, mysql, sql, inserts, expectedErrorHandlers, BASE_ROUTE);
+    }
+  }
 
   // --------------------------------------------------------------------------
 
