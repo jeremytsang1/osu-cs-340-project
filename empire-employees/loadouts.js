@@ -64,28 +64,6 @@ module.exports = function() {
     });
   }
 
-
-  // --------------------------------------------------------------------------
-
-  /**
-   * Determine if user input for loadouts.id and loadouts.type are valid.
-   * @param {int} id - user input for the loadouts.id
-   * @param {string} blaster - user input for the loaouts.blaster
-   * @param {string} detonator - user input for the loaouts.detonator
-   * @return {string} query string field/value pair if invalid else "".
-   */
-  function validateInputCreateLoadout(id, blaster, detonator) {
-    if (id <= 0) {
-      return `${QUERY_ERROR_FIELD}=NON_POSITIVE_ID`;
-    } else if ((!DETONATOR_TYPES.includes(detonator)) ) {
-      return `${QUERY_ERROR_FIELD}=TAMPERED_TYPE`;
-    } else if (!BLASTER_TYPES.includes(blaster)) {
-      return `${QUERY_ERROR_FIELD}=TAMPERED_TYPE`;
-    } else {
-      return "";
-    }
-  }
-
   // --------------------------------------------------------------------------
 
   // display all existing loadouts
@@ -97,13 +75,8 @@ module.exports = function() {
       jsscripts: [],
       blasterTypes: BLASTER_TYPES,
       detonatorTypes: DETONATOR_TYPES,
-      errorMessage: "",
+      errorMessage: validator.getErrorMessage(req),
     };
-
-    // check query string for any invalid input
-    if (req.query.hasOwnProperty(QUERY_ERROR_FIELD)) {
-      context.errorMessage = VALIDATION_ERRORS[req.query[QUERY_ERROR_FIELD]];
-    }
 
     let mysql = req.app.get('mysql');
 
