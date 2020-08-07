@@ -82,20 +82,8 @@ module.exports = function() {
       title: "Garrisons",
       heading: "Garrisons",
       jsscripts: [],
-      errorMessage: "",
+      errorMessage: validator.getErrorMessage(req),
     };
-
-    // check query string for any invalid input
-    // ASSUMES: if req.query[QUERY_ERROR_FIELD] exists then so does
-    // req.query[QUERY_OFFENDER_FIELD]
-    // ASSUMES: if req.query[QUERY_OFFENDER_FIELD] exists then it is a property
-    // of USR_INPUT_FIELDS
-    if (req.query.hasOwnProperty(QUERY_ERROR_FIELD)) {
-      let reason = req.query[QUERY_ERROR_FIELD];
-      context.errorMessage = VALIDATION_ERRORS[reason].replace(
-	REPLACEMENT_STRING, USR_INPUT_FIELDS[req.query[QUERY_OFFENDER_FIELD]]
-      );
-    }
 
     let mysql = req.app.get('mysql');
 
