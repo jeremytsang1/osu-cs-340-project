@@ -21,6 +21,12 @@ module.exports = function() {
     // argument 3: errorMessages (optional)
   );
 
+  // set custom error message
+  validator.setErrorMessage(
+    Validator.QUERY_PARAM_VALUES_REASON.duplicate,
+    "Garrison ID and Name must be unique!" // Hardcoded
+  );
+
   // --------------------------------------------------------------------------
 
   function getGarrisons(res, mysql, context, complete) {
