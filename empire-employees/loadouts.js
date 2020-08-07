@@ -1,5 +1,5 @@
 module.exports = function() {
-  const BASE_ROUTE = '/troopers';
+  const BASE_ROUTE = '/loadouts';
   const Validator = require('./validator.js');
   const attemptQuery = require('./queryHelpers.js');
   let express = require('express');
@@ -26,9 +26,9 @@ module.exports = function() {
     [
       {field: "id", type: Validator.INT,
 	friendlyName: "Loadout ID", allowedValues: []},
-      {field: "blaster", type: Validator.INT,
+      {field: "blaster", type: Validator.STRING,
 	friendlyName: "Blaster", allowedValues: []},
-      {field: "Detonator", type: Validator.INT,
+      {field: "detonator", type: Validator.STRING,
 	friendlyName: "Detonator", allowedValues: []},
     ],
     // argument 1: primary
