@@ -1,6 +1,42 @@
 module.exports = function() {
+  const BASE_ROUTE = '/troopers';
+  const Validator = require('./validator.js');
+  const attemptQuery = require('./queryHelpers.js');
   let express = require('express');
   let router = express.Router();
+
+  // choices for the drop down menu
+  const BLASTER_TYPES = [
+    "E-11",
+    "DC-15A",
+    "DLT-19",
+    "A280",
+    "E-10",
+    "E-22",
+    "C-303",
+  ];
+
+  const DETONATOR_TYPES = [
+    "Thermal",
+    "Sonic",
+  ];
+
+  let validator = new Validator(
+    // argument 0: databaseFields
+    [
+      {field: "id", type: Validator.INT,
+	friendlyName: "Loadout ID", allowedValues: []},
+      {field: "blaster", type: Validator.INT,
+	friendlyName: "Blaster", allowedValues: []},
+      {field: "Detonator", type: Validator.INT,
+	friendlyName: "Detonator", allowedValues: []},
+    ],
+    // argument 1: primary
+    "id",
+    // argument 2: fkConstraintNames
+    {}
+    // argument 3: errorMessages (optional)
+  );
 
  // query parameter name
  const QUERY_ERROR_FIELD = "VALIDATION_ERROR";
@@ -11,22 +47,6 @@ module.exports = function() {
    NON_POSITIVE_ID: "Please enter a positive integer for ID!",
    TAMPERED_TYPE: "Selected blaster and/or detonator type is invalid!",
  };
-
- // choices for the drop down menu
- const BLASTER_TYPES = [
-   "E-11",
-   "DC-15A",
-   "DLT-19",
-   "A280",
-   "E-10",
-   "E-22",
-   "C-303",
- ];
-
- const DETONATOR_TYPES = [
-  "Thermal",
-  "Sonic",
-];
 
  // --------------------------------------------------------------------------
 
