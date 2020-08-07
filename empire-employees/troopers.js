@@ -155,7 +155,7 @@ module.exports = function() {
     let context = {
       title: "Troopers",
       heading: "Troopers",
-      jsscripts: [],
+      jsscripts: ["trooperForm.js"],
       errorMessage: validator.getErrorMessage(req),
     };
 
