@@ -5,34 +5,35 @@ module.exports = function() {
   let express = require('express');
   let router = express.Router();
 
-  // choices for the drop down menu
-  const SHIP_TYPES = [
-    "AT-AT",
-    "AT-ST",
-    "TIE Fighter",
-    "TIE Bomber",
-    "TIE Defender",
-    "TIE Interceptor",
-    "Freighter",
-    "Star Destroyer",
-    "Shuttle",
-    "Speeder Bike",
-    "Death Star"
-  ];
+    // choices for the drop down menu
+    const SHIP_TYPES = [
+        "AT-AT",
+        "AT-ST",
+        "TIE Fighter",
+        "TIE Bomber",
+        "TIE Defender",
+        "TIE Interceptor",
+        "Freighter",
+        "Star Destroyer",
+        "Shuttle",
+        "Speeder Bike",
+        "Death Star"
+    ];
 
-  let validator = new Validator(
-    [ // argument 0: databaseFields
-      {field: "id", type: Validator.INT,
-	friendlyName: "Ship ID", allowedValues: []},
-      {field: "type", type: Validator.STRING,
-	friendlyName: "Type", allowedValues: SHIP_TYPES}
-    ],
-    // argument 1: primary
-    "id",
-    // argument 2: fkConstraintNames
-    {}
-    // argument 3: errorMessages (optional)
-  );
+    let validator = new Validator(
+      [ // argument 0: databaseFields
+        {field: "id", type: Validator.INT,
+    friendlyName: "Ship ID", allowedValues: []},
+        {field: "type", type: Validator.STRING,
+    friendlyName: "Type", allowedValues: SHIP_TYPES}
+      ],
+      // argument 1: primary
+      "id",
+      // argument 2: fkConstraintNames
+      {}
+      // argument 3: errorMessages (optional)
+    );
+
   // --------------------------------------------------------------------------
   
   function getShips(res, mysql, context, complete) {
@@ -61,7 +62,7 @@ module.exports = function() {
     };
 
     let mysql = req.app.get('mysql');
-    
+
     getShips(res, mysql, context, complete);
     
     function complete() {
