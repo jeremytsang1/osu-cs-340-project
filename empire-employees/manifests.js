@@ -108,9 +108,17 @@ module.exports = function() {
 
   // add a new manifest to one of the tables
   router.post('/', function(req, res) {
-
-    
     let mysql = req.app.get('mysql');
+
+    switch (req.body['postButton']) {
+    case "insert":
+      handleInsert(req, res, mysql);
+      break;
+    case "delete":
+      handleDelete(req, res, mysql);
+      break;
+    }
+  });
 
 
     if (req.body.postButton == "add") {
@@ -183,10 +191,7 @@ module.exports = function() {
 	});
       }
     }
-  })
 
-
-  ;
 
 
   return router;
