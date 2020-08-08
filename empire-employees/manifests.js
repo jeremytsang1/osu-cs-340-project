@@ -41,7 +41,7 @@ module.exports = function() {
     // argument 3: errorMessages (optional)
   );
 
-  // ----------------------------------------------------------------------------
+  // --------------------------------------------------------------------------
 
   function getManifests(res, mysql, context, complete) {
     mysql.pool.query("SELECT ship, trooper from ships_troopers;", function(error, results, fields) {
@@ -106,6 +106,8 @@ module.exports = function() {
     }
   });
 
+  // --------------------------------------------------------------------------
+
   // add a new manifest to one of the tables
   router.post('/', function(req, res) {
     let mysql = req.app.get('mysql');
@@ -119,6 +121,18 @@ module.exports = function() {
       break;
     }
   });
+
+  // --------------------------------------------------------------------------
+
+  function handleInsert(req, res, mysql) {
+
+  }
+
+  // --------------------------------------------------
+
+  function handleDelete(req, res, mysql) {
+
+  }
 
 
     if (req.body.postButton == "add") {
