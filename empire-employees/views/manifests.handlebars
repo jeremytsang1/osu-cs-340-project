@@ -1,53 +1,52 @@
 <div class="page_info">
 
-	<!-- ship adding field -->
-        {{!-- <div>
-	  <label>
-	    <select id="manifests_ship_select" name="ship">
-	      {{#each manifestShip}}
-		<option value="{{this}}">{{this}}</option>
-	      {{/each}}
-	    </select>
-	    Ship ID
-	  </label>
-	</div>
-      </div> --}}
+  <!-- ship adding field -->
+  {{!-- <div>
+	   <label>
+	   <select id="manifests_ship_select" name="ship">
+	   {{#each manifestShip}}
+	   <option value="{{this}}">{{this}}</option>
+	   {{/each}}
+	   </select>
+	   Ship ID
+	   </label>
+	   </div>
+	   </div> --}}
 
-<div class="table">
-<form action="/manifests" method="POST" id="manifest">
+  <div class="table">
+    <form action="/manifests" method="POST" id="manifest">
 
       <legend><strong>Add a new Manifest</strong></legend>
 
-<!-- ship and occupant adding field -->
-<div>
-  <label>
-      <input type="number" name="ship"> Ship ID
-  </label>
+      <!-- ship and occupant adding field -->
+      <div>
+	<label>
+	  <input type="number" name="ship"> Ship ID
+	</label>
 
-<br>
+	<br>
 
-  <label>
-      <input type="number" name="occupant"> Occupant ID                   
-  </label>
-</div>
+	<label>
+	  <input type="number" name="occupant"> Occupant ID
+	</label>
+      </div>
 
-     <label>
+      <label>
         <input type="radio" name="occupantChoice" class="radio_b" value="trooper" checked/> Trooper
-    </label>
+      </label>
 
-    <label>
-        <input type="radio" name="occupantChoice" class="radio_b" value="droid"> Droid                   
-    </label>
+      <label>
+        <input type="radio" name="occupantChoice" class="radio_b" value="droid"> Droid
+      </label>
 
-	
       {{!-- </div> --}}
 
-    <div>
-      <button name="postButton" value="insert">add</button>
-      <button name="postButton" value="delete">remove</button>
-    </div>
+      <div>
+	<button name="postButton" value="insert">add</button>
+	<button name="postButton" value="delete">remove</button>
+      </div>
 
-	</div>
+  </div>
     </form>
 
 
