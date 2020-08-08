@@ -113,7 +113,7 @@ class Validator {
 
       let databaseField;
       let friendlyName;
-      for (let offender in offenders) {
+      for (let offender of offenders) {
 	databaseField = this.lookupDatabaseField(offender);
 	friendlyName = (databaseField !== null)
 	  ? databaseField.friendlyName // assumed provided in constructor
