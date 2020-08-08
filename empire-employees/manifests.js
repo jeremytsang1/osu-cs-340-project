@@ -50,11 +50,9 @@ module.exports = function() {
   for (let key in validators) {
     validators[key].setErrorMessage(
       Validator.QUERY_PARAM_VALUES_REASON.duplicate,
-      "Occupant is already associated with given ship!"
+      "Occupant is already onboard given ship!"
     );
   }
-
-
 
   // --------------------------------------------------------------------------
 
