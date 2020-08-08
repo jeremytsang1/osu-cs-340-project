@@ -132,7 +132,11 @@ module.exports = function() {
     let operation = req.body['postButton']; // "insert" or "delete"
     let occupant = req.body.occupantChoice; // "trooper" or "droid"
     let sql = queries[occupant][operation];
-    let inserts = [{field: 'ship', value: req.body.ship}]; // ship shows up in both queries
+
+    let inserts = [
+      {field: 'ship', value: req.body.ship},
+      {field: occupant, value: req.body.occupant}
+    ];
     let validator = validators[occupant];
     let extraQueryParams = `&occupant=${occupant}`;
 
