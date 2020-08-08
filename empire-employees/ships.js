@@ -48,24 +48,6 @@ module.exports = function() {
   }
 
   // --------------------------------------------------------------------------
-
-  /**
-   * Determine if user input for ship.id and ship.type are valid.
-   * @param {int} id - user input for the ship.id
-   * @param {string} type - user input for the ship.type
-   * @return {string} query string field/value pair if invalid else "".
-   */
-  function validateInputCreateShip(id, type) {
-    if (id <= 0) {
-      return `${QUERY_ERROR_FIELD}=NON_POSITIVE_ID`;
-    } else if (!SHIP_TYPES.includes(type)) {
-      return `${QUERY_ERROR_FIELD}=TAMPERED_TYPE`;
-    } else {
-      return "";
-    }
-  }
-
-  // --------------------------------------------------------------------------
   
   // display all existing ships
   router.get('/', function(req, res) {
