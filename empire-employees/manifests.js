@@ -41,6 +41,21 @@ module.exports = function() {
     // argument 3: errorMessages (optional)
   );
 
+  let validators = {
+    'trooper': validatorTroopers,
+    'droid': validatorDroids,
+  }
+
+  // set custom error message
+  for (let key in validators) {
+    validators[key].setErrorMessage(
+      Validator.QUERY_PARAM_VALUES_REASON.duplicate,
+      "Occupant is already associated with given ship!"
+    );
+  }
+
+
+
   // --------------------------------------------------------------------------
 
   function getManifests(res, mysql, context, complete) {
