@@ -9,7 +9,8 @@ function attemptQuery(req, res, mysql, sql, inserts,
       // console.log(results);
       let queryString = Validator.handleZeroAffectedRows(results);
       queryString = (queryString === "") ? queryString : `?${queryString}`
-      res.redirect(`${baseRoute}${queryString}${extraQueryParams}`); // NOTE: '?' not harded coded
+      queryString = addExtraQueryParams(queryString, extraQueryParams);
+      res.redirect(`${baseRoute}${queryString}`); // NOTE: '?' not harded coded
     }
   });
 }
@@ -18,13 +19,27 @@ function handleFailedQuery(res, error, expectedErrorHandlers, baseRoute, extraQu
   let code = error.code;
 
   if (expectedErrorHandlers.hasOwnProperty(code)) {  // error was expected
-    res.redirect(`${baseRoute}?${expectedErrorHandlers[code](res, error)}${extraQueryParams}`);
+    let queryString = expectedErrorHandlers[code](res, error);
+    queryString = addExtraQueryParams(queryString, extraQueryParams);
+    res.redirect(`${baseRoute}?${queryString}`);
   } else {                                           // error was unepected
     let stringifiedError = JSON.stringify(error);
     console.log(stringifiedError);
     res.write(stringifiedError);
     res.end();
   }
+}
+
+function addExtraQueryParams(queryString, extraQueryParams) {
+  let result = queryString;
+  if (queryString !== "") {
+    result += extraQueryParams
+  } else {
+    if (extraQueryParams !== "") {
+      result += `?${extraQueryParams}`
+    }
+  }
+  return result;
 }
 
 module.exports = attemptQuery;
