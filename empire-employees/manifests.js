@@ -1,34 +1,47 @@
 module.exports = function() {
+  const BASE_ROUTE = '/manifests';
+  const Validator = require('./validator.js');
+  const attemptQuery = require('./queryHelpers.js');
   let express = require('express');
   let router = express.Router();
-  
-  // query parameter name
-  const QUERY_ERROR_FIELD = "VALIDATION_ERROR";
 
-  // query parameter values and their corresponding messages to display on the page
-  const VALIDATION_ERRORS = {
-    NON_UNIQUE_ID: "Please enter an ID that is not already taken!",
-    NON_POSITIVE_ID: "Please enter a positive integer for ID!",
-    TAMPERED_TYPE: "Selected ship and/or occupant ID is invalid!",
-  };
+  let validatorTroopers = new Validator(
+    // argument 0: databaseFields
+    [
+      {field: "ship", type: Validator.INT,
+	friendlyName: "Ship ID", allowedValues: []},
+      {field: "trooper", type: Validator.INT,
+	friendlyName: "Trooper ID", allowedValues: []},
+    ],
+    // argument 1: primary
+    ["ship", "trooper"],
+    // argument 2: fkConstraintNames
+    {
+      fk_ships_troopers_ship: 'ship',
+      fk_ships_troopers_trooper: 'trooper'
+    }
+    // argument 3: errorMessages (optional)
+  );
 
-  //  let mysql = req.app.get('mysql');
+  let validatorDroids = new Validator(
+    // argument 0: databaseFields
+    [
+      {field: "ship", type: Validator.INT,
+	friendlyName: "Ship ID", allowedValues: []},
+      {field: "droid", type: Validator.INT,
+	friendlyName: "Droid ID", allowedValues: []},
+    ],
+    // argument 1: primary
+    ["ship", "droid"],
+    // argument 2: fkConstraintNames
+    {
+      fk_ships_droids_ship: 'ship',
+      fk_ships_droids_droid: 'droid'
+    }
+    // argument 3: errorMessages (optional)
+  );
 
-  //  // choices for the drop down menu
-  //  const SHIP_IDS = [
-  //   mysql.pool.query("SELECT id FROM ships;"),
-  //  ];
-
-  //  const OCCUPANT_IDS = [
-  //   mysql.pool.query("SELECT id FROM troopers;"),
-  //   mysql.pool.query("SELECT id FROM droids;"),
-  // ];
-
-  const OCCUPANT_CHOICE = [
-    "droid",
-    "trooper",
-
-  ];
+  // ----------------------------------------------------------------------------
 
   function getManifests(res, mysql, context, complete) {
     mysql.pool.query("SELECT ship, trooper from ships_troopers;", function(error, results, fields) {
