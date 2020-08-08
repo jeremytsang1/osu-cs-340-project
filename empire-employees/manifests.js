@@ -148,7 +148,39 @@ module.exports = function() {
   // --------------------------------------------------------------------------
 
   function handleInsert(req, res, mysql) {
+    let sql;
+    let inserts = [{field: 'ship', value: req.body.ship}];
+    let occupant = req.body.occupantChoice;
+    let validator;
+    let extraQueryParams = `&occupant=${occupant}`;
 
+    switch (occupant) {
+    case "trooper":
+      sql = "INSERT INTO `ships_troopers` (`ship`, `trooper`) VALUE (?, ?);";
+      inserts.push({field: 'trooper', value: req.body.occupant});
+      validator = validatorTroopers;
+      break;
+    case "droid":
+      sql = "INSERT INTO `ships_droids` (`ship`, `droid`) VALUE (?, ?);";
+      inserts.push({field: 'droid', value: req.body.occupant});
+      validator = validatorDroids;
+      break;
+    }
+
+    let expectedErrorHandlers = { // property names are SQL error codes
+      "ER_DUP_ENTRY": validator.handleDuplicateInsert(),
+      "ER_NO_REFERENCED_ROW_2": validator.handleNonexistentFK(),
+    };
+
+    // validate the user input
+    let queryString = validator.validateBeforeQuery(inserts);
+
+    if (queryString !== "") {
+      res.redirect(`${BASE_ROUTE}?${queryString}${extraQueryParams}`)
+    } else { // attempt the INSERT query
+      attemptQuery(req, res, mysql, sql, inserts, expectedErrorHandlers,
+	BASE_ROUTE, extraQueryParams);
+    }
   }
 
   // --------------------------------------------------
@@ -158,78 +190,78 @@ module.exports = function() {
   }
 
 
-    if (req.body.postButton == "add") {
-      let mysql = req.app.get('mysql');
-      if (req.body.occupantChoice == "trooper") {
-        sql = "INSERT INTO `ships_troopers` (`ship`, `trooper`) VALUE (?, ?);";
-      } else if (req.body.occupantChoice == "droid") {
-        sql = "INSERT INTO `ships_droids` (`ship`, `droid`) VALUE (?, ?);";
-      }
+    // if (req.body.postButton == "add") {
+    //   let mysql = req.app.get('mysql');
+    //   if (req.body.occupantChoice == "trooper") {
+    //     sql = "INSERT INTO `ships_troopers` (`ship`, `trooper`) VALUE (?, ?);";
+    //   } else if (req.body.occupantChoice == "droid") {
+    //     sql = "INSERT INTO `ships_droids` (`ship`, `droid`) VALUE (?, ?);";
+    //   }
 
-      let inserts = [req.body.ship, req.body.occupant];
+    //   let inserts = [req.body.ship, req.body.occupant];
 
-      // validate the user input
-      let queryString = validateInputCreateManifest(inserts[0], inserts[1]);
+    //   // validate the user input
+    //   let queryString = validateInputCreateManifest(inserts[0], inserts[1]);
 
-      if (queryString !== "") {
-        res.redirect(`/manifests?${queryString}`) // display error messages
-      } else { // attempt the INSERT query
-        sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
-	  if (error && error.code === "ER_DUP_ENTRY") {
-	    // INSERT failed from duplicate ID
-	    queryString = `${QUERY_ERROR_FIELD}=NON_UNIQUE_ID`
-	    res.redirect(`/manifests?${queryString}`)
-	  } else if (error) {
-	    // INSERT failed for reason other than duplicate ID
-	    console.log(JSON.stringify(error));
-	    res.write(JSON.stringify(error));
-	    res.end();
-	  } else {
-	    // INSERT succeeded
-	    res.redirect('/manifests');
-	  }
-        });
-      }
-    }
+    //   if (queryString !== "") {
+    //     res.redirect(`/manifests?${queryString}`) // display error messages
+    //   } else { // attempt the INSERT query
+    //     sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
+    // 	  if (error && error.code === "ER_DUP_ENTRY") {
+    // 	    // INSERT failed from duplicate ID
+    // 	    queryString = `${QUERY_ERROR_FIELD}=NON_UNIQUE_ID`
+    // 	    res.redirect(`/manifests?${queryString}`)
+    // 	  } else if (error) {
+    // 	    // INSERT failed for reason other than duplicate ID
+    // 	    console.log(JSON.stringify(error));
+    // 	    res.write(JSON.stringify(error));
+    // 	    res.end();
+    // 	  } else {
+    // 	    // INSERT succeeded
+    // 	    res.redirect('/manifests');
+    // 	  }
+    //     });
+    //   }
+    // }
 
-    else if ((req.body.postButton == "remove")) {
+    // else if ((req.body.postButton == "remove")) {
 
-      mysql = req.app.get('mysql');
+    //   mysql = req.app.get('mysql');
 
-      if (req.body.occupantChoice == "trooper") {
-        sql = "DELETE FROM ships_troopers where ship = ? && trooper = ?;";
-      }
-      else if (req.body.occupantChoice == "droid") {
-        sql = "DELETE FROM ships_droids where ship = ? && droid = ?;";
-      }
+    //   if (req.body.occupantChoice == "trooper") {
+    //     sql = "DELETE FROM ships_troopers where ship = ? && trooper = ?;";
+    //   }
+    //   else if (req.body.occupantChoice == "droid") {
+    //     sql = "DELETE FROM ships_droids where ship = ? && droid = ?;";
+    //   }
 
-      let inserts = [req.body.ship, req.body.occupant];
+    //   let inserts = [req.body.ship, req.body.occupant];
 
-      // validate the user input
-      let queryString = validateInputCreateManifest(inserts[0], inserts[1]);
+    //   // validate the user input
+    //   let queryString = validateInputCreateManifest(inserts[0], inserts[1]);
 
-      if (queryString !== "") {
-        res.redirect(`/manifests?${queryString}`) // display error messages
-      } else { // attempt the INSERT query
-        sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
-	  if (error && error.code === "ER_DUP_ENTRY") {
-            // INSERT failed from duplicate ID
-            queryString = `${QUERY_ERROR_FIELD}=NON_UNIQUE_ID`
-            res.redirect(`/manifests?${queryString}`)
-	  } else if (error) {
-            // INSERT failed for reason other than duplicate ID
-            console.log(JSON.stringify(error));
-            res.write(JSON.stringify(error));
-            res.end();
-	  } else {
-            // INSERT succeeded
-            res.redirect('/manifests');
-	  }
-	});
-      }
-    }
+    //   if (queryString !== "") {
+    //     res.redirect(`/manifests?${queryString}`) // display error messages
+    //   } else { // attempt the INSERT query
+    //     sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
+    // 	  if (error && error.code === "ER_DUP_ENTRY") {
+    //         // INSERT failed from duplicate ID
+    //         queryString = `${QUERY_ERROR_FIELD}=NON_UNIQUE_ID`
+    //         res.redirect(`/manifests?${queryString}`)
+    // 	  } else if (error) {
+    //         // INSERT failed for reason other than duplicate ID
+    //         console.log(JSON.stringify(error));
+    //         res.write(JSON.stringify(error));
+    //         res.end();
+    // 	  } else {
+    //         // INSERT succeeded
+    //         res.redirect('/manifests');
+    // 	  }
+    // 	});
+    //   }
+    // }
 
-
+  // ----------------------------------------------------------------------------
 
   return router;
 }();
