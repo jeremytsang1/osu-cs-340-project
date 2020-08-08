@@ -145,7 +145,7 @@ module.exports = function() {
 
     if (queryString !== "") {
       res.redirect(`${BASE_ROUTE}?${queryString}${extraQueryParams}`)
-    } else { // attempt the INSERT query
+    } else {
       attemptQuery(req, res, mysql, sql, inserts, expectedErrorHandlers,
 	BASE_ROUTE, extraQueryParams);
     }
