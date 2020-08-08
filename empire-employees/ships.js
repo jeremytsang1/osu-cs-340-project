@@ -1,16 +1,9 @@
 module.exports = function() {
+  const BASE_ROUTE = '/ships';
+  const Validator = require('./validator.js');
+  const attemptQuery = require('./queryHelpers.js');
   let express = require('express');
   let router = express.Router();
-
-  // query parameter name
-  const QUERY_ERROR_FIELD = "VALIDATION_ERROR";
-
-  // query parameter values and their corresponding messages to display on the page
-  const VALIDATION_ERRORS = {
-    NON_UNIQUE_ID: "Please enter an ID that is not already taken!",
-    NON_POSITIVE_ID: "Please enter a positive integer for ID!",
-    TAMPERED_TYPE: "Selected ship type is invalid!",
-  };
 
   // choices for the drop down menu
   const SHIP_TYPES = [
@@ -27,6 +20,19 @@ module.exports = function() {
     "Death Star"
   ];
 
+  let validator = new Validator(
+    [ // argument 0: databaseFields
+      {field: "id", type: Validator.INT,
+	friendlyName: "Ship ID", allowedValues: []},
+      {field: "type", type: Validator.STRING,
+	friendlyName: "Type", allowedValues: SHIP_TYPES}
+    ],
+    // argument 1: primary
+    "id",
+    // argument 2: fkConstraintNames
+    {}
+    // argument 3: errorMessages (optional)
+  );
   // --------------------------------------------------------------------------
   
   function getShips(res, mysql, context, complete) {
