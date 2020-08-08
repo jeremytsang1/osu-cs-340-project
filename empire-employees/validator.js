@@ -108,14 +108,21 @@ class Validator {
       let errorMessage = this.errorMessages[reasonValue];
 
       // given the offender (from POST request), find its friendly name
-      let offender = req.query[Validator.QUERY_PARAM_NAME_OFFENDER];
-      let databaseField = this.lookupDatabaseField(offender)
-      let friendlyName = (databaseField !== null)
-	  ? databaseField.friendlyName // assumed provided in constructor
-	  : "no friendly name";
+      let offenders = req.query[Validator.QUERY_PARAM_NAME_OFFENDER];
+      offenders = (Array.isArray(offenders)) ? offenders : [offenders];
 
-      // insert the friendly name into the error message
-      return errorMessage.replace(Validator.REPLACEMENT_STRING, friendlyName);
+      let databaseField;
+      let friendlyName;
+      for (let offender in offenders) {
+	databaseField = this.lookupDatabaseField(offender);
+	friendlyName = (databaseField !== null)
+	  ? databaseField.friendlyName // assumed provided in constructor
+	    : "no friendly name";
+	// insert the friendly name into the error message
+	errorMessage = errorMessage.replace(Validator.REPLACEMENT_STRING, friendlyName)
+      }
+
+      return errorMessage;
     } else {
       return "";
     }
