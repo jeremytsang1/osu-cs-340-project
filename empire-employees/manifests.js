@@ -80,23 +80,6 @@ module.exports = function() {
 
   // --------------------------------------------------------------------------
 
-  /**
-   * Determine if user input is valid.
-   * @param {int} ship - user input for the 
-   * @param {int} occupant - user input for the 
-   * @param {string} occupantChoice - user input for the 
-   * @return {string} query string field/value pair if invalid else "".
-   */
-  function validateInputCreateManifest(ship, occupant, occupantChoice) {
-    // if (!OCCUPANT_CHOICE.includes(occupantChoice)) {
-    //   return `${QUERY_ERROR_FIELD}=TAMPERED_TYPE`;
-    // } else {
-    return "";
-    // }
-  }
-
-  // --------------------------------------------------------------------------
-
   // display all existing loadouts
   router.get('/', function(req, res) {
     let callbackCount = 0;
