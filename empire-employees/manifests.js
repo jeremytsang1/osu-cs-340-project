@@ -90,17 +90,10 @@ module.exports = function() {
     let context = {
       title: "Manifests",
       heading: "Manifests",
-      // manifestShip: SHIP_IDS,
-      // manifestOccupant: OCCUPANT_IDS,
-      errorMessage: "",
       jsscripts: [],
+      errorMessage: validator.getErrorMessage(req),
     };
 
-    // check query string for any invalid input
-    if (req.query.hasOwnProperty(QUERY_ERROR_FIELD)) {
-      context.errorMessage = VALIDATION_ERRORS[req.query[QUERY_ERROR_FIELD]];
-    }
-    
     let mysql = req.app.get('mysql');
 
     getManifests(res, mysql, context, complete);
