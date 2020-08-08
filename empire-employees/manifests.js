@@ -106,8 +106,18 @@ module.exports = function() {
       title: "Manifests",
       heading: "Manifests",
       jsscripts: [],
-      errorMessage: validator.getErrorMessage(req),
+      errorMessage: "",
     };
+
+    // decide on a validator based on the query string parameter `occupant`
+    let validator = (req.query.occupant in validators)
+	? validators[req.query.occupant]
+	: null;
+
+    // choose the error message to display if validator is non-null
+    if (validator !== null) {
+      context.errorMessage = validator.getErrorMessage(req);
+    }
 
     let mysql = req.app.get('mysql');
 
