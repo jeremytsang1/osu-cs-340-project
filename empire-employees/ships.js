@@ -57,13 +57,8 @@ module.exports = function() {
       heading: "Ships",
       jsscripts: [],          // filename of scrips to run
       shipTypes: SHIP_TYPES,  // options for the dropdown menu
-      errorMessage: "",       // message to place at top of page if input invalid
+      errorMessage: validator.getErrorMessage(req),       // message to place at top of page if input invalid
     };
-
-    // check query string for any invalid input
-    if (req.query.hasOwnProperty(QUERY_ERROR_FIELD)) {
-      context.errorMessage = VALIDATION_ERRORS[req.query[QUERY_ERROR_FIELD]];
-    }
 
     let mysql = req.app.get('mysql');
     
@@ -76,36 +71,44 @@ module.exports = function() {
       }
     }
   });
-  
+
+  // --------------------------------------------------------------------------
+
   // add a new ship to the table
   router.post('/', function(req, res) {
     let mysql = req.app.get('mysql');
-    let sql = "INSERT INTO `ships` (id, `type`) VALUE (?, ?);";
-    let inserts = [req.body.id, req.body.type];
 
-    // validate the user input
-    let queryString = validateInputCreateShip(inserts[0], inserts[1]);
-
-    if (queryString !== "") {
-      res.redirect(`/ships?${queryString}`) // display error messages
-    } else { // attempt the INSERT query
-      sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
-	if (error && error.code === "ER_DUP_ENTRY") {
-	  // INSERT failed from duplicate ID
-	  queryString = `${QUERY_ERROR_FIELD}=NON_UNIQUE_ID`
-	  res.redirect(`/ships?${queryString}`)
-	} else if (error) {
-	  // INSERT failed for reason other than duplicate ID
-	  console.log(JSON.stringify(error));
-	  res.write(JSON.stringify(error));
-	  res.end();
-	} else {
-	  // INSERT succeeded
-	  res.redirect('/ships');
-	}
-      });
+    switch (req.body['postButton']) {
+    case "insert":
+      handleInsert(req, res, mysql);
+      break;
     }
   });
+
+  // ----------------------------------------------------------------------------
+
+  function handleInsert(req, res, mysql) {
+    let sql = "INSERT INTO `ships` (id, `type`) VALUE (?, ?);";
+    let inserts = [  // must appear in same order as in the query
+      {field: 'id', value: req.body.id},
+      {field: 'type', value: req.body.type},
+    ];
+
+    let expectedErrorHandlers = { // property names are SQL error codes
+      "ER_DUP_ENTRY": validator.handleDuplicateInsert(),
+    };
+
+    // validate the user input
+    let queryString = validator.validateBeforeQuery(inserts);
+
+    if (queryString !== "") {
+      res.redirect(`${BASE_ROUTE}?${queryString}`) // display error messages
+    } else { // attempt the INSERT query
+      attemptQuery(req, res, mysql, sql, inserts, expectedErrorHandlers, BASE_ROUTE);
+    }
+  }
+
+  // --------------------------------------------------------------------------
 
   return router;
 }();
