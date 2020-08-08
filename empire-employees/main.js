@@ -11,13 +11,7 @@ let bodyParser = require('body-parser');
 let app = express();
 let handlebars = require('express-handlebars').create({
         defaultLayout:'main',
-});
-
-// Credit for making string equality predicate to following stack overflow
-// post: https://stackoverflow.com/a/34252942
-handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
-    return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
-});
+        });
 
 app.engine('handlebars', handlebars.engine);
 app.use(bodyParser.urlencoded({extended:true}));
