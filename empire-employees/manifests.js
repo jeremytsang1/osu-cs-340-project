@@ -8,10 +8,10 @@ module.exports = function() {
   let queries = {
     'trooper': {
       'insert': "INSERT INTO `ships_troopers` (`ship`, `trooper`) VALUE (?, ?);",
-      'delete': "INSERT INTO `ships_droids` (`ship`, `droid`) VALUE (?, ?);"
+      'delete': "DELETE FROM ships_troopers where ship = ? && trooper = ?;"
     },
     'droid': {
-      'insert': "DELETE FROM ships_troopers where ship = ? && trooper = ?;",
+      'insert': "INSERT INTO `ships_droids` (`ship`, `droid`) VALUE (?, ?);",
       'delete': "DELETE FROM ships_droids where ship = ? && droid = ?;"
     }
   }
