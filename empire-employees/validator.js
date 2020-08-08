@@ -125,10 +125,12 @@ class Validator {
   // utilities
 
   static makeQueryString(reason, offender) {
-    return (
-      `${Validator.QUERY_PARAM_NAME_REASON}=${reason}&` +
-      `${Validator.QUERY_PARAM_NAME_OFFENDER}=${offender}`
-    );
+    let offenderPortion = "";
+    for (let elt in (Array.isArray(offender)) ? offender : [offender]) {
+      offenderPortion += `&${Validator.QUERY_PARAM_NAME_OFFENDER}=${offender}`
+    }
+
+    return `${Validator.QUERY_PARAM_NAME_REASON}=${reason}${offenderPortion}`;
   }
 
   /**
