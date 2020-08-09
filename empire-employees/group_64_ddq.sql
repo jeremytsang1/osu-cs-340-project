@@ -1,6 +1,7 @@
 -- -----------------------------------------------------------------------------
 -- ***** Create Tables *****
 
+-- Drop any leftover tables before creating the tables.
 SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS troopers;
 DROP TABLE IF EXISTS garrisons;
@@ -11,12 +12,14 @@ DROP TABLE IF EXISTS ships_troopers;
 DROP TABLE IF EXISTS ships_droids;
 SET FOREIGN_KEY_CHECKS = 1;
 
+-- Troopers page
 CREATE TABLE troopers (
   id int auto_increment not NULL PRIMARY KEY,
   garrison int,
   loadout int not NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- Garrisons page
 CREATE TABLE garrisons (
   id INT AUTO_INCREMENT NOT NULL,
   name VARCHAR(255) NOT NULL UNIQUE,
@@ -24,6 +27,7 @@ CREATE TABLE garrisons (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- Loadouts Paage
 CREATE TABLE loadouts (
   id INT AUTO_INCREMENT NOT NULL,
   blaster VARCHAR(255) NOT NULL,
@@ -31,22 +35,26 @@ CREATE TABLE loadouts (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- Ships page
 CREATE TABLE ships (
   id int auto_increment not NULL PRIMARY KEY,
   type varchar(255) not NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- Droids page
 CREATE TABLE droids (
   id int auto_increment not NULL PRIMARY KEY,
   type varchar(255) not NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- Manifests page: when trooper is the occupant
 CREATE TABLE ships_troopers (
   ship INT NOT NULL,
   trooper INT NOT NULL,
   PRIMARY KEY (ship, trooper)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- Manifests page: when droid is the occupant
 CREATE TABLE ships_droids (
   ship INT NOT NULL,
   droid INT NOT NULL,
@@ -70,7 +78,7 @@ ALTER TABLE troopers
   REFERENCES loadouts(id);
 
 -- ------------------------------------------------
--- ***** ships_troopers relationships *****
+-- ***** ships_troopers relationships (Manifests)  *****
 
 ALTER TABLE ships_troopers
   ADD CONSTRAINT fk_ships_troopers_ship
@@ -84,7 +92,7 @@ ALTER TABLE ships_troopers
   ON DELETE CASCADE;
 
 -- ------------------------------------------------
--- ***** ships_droids relationships *****
+-- ***** ships_droids relationships (Manifests) *****
 
 ALTER TABLE ships_droids
   ADD CONSTRAINT fk_ships_droids_ship
