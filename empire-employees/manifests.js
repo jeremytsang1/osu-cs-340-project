@@ -14,7 +14,7 @@ module.exports = function() {
       'insert': "INSERT INTO `ships_droids` (`ship`, `droid`) VALUE (?, ?);",
       'delete': "DELETE FROM ships_droids where ship = ? && droid = ?;"
     }
-  }
+  };
 
   let validatorTroopers = new Validator(
     // argument 0: databaseFields
