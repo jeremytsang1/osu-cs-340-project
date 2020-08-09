@@ -107,26 +107,32 @@ ALTER TABLE ships_droids
 -- -----------------------------------------------------------------------------
 -- ***** Initial Data *****
 
+-- Garrisons page (`name` must be UNIQUE)
 INSERT INTO `garrisons` (id, `name`, `capacity`) VALUES
 (1, "Tatooine", 10000),
 (2, "Coruscant", 100000),
 (3, "Kashyyk", 5000);
 
+
+-- Loadouts page
 INSERT INTO `loadouts` (`id`, `blaster`, `detonator`) VALUES
 (1, "EL-16", "Thermal"),
 (2, "E-11", "Sonic"),
 (3, "DC-15A", "Sonic");
 
+-- Ships page
 INSERT INTO `ships` (`id`, `type`) VALUES
 (1, "Star Destroyer"),
 (2, "AT-AT"),
 (3, "TIE Fighter");
 
+-- Droids page
 INSERT INTO `droids` (`id`, `type`) VALUES
 (1, "Protocol"),
 (2, "Astromech"),
 (3, "Battle");
 
+-- Troopers page: which trooper has which garrison and loadout.
 INSERT INTO `troopers` (`id`, `garrison`, `loadout`) VALUES
 (2187, NULL, 1),
 (2188, 1, 2),
@@ -135,11 +141,13 @@ INSERT INTO `troopers` (`id`, `garrison`, `loadout`) VALUES
 (2191, 3, 3),
 (2199, 3, 3);
 
+-- Manifests page: occupant is droid
 INSERT INTO `ships_droids` (`ship`, `droid`) VALUES
 (1, 2),
 (2, 1),
 (3, 3);
 
+-- Manifests page: occupant is trooper
 INSERT INTO `ships_troopers` (`ship`, `trooper`) VALUES
 (2, 2187),
 (3, 2199),
