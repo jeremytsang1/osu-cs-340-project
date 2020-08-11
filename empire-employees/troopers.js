@@ -86,7 +86,7 @@ module.exports = function() {
   }
 
   
-  function getTroopersByShip(req, res, mysql, context, complete) {
+  function getTroopersByLoadout(req, res, mysql, context, complete) {
     filterKey = req.query.filterKey;
 
     if (filterKey == "" ) {
@@ -127,8 +127,7 @@ module.exports = function() {
     + " FROM troopers"
     + " INNER JOIN loadouts ON troopers.loadout=loadouts.id"
     + " LEFT JOIN garrisons ON troopers.garrison=garrisons.id"
-    + " LEFT JOIN ships_troopers ON troopers.id=ships_troopers.trooper"
-    + " WHERE ships_troopers.ship= (?)"
+    + " WHERE loadouts.id= (?)"
     + " ORDER BY troopers.id" 
 
     );
@@ -168,7 +167,7 @@ module.exports = function() {
       getTroopersByGarrison(req, res, mysql, context, complete);
       break;
     case "ship":      // filtering by ship
-      getTroopersByShip(req, res, mysql, context, complete);
+      getTroopersByLoadout(req, res, mysql, context, complete);
       break;
     default:          // no filtering
       getTroopers(res, mysql, context, complete);
