@@ -62,6 +62,7 @@
     <thead>
       <tr>
 	<th>Ship ID</th>
+	<th>Ship Type</th>
 	<th>Trooper ID</th>
 
       </tr>
@@ -70,8 +71,9 @@
     <tbody>
       {{#each ships_troopers}}
 	<tr>
-	  <td>{{ship}}</td>
-	  <td>{{trooper}}</td>
+	  <td>{{'Ship ID'}}</td>
+	  <td>{{'Ship Type'}}</td>
+	  <td>{{'Trooper ID'}}</td>
 
 	</tr>
       {{/each}}
@@ -87,7 +89,9 @@
     <thead>
       <tr>
 	<th>Ship ID</th>
-	<th>Droid ID</th>
+	<th>Ship Type</th>
+  <th>Droid ID</th>
+  <th>Droid Type</th>
 
       </tr>
     </thead>
@@ -95,8 +99,10 @@
     <tbody>
       {{#each ships_droids}}
 	<tr>
-	  <td>{{ship}}</td>
-	  <td>{{droid}}</td>
+	  <td>{{'Ship ID'}}</td>
+	  <td>{{'Ship Type'}}</td>
+	  <td>{{'Droid ID'}}</td>
+	  <td>{{'Droid Type'}}</td>
 
 	</tr>
       {{/each}}
