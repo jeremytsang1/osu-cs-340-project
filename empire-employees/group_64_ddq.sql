@@ -128,9 +128,16 @@ INSERT INTO `ships` (`id`, `type`) VALUES
 
 -- Droids page
 INSERT INTO `droids` (`id`, `type`) VALUES
-(1, "Protocol"),
-(2, "Astromech"),
-(3, "Battle");
+(4211, "Protocol"),
+(2152, "Astromech"),
+(1252, "Battle"),
+(1244, "Battle"),
+(5325, "Battle"),
+(5262, "Battle"),
+(2722, "Assassin"),
+(1128, "General Labor"),
+(3539, "General Labor"),
+(1223, "Engineering");
 
 -- Troopers page: which trooper has which garrison and loadout.
 INSERT INTO `troopers` (`id`, `garrison`, `loadout`) VALUES
@@ -143,9 +150,9 @@ INSERT INTO `troopers` (`id`, `garrison`, `loadout`) VALUES
 
 -- Manifests page: occupant is droid
 INSERT INTO `ships_droids` (`ship`, `droid`) VALUES
-(1, 2),
-(2, 1),
-(3, 3);
+(1, 4211),
+(2, 1252),
+(3, 2722);
 
 -- Manifests page: occupant is trooper
 INSERT INTO `ships_troopers` (`ship`, `trooper`) VALUES
