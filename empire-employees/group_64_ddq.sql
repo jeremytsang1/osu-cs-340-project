@@ -116,9 +116,13 @@ INSERT INTO `garrisons` (id, `name`, `capacity`) VALUES
 
 -- Loadouts page
 INSERT INTO `loadouts` (`id`, `blaster`, `detonator`) VALUES
-(1, "EL-16", "Thermal"),
-(2, "E-11", "Sonic"),
-(3, "DC-15A", "Sonic");
+(12, "EL-16", "Thermal"),
+(53, "E-11", "Sonic"),
+(29, "DC-15A", "Sonic"),
+(82, "EL-16", "Thermal"),
+(28, "C-303", "Sonic"),
+(20, "DLT-19", "Sonic"),
+(99, "DC-15A", "Thermal");
 
 -- Ships page
 INSERT INTO `ships` (`id`, `type`) VALUES
@@ -141,12 +145,12 @@ INSERT INTO `droids` (`id`, `type`) VALUES
 
 -- Troopers page: which trooper has which garrison and loadout.
 INSERT INTO `troopers` (`id`, `garrison`, `loadout`) VALUES
-(2187, NULL, 1),
-(2188, 1, 2),
-(2189, 2, 3),
-(2190, 3, 3),
-(2191, 3, 3),
-(2199, 3, 3);
+(2187, NULL, 12),
+(2188, 1, 53),
+(2189, 2, 82),
+(2190, 3, 28),
+(2191, 3, 20),
+(2199, 3, 20);
 
 -- Manifests page: occupant is droid
 INSERT INTO `ships_droids` (`ship`, `droid`) VALUES
