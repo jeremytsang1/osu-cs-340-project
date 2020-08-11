@@ -109,46 +109,81 @@ ALTER TABLE ships_droids
 
 -- Garrisons page (`name` must be UNIQUE)
 INSERT INTO `garrisons` (id, `name`, `capacity`) VALUES
-(1, "Tatooine", 10000),
-(2, "Coruscant", 100000),
-(3, "Kashyyk", 5000);
-
+(39, "Tatooine", 10000),
+(10, "Coruscant", 100000),
+(59, "Kashyyyk", 5000),
+(4972, "Yityl", 2000),
+(120, "Wobani", 3000),
+(129, "Vaal", 4000),
+(293, "Notak", 5000),
+(2921, "Kintoni", 9000),
+(192, "Corlass", 10000),
+(101, "Mustafar", 5000),
+(241, "Alderaan", 28000),
+(659, "Naboo", 15000);
 
 -- Loadouts page
 INSERT INTO `loadouts` (`id`, `blaster`, `detonator`) VALUES
-(1, "EL-16", "Thermal"),
-(2, "E-11", "Sonic"),
-(3, "DC-15A", "Sonic");
+(12, "EL-16", "Thermal"),
+(53, "E-11", "Sonic"),
+(29, "DC-15A", "Sonic"),
+(82, "EL-16", "Thermal"),
+(28, "C-303", "Sonic"),
+(20, "DLT-19", "Sonic"),
+(99, "DC-15A", "Thermal");
+
+-- Troopers page: which trooper has which garrison and loadout. Needs to come
+-- AFTER garrisons and loadouts have been inserted due to FK constraints.
+INSERT INTO `troopers` (`id`, `garrison`, `loadout`) VALUES
+(2187, NULL, 12),
+(2188, 39, 53),
+(2189, 120, 82),
+(2190, 10, 28),
+(2191, NULL, 20),
+(2192, NULL, 99),
+(2199, 10, 20);
 
 -- Ships page
 INSERT INTO `ships` (`id`, `type`) VALUES
-(1, "Star Destroyer"),
-(2, "AT-AT"),
-(3, "TIE Fighter");
+(2947, "Star Destroyer"),
+(2946, "AT-AT"),
+(5076, "AT-ST"),
+(2047, "TIE Fighter"),
+(2461, "Freighter"),
+(2222, "TIE Bomber"),
+(3967, "TIE Fighter"),
+(1925, "TIE Bomber"),
+(9483, "TIE Fighter"),
+(8847, "Freighter"),
+(8290, "Speeder Bike"),
+(2978, "TIE Fighter"),
+(5272, "Speeder Bike"),
+(5892, "Speeder Bike");
 
 -- Droids page
 INSERT INTO `droids` (`id`, `type`) VALUES
-(1, "Protocol"),
-(2, "Astromech"),
-(3, "Battle");
-
--- Troopers page: which trooper has which garrison and loadout.
-INSERT INTO `troopers` (`id`, `garrison`, `loadout`) VALUES
-(2187, NULL, 1),
-(2188, 1, 2),
-(2189, 2, 3),
-(2190, 3, 3),
-(2191, 3, 3),
-(2199, 3, 3);
+(4211, "Protocol"),
+(2152, "Astromech"),
+(1252, "Battle"),
+(1244, "Battle"),
+(5325, "Battle"),
+(5262, "Battle"),
+(2722, "Assassin"),
+(1128, "General Labor"),
+(3539, "General Labor"),
+(1223, "Engineering");
 
 -- Manifests page: occupant is droid
 INSERT INTO `ships_droids` (`ship`, `droid`) VALUES
-(1, 2),
-(2, 1),
-(3, 3);
+(2947, 4211),
+(2947, 1252),
+(2047, 1252),
+(8847, 2722);
 
 -- Manifests page: occupant is trooper
 INSERT INTO `ships_troopers` (`ship`, `trooper`) VALUES
-(2, 2187),
-(3, 2199),
-(1, 2191);
+(2947, 2187),
+(9483, 2187),
+(2947, 2199),
+(5076, 2191),
+(8290, 2192);
