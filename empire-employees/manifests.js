@@ -67,8 +67,17 @@ module.exports = function() {
 
   // --------------------------------------------------------------------------
 
+  display_table_query_troopers = ("SELECT"
+  + " ships_troopers.ship AS `Ship ID`,"
+  + " ships.type AS `Ship Type`,"
+  + " ships_troopers.trooper AS `Trooper ID`"
+  + " FROM ships_troopers"
+  + " INNER JOIN ships ON ships_troopers.ship=ships.id"
+  + " ORDER BY ship;" 
+  );
+
   function getManifests(res, mysql, context, complete) {
-    mysql.pool.query("SELECT ship, trooper from ships_troopers;", function(error, results, fields) {
+    mysql.pool.query(display_table_query_troopers, function(error, results, fields) {
 
       if (error) {
         res.write(JSON.stringify(error));
@@ -78,7 +87,18 @@ module.exports = function() {
       complete();
     });
 
-    mysql.pool.query("SELECT ship, droid from ships_droids;", function(error, results, fields) {
+  display_table_query_droids = ("SELECT"
+  + " ships_droids.ship AS `Ship ID`,"
+  + " ships.type AS `Ship Type`,"
+  + " ships_droids.droid AS `Droid ID`,"
+  + " droids.type AS `Droid Type`"
+  + " FROM ships_droids"
+  + " INNER JOIN ships ON ships_droids.ship=ships.id"
+  + " INNER JOIN droids ON ships_droids.droid=droids.id"
+  + " ORDER BY ship;" 
+  );
+
+    mysql.pool.query(display_table_query_droids, function(error, results, fields) {
 
       if (error) {
         res.write(JSON.stringify(error));
