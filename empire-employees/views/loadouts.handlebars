@@ -1,105 +1,103 @@
-<div class="page_info">
-  <!-- Form: Adding a new loadout to the database -->
-  <div class="table">
-    <form action="/loadouts" method="POST" id="loadout_add">
+<!-- Form: Adding a new loadout to the database -->
+<div class="table">
+  <form action="/loadouts" method="POST" id="loadout_add">
 
-      <legend><strong>Add a new Loadout</strong></legend>
+    <legend><strong>Add a new Loadout</strong></legend>
 
-      <!-- input fields -->
-      <div class="form_input">
+    <!-- input fields -->
+    <div class="form_input">
 
-	<!-- id of loadout to add -->
-        <div>
-	  <label>
-	    <input type="number" name="id" min="1"> <!-- Prevent non-positive values -->
-	    Loadout ID
-	  </label>
-	</div>
-
-	<!-- blaster adding field -->
-        <div>
-	  <label>
-	    <select id="loutout_blaster_select" name="blaster">
-	      {{#each blasterTypes}}
-		<option value="{{this}}">{{this}}</option>
-	      {{/each}}
-	    </select>
-	    Blaster
-	  </label>
-	</div>
-     
-
-
-	<!-- detonator adding field -->
-        <div>
-	  <label>
-	    <select id="loutout_detonator_select" name="detonator">
-	      {{#each detonatorTypes}}
-		<option value="{{this}}">{{this}}</option>
-	      {{/each}}
-	    </select>
-	    Detonator
-	  </label>
-	
+      <!-- id of loadout to add -->
+      <div>
+	<label>
+	  <input type="number" name="id" min="1"> <!-- Prevent non-positive values -->
+	  Loadout ID
+	</label>
       </div>
 
-	    <div><button name="postButton" value="insert">add</button>
-		</div>
-	
-    </form>
-	</div>
-	</div>
-
-
-
-  <br/>
-
-  <div class="table">
-    <form action="/loadouts" method="POST" id="loadout_update">
-      <div class="form_input">
-		  <legend><strong>Update an existing Loadout</strong></legend>
-	<!-- id of loadout to update -->
-        <div>
-	  <label>
-	    <input type="number" name="id" min="1"> <!-- Prevent non-positive values -->
-	    Loadout ID
-	  </label>
-	</div>
-
-	<!-- blaster update field -->
-        <div>
-	  <label>
-	    <select id="loutout_blaster_select" name="blaster">
-	      {{#each blasterTypes}}
-		<option value="{{this}}">{{this}}</option>
-	      {{/each}}
-	    </select>
-	    Blaster
-	  </label>
-	</div>
-     
-
-
-	<!-- detonator update field -->
-        <div>
-	  <label>
-	    <select id="loutout_detonator_select" name="detonator">
-	      {{#each detonatorTypes}}
-		<option value="{{this}}">{{this}}</option>
-	      {{/each}}
-	    </select>
-	    Detonator
-	  </label>
-	
+      <!-- blaster adding field -->
+      <div>
+	<label>
+	  <select id="loutout_blaster_select" name="blaster">
+	    {{#each blasterTypes}}
+	      <option value="{{this}}">{{this}}</option>
+	    {{/each}}
+	  </select>
+	  Blaster
+	</label>
       </div>
 
-	    <div><button name="postButton" value="update">update</button>
-		</div>
-	
-    </form>
-  </div>
 
+
+      <!-- detonator adding field -->
+      <div>
+	<label>
+	  <select id="loutout_detonator_select" name="detonator">
+	    {{#each detonatorTypes}}
+	      <option value="{{this}}">{{this}}</option>
+	    {{/each}}
+	  </select>
+	  Detonator
+	</label>
+
+      </div>
+
+      <div><button name="postButton" value="insert">add</button>
+      </div>
+
+  </form>
+    </div>
 </div>
+
+
+
+<br/>
+
+<div class="table">
+  <form action="/loadouts" method="POST" id="loadout_update">
+    <div class="form_input">
+      <legend><strong>Update an existing Loadout</strong></legend>
+      <!-- id of loadout to update -->
+      <div>
+	<label>
+	  <input type="number" name="id" min="1"> <!-- Prevent non-positive values -->
+	  Loadout ID
+	</label>
+      </div>
+
+      <!-- blaster update field -->
+      <div>
+	<label>
+	  <select id="loutout_blaster_select" name="blaster">
+	    {{#each blasterTypes}}
+	      <option value="{{this}}">{{this}}</option>
+	    {{/each}}
+	  </select>
+	  Blaster
+	</label>
+      </div>
+
+
+
+      <!-- detonator update field -->
+      <div>
+	<label>
+	  <select id="loutout_detonator_select" name="detonator">
+	    {{#each detonatorTypes}}
+	      <option value="{{this}}">{{this}}</option>
+	    {{/each}}
+	  </select>
+	  Detonator
+	</label>
+
+      </div>
+
+      <div><button name="postButton" value="update">update</button>
+      </div>
+
+  </form>
+    </div>
+
 </div>
 
 <div class="db">

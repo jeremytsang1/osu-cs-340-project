@@ -1,3 +1,8 @@
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
 .title_bar {
     background-color: rgb(65, 63, 63);
     color: white;
@@ -8,11 +13,11 @@
 .menu {
     position: static;
     font-size: 20px;
-    width: auto;
+    width: 10%;
     padding-right: 10px;
     float: left;
     background-color: rgb(61, 142, 209, .5);
-    height: 90vh;
+    height: 100%;
 }
 
 .menu ul {
@@ -25,9 +30,11 @@
 
 
 .page_info {
+    height: 100%;
     margin-top: 15px;
     margin-left: 40px;
     float: left;
+    width: 80%;
 }
 
 .page_info_manifests {
@@ -80,6 +87,7 @@
     outline: 2px solid black;
     padding: 10px 10px;
     width: 250px;
+    float: left;
 }
 
 .table input {
@@ -88,11 +96,6 @@
 
 input.radio_b {
     width: 10px;
-}
-
-h1, #error_message {
-    /* color: green; */
-    margin-left: 180px;
 }
 
 #error_message{

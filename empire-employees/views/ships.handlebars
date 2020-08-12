@@ -1,41 +1,37 @@
-<div class="page_info">
-      <!-- Form: Adding a new ship to the database -->
-      <div class="table">
-        <form action="/ships" method="POST" id="ship_add">
+<!-- Form: Adding a new ship to the database -->
+<div class="table">
+  <form action="/ships" method="POST" id="ship_add">
 
-	  <legend><strong>Add a new Ship</strong></legend>
+    <legend><strong>Add a new Ship</strong></legend>
 
-	  <!-- input fields -->
-	  <div class="form_input">
-	    <!-- id of ship to add -->
-            <div>
-	      <label>
-		<input type="number" name="id" min="1">
-		Ship ID
-	      </label>
-	    </div>
-
-	    <!-- type of ship to add -->
-        <div>
-	  <label>
-	    <select id="ship_type_select" name="type">
-	      {{#each shipTypes}}
-		<option value="{{this}}">{{this}}</option>
-	      {{/each}}
-	    </select>
-	    Type
-	  </label>
-	</div>
+    <!-- input fields -->
+    <div class="form_input">
+      <!-- id of ship to add -->
+      <div>
+	<label>
+	  <input type="number" name="id" min="1">
+	  Ship ID
+	</label>
       </div>
 
-	  <!-- Adding button -->
-      <div><button name="postButton" value="insert">add</button></div>
-
-        </form>
+      <!-- type of ship to add -->
+      <div>
+	<label>
+	  <select id="ship_type_select" name="type">
+	    {{#each shipTypes}}
+	      <option value="{{this}}">{{this}}</option>
+	    {{/each}}
+	  </select>
+	  Type
+	</label>
       </div>
-
     </div>
 
+    <!-- Adding button -->
+    <div><button name="postButton" value="insert">add</button></div>
+
+  </form>
+</div>
 
 <div class="db">
   <table>

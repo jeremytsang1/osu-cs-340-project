@@ -1,40 +1,34 @@
- <div class="page_info">
+
+<div class="table">
+  <form action="/garrisons" method="POST" id="garrison_add">
+    <div class="form_input">
+
+      <legend><strong>Add a new Garrison</strong></legend>
+
+      <Label>
+        <input type="number" name="id" min="1"> Garrison ID
+      </Label>
+
+      <br>
+
+      <label>
+        <input type="text" name="name"> Name
+      </label>
+
+      <br>
 
 
-
-    <div class="table">
-      <form action="/garrisons" method="POST" id="garrison_add">
-          <div class="form_input">
-
-	    <legend><strong>Add a new Garrison</strong></legend>
-
-                <Label>
-                    <input type="number" name="id" min="1"> Garrison ID
-                </Label>
-
-                <br>
-
-                <label>
-                    <input type="text" name="name"> Name
-                </label>
-
-                <br>
+      <Label>
+        <input type="number" name="capacity" min="1"> Capacity
+      </Label>
 
 
-                <Label>
-                  <input type="number" name="capacity" min="1"> Capacity
-                </Label>
-    
-
-            </div>
-
-            <div><button name="postButton" value="insert">Add</button></div>
-
-        </form>
     </div>
 
-</div>
+    <div><button name="postButton" value="insert">Add</button></div>
 
+  </form>
+</div>
 
 <div class="db">
   <table>
