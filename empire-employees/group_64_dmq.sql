@@ -118,7 +118,10 @@ INSERT INTO `droids` (id, `type`) VALUES
 -- ships_troopers
 
 -- display which troopers are on which ships
-SELECT * FROM ships_troopers;
+SELECT ships_troopers.ship AS `Ship ID`, ships.type AS `Ship Type`, ships_troopers.trooper AS `Trooper ID` 
+    FROM ships_troopers
+      INNER JOIN ships ON ships_troopers.ship=ships.id
+  ORDER BY ship;
 
 -- add a trooper to a ship
 INSERT INTO `ships_troopers` (`ship`, `trooper`) VALUES
@@ -131,8 +134,11 @@ DELETE FROM `ships_troopers` WHERE ship=:shipInput AND trooper=:trooperInput;
 -- ships_droids
 
 -- display which droids are on which ships
-SELECT *
-    FROM ships;
+SELECT ships_droids.ship AS `Ship ID`, ships.type AS `Ship Type`, ships_droids.droid AS `Droid ID`, droids.type AS `Droid Type`
+    FROM ships_droids
+      INNER JOIN ships ON ships_droids.ship=ships.id
+      INNER JOIN droids ON ships_droids.droid=droids.id
+  ORDER BY ship;
 
 -- add a droid to a ship
 INSERT INTO `ships_droids` (`ship`, `droid`) VALUES
