@@ -1,36 +1,38 @@
 <!-- Form: Adding a new ship to the database -->
-<div class="table">
-  <form action="/ships" method="POST" id="ship_add">
+<div class="forms">
+  <div class="table">
+    <form action="/ships" method="POST" id="ship_add">
 
-    <legend><strong>Add a new Ship</strong></legend>
+      <legend><strong>Add a new Ship</strong></legend>
 
-    <!-- input fields -->
-    <div class="form_input">
-      <!-- id of ship to add -->
-      <div>
-	<label>
-	  <input type="number" name="id" min="1">
-	  Ship ID
-	</label>
+      <!-- input fields -->
+      <div class="form_input">
+	<!-- id of ship to add -->
+	<div>
+	  <label>
+	    <input type="number" name="id" min="1">
+	    Ship ID
+	  </label>
+	</div>
+
+	<!-- type of ship to add -->
+	<div>
+	  <label>
+	    <select id="ship_type_select" name="type">
+	      {{#each shipTypes}}
+		<option value="{{this}}">{{this}}</option>
+	      {{/each}}
+	    </select>
+	    Type
+	  </label>
+	</div>
       </div>
 
-      <!-- type of ship to add -->
-      <div>
-	<label>
-	  <select id="ship_type_select" name="type">
-	    {{#each shipTypes}}
-	      <option value="{{this}}">{{this}}</option>
-	    {{/each}}
-	  </select>
-	  Type
-	</label>
-      </div>
-    </div>
+      <!-- Adding button -->
+      <div><button name="postButton" value="insert">add</button></div>
 
-    <!-- Adding button -->
-    <div><button name="postButton" value="insert">add</button></div>
-
-  </form>
+    </form>
+  </div>
 </div>
 
 <div class="db">

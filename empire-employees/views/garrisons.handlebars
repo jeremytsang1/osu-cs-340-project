@@ -1,33 +1,35 @@
 
-<div class="table">
-  <form action="/garrisons" method="POST" id="garrison_add">
-    <div class="form_input">
+<div class="forms">
+  <div class="table">
+    <form action="/garrisons" method="POST" id="garrison_add">
+      <div class="form_input">
 
-      <legend><strong>Add a new Garrison</strong></legend>
+	<legend><strong>Add a new Garrison</strong></legend>
 
-      <Label>
-        <input type="number" name="id" min="1"> Garrison ID
-      </Label>
+	<Label>
+          <input type="number" name="id" min="1"> Garrison ID
+	</Label>
 
-      <br>
+	<br>
 
-      <label>
-        <input type="text" name="name"> Name
-      </label>
+	<label>
+          <input type="text" name="name"> Name
+	</label>
 
-      <br>
-
-
-      <Label>
-        <input type="number" name="capacity" min="1"> Capacity
-      </Label>
+	<br>
 
 
-    </div>
+	<Label>
+          <input type="number" name="capacity" min="1"> Capacity
+	</Label>
 
-    <div><button name="postButton" value="insert">Add</button></div>
 
-  </form>
+      </div>
+
+      <div><button name="postButton" value="insert">Add</button></div>
+
+    </form>
+  </div>
 </div>
 
 <div class="db">

@@ -1,36 +1,38 @@
 <!-- Form: Adding a new droid to the database -->
-<div class="table">
-  <form action="/droids" method="POST" id="droid_add">
+<div class="forms">
+  <div class="table">
+    <form action="/droids" method="POST" id="droid_add">
 
-    <legend><strong>Add a new Droid</strong></legend>
+      <legend><strong>Add a new Droid</strong></legend>
 
-    <!-- input fields -->
-    <div class="form_input">
-      <!-- id of droid to add -->
-      <div>
-	<label>
-	  <input type="number" name="id" min="1"> <!-- Prevent non-positive values -->
-	  Droid ID
-	</label>
+      <!-- input fields -->
+      <div class="form_input">
+	<!-- id of droid to add -->
+	<div>
+	  <label>
+	    <input type="number" name="id" min="1"> <!-- Prevent non-positive values -->
+	    Droid ID
+	  </label>
+	</div>
+
+	<!-- type of droid to add -->
+	<div>
+	  <label>
+	    <select id="droid_type_select" name="type">
+	      {{#each droidTypes}}
+		<option value="{{this}}">{{this}}</option>
+	      {{/each}}
+	    </select>
+	    Type
+	  </label>
+	</div>
       </div>
 
-      <!-- type of droid to add -->
-      <div>
-	<label>
-	  <select id="droid_type_select" name="type">
-	    {{#each droidTypes}}
-	      <option value="{{this}}">{{this}}</option>
-	    {{/each}}
-	  </select>
-	  Type
-	</label>
-      </div>
-    </div>
+      <!-- Adding button -->
+      <div><button name="postButton" value="insert">add</button></div>
 
-    <!-- Adding button -->
-    <div><button name="postButton" value="insert">add</button></div>
-
-  </form>
+    </form>
+  </div>
 </div>
 
 <div class="db">
