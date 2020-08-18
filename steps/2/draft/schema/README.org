@@ -1,0 +1,6 @@
+* Image (~.png~)
+[[file:step-2-schema.png]]
+* Exported Visio 2010
+[[file:step-2-schema.vdx]]
+* Link
+[[https://app.lucidchart.com/invitations/accept/7c8ea42f-660d-4989-821b-455bdd7182e4][Lucid Chart: step-2-schema]]
