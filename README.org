@@ -47,7 +47,7 @@ the database if they have fulfilled their purpose and given their lives for the 
 The glorious Galactic Empire has 1.5 million planets under its control which includes 69
 million different colonies and states. Without proper organization and resolve the galaxy will turn
 to chaos, or worse, become under the control of rebel scum. Empire Employees is capable of
-managing all 1 billion Stormtroopers, 25,000 Star Destroyers and other smaller vehicles, as well
+managing all 1 billion stormtroopers, 25,000 Star Destroyers and other smaller vehicles, as well
 as droids that the Empire employs. There are 11 vehicles types and 20 droid types currently
 supported. Each stormtrooper is equipped with a loadout that contains 1 out of 7 blasters and 1
 out of 2 detonator grenades. To deploy a specific number of troops to ensure effective defense
@@ -56,8 +56,8 @@ number of supplies and personnel available. Empire Employees does this by allowi
 current troop, ship, and droid counts for each garrison and providing sufficient warnings when
 said counts drop below an acceptable level needed for adequate defense. For some ships, such
 as tie fighters, there may only be 1 trooper on board whereas for larger ships, such as star
-destroyers, may have as much as 9,700 Stormtroopers. With our simple to use online interface,
-we will meet all your Stormtrooper relocation management needs!
+destroyers, may have as much as 9,700 stormtroopers. With our simple to use online interface,
+we will meet all your stormtrooper relocation management needs!
 * Database Outline
 ** Entity Tables
 *** ~troopers~
