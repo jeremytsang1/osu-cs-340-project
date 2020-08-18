@@ -3,6 +3,31 @@
 #+AUTHOR: Kyle Bell and Jeremy Tsang
 #+LATEX_HEADER: \usepackage[margin=1.0in]{geometry}
 * Table of Contents
+:PROPERTIES:
+:TOC:      :include all
+:END:
+:CONTENTS:
+- [[#table-of-contents][Table of Contents]]
+- [[#project-outline][Project Outline]]
+- [[#database-outline][Database Outline]]
+  - [[#entity-tables][Entity Tables]]
+    - [[#troopers][troopers]]
+    - [[#ships][ships]]
+    - [[#droids][droids]]
+    - [[#loadouts][loadouts]]
+    - [[#garrisons][garrisons]]
+  - [[#relationship-tables][Relationship Tables]]
+    - [[#ships_troopers][ships_troopers]]
+    - [[#ships_droids][ships_droids]]
+- [[#erd][ERD]]
+- [[#schema][Schema]]
+- [[#description][Description]]
+- [[#installation-and-usage][Installation and Usage]]
+  - [[#install-dependencies-with-npm][Install dependencies with npm]]
+  - [[#credentials][Credentials]]
+  - [[#setup-initial-database][Setup initial database]]
+  - [[#run-the-app][Run the app]]
+:END:
 * Project Outline
 Empire Employees is a database driven web application designed to manage
 stormtroopers, garrisons, ships, and droids under the Galactic Empire. It does this by providing
