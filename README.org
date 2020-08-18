@@ -45,7 +45,7 @@ and loadouts entities respectively.
 *** ~ships_troopers~
 *** ~ships_droids~
 * ERD
-[[file:steps/2/step-2-draft-erd.png]]
+[[file:steps/2/draft/erd/step-2-draft-erd.png]]
 * Schema
 * Description
 * Installation and Usage
