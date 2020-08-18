@@ -47,6 +47,7 @@ and loadouts entities respectively.
 * ERD
 [[file:steps/2/draft/erd/step-2-draft-erd.png]]
 * Schema
+[[file:steps/2/draft/schema/step-2-schema.png]]
 * Description
 * Installation and Usage
 ** Install dependencies with npm
