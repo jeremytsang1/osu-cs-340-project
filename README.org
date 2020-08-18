@@ -112,7 +112,7 @@ Relationship between ships and droids.
 ** Install dependencies with npm
 - after cloning the repository navigate to the app directory
   #+begin_src bash
-    cd empire-employees/
+    cd osu-cs-340-project/empire-employees/
     npm install
   #+end_src
 ** Credentials
