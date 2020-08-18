@@ -58,16 +58,53 @@ An individual soldier of the Galactic Empire that upholds peace and prosperity
 for all. They have a garrison and load out assignments that are related to the garrisons
 and loadouts entities respectively.
 
-- id​ : int, auto_increment, unique, not NULL, PK
-- garrison: int, FK
-- loadout: int, not NULL, FK
+- ~id~: int, auto_increment, unique, not NULL, PK
+- ~garrison~: int, FK
+- ~loadout~: int, not NULL, FK
+- Relationship: a 1:M relationship between garrisons and troopers, a M:M relationship between troopers and ships (implemented with the ships_troopers composite entity), and a 1:M relationship between loadouts and troopers.
 *** ~ships~
+The Galactic Empire has ships in order to transport troopers and droids
+throughout the galax. Each ship has a ship type and is related to troopers and droids.
+
+- ~id~ : int, auto_increment, unique, not NULL, PK
+- ~type~: varchar(255), not NULL
+- Relationship: a M:M relationship between ships and troopers, a M:M relationship between ships and droids.
 *** ~droids~
+Robust, top of the line droids help repair ships for our glorious fleet. They have a droid type, and have a relationship with ships.
+
+- ~id~: int, auto_increment, unique, not NULL, PK
+- ~type~: varchar(255), not NULL
+- Relationship: a M:M relationship between droids and ships implemented with the ships_droids composite entity.
 *** ~loadouts~
+Each unique weapon loadout contains a proprietary blaster as well as an
+option for a detonator in order for each trooper to get the job done right their own way! A
+loadout has a relationship with a trooper.
+
+- ~id~: int, auto_increment, unique, not NULL, PK
+- ~blaster~: varchar(255), not NULL
+- ~detonator~: bool, not NULL
+- Relationship: a 1:M relationship between loadouts and trooper
 *** ~garrisons~
+Our Empire keeps the galaxy safe with garrisons throughout the galaxy. Each
+of them has a name and a maximum capacity.
+
+- ~id~ : int, auto_increment, unique, not NULL, PK
+- ~name~: varchar(255), not NULL UNIQUE
+- ~capacity~: int, not NULL
+- Relationship: a 1:M relationship is implemented between troops and garrisons as a FK inside of troops.
 ** Relationship Tables
 *** ~ships_troopers~
+ Relationship between ships and troopers.
+
+- ~ship~: int, not NULL, PK, FK
+- ~trooper~: int, not NULL, PK, FK
+- Relationship: facilitates M:M relationship between ships and troopers.
 *** ~ships_droids~
+Relationship between ships and droids.
+
+- ~ship~: int, not NULL, PK, FK
+- ~droid~ : int, not NULL, PK, FK
+- Relationship: facilitates M:M relationship between ships and droids.
 * ERD
 [[file:steps/2/draft/erd/step-2-draft-erd.png]]
 * Schema
