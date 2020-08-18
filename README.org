@@ -124,7 +124,7 @@ Relationship between ships and droids.
     DB_NAME='cs340_<YOUR_ONID>'
   #+end_example
 ** Setup initial database
-- While still in the app directory (~empire-employees/~) Connect to the MySQL shell
+- While still in the app directory (~empire-employees/~) connect to the MySQL shell
   #+begin_src bash
     mysql -u cs340_<YOUR_ONID> -p -h classmysql.engr.oregonstate.edu cs340_<YOUR_ONID>
   #+end_src
