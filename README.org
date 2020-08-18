@@ -30,6 +30,13 @@ we will meet all your Stormtrooper relocation management needs!
 * Database Outline
 ** Entity Tables
 *** ~troopers~
+An individual soldier of the Galactic Empire that upholds peace and prosperity
+for all. They have a garrison and load out assignments that are related to the garrisons
+and loadouts entities respectively.
+
+- id​ : int, auto_increment, unique, not NULL, PK
+- garrison: int, FK
+- loadout: int, not NULL, FK
 *** ~ships~
 *** ~droids~
 *** ~loadouts~
