@@ -1,0 +1,51 @@
+#+OPTIONS: toc:nil num:nil tasks:nil ^:nil
+#+TITLE: OSU CS 340 Final Project: Empire Employees
+#+AUTHOR: Kyle Bell and Jeremy Tsang
+#+LATEX_HEADER: \usepackage[margin=1.0in]{geometry}
+* Table of Contents
+* Database Outline
+** Entity Tables
+*** ~troopers~
+*** ~ships~
+*** ~droids~
+*** ~loadouts~
+*** ~garrisons~
+** Relationship Tables
+*** ~ships_troopers~
+*** ~ships_droids~
+* ERD
+[[file:steps/2/step-2-draft-erd.png]]
+* Schema
+* Description
+* Installation and Usage
+** Install dependencies with npm
+- after cloning the repository navigate to the app directory
+  #+begin_src bash
+    cd empire-employees/
+    npm install
+  #+end_src
+** Credentials
+- Create a file named ~empire-employees/.env~ containing database credentials in the following form
+  #+begin_example
+    DB_HOST='classmysql.engr.oregonstate.edu'
+    DB_USER='cs340_<YOUR_ONID>'
+    DB_PASS='<YOUR_PASSWORD>'
+    DB_NAME='cs340_<YOUR_ONID>'
+  #+end_example
+** Setup initial database
+- While still in the app directory (~empire-employees/~) Connect to the MySQL shell
+  #+begin_src bash
+    mysql -u cs340_<YOUR_ONID> -p -h classmysql.engr.oregonstate.edu cs340_<YOUR_ONID>
+  #+end_src
+
+- Once authenticated, ~source~ the data definition file, ~empire-employees/group_64_ddq.sql~
+  #+begin_example
+    source group_64_ddq.sql;
+  #+end_example
+** Run the app
+- Now that the tables have been created via the data definition, it is now possible to run the web app from the entry point ~empire-employees/main.js~.
+
+- Choose an unused port number and start the app. In the below example port 3000 was chosen,
+  #+begin_src bash
+    node main.js 3000
+  #+end_src
