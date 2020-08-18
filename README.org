@@ -20,6 +20,14 @@
     - [[#ships_droids][ships_droids]]
 - [[#erd][ERD]]
 - [[#schema][Schema]]
+- [[#screenshots][Screenshots]]
+  - [[#home-page][Home Page]]
+  - [[#troopers][Troopers]]
+  - [[#garrisons][Garrisons]]
+  - [[#loadouts][Loadouts]]
+  - [[#ships][Ships]]
+  - [[#droids][Droids]]
+  - [[#ship-manifests][Ship Manifests]]
 - [[#installation-and-usage][Installation and Usage]]
   - [[#install-dependencies-with-npm][Install dependencies with npm]]
   - [[#credentials][Credentials]]
@@ -108,6 +116,21 @@ Relationship between ships and droids.
 [[file:steps/2/draft/erd/step-2-draft-erd.png]]
 * Schema
 [[file:steps/2/draft/schema/step-2-schema.png]]
+* Screenshots
+** Home Page
+[[file:steps/6/screenshots/0-home.png]]
+** Troopers
+[[file:steps/6/screenshots/1-troopers.png]]
+** Garrisons
+[[file:steps/6/screenshots/2-garrisons.png]]
+** Loadouts
+[[file:steps/6/screenshots/3-loadouts.png]]
+** Ships
+[[file:steps/6/screenshots/4-ships.png]]
+** Droids
+[[file:steps/6/screenshots/5-droids.png]]
+** Ship Manifests
+[[file:steps/6/screenshots/6-ship-manifests.png]]
 * Installation and Usage
 ** Install dependencies with npm
 - after cloning the repository navigate to the app directory
