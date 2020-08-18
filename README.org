@@ -35,29 +35,9 @@
   - [[#run-the-app][Run the app]]
 :END:
 * Project Outline
-Empire Employees is a database driven web application designed to manage
-stormtroopers, garrisons, ships, and droids under the Galactic Empire. It does this by providing
-a listing of each of the above entities as well as allowing users to add/modify/delete entities. For
-modifying these entities, we allow troopers to be moved around to various garrisons (or no
-garrisons at all if they are in transit). Their equipment, modeled by the Loadouts entity, can also
-be updated as well. We can move troopers/droids from ship to ship as well and in this case
-these relationships are modeled by a M:M relationship. Stormtroopers can also be deleted from
-the database if they have fulfilled their purpose and given their lives for the Empire.
+Empire Employees is a database driven web application designed to manage stormtroopers, garrisons, ships, and droids under the Galactic Empire. It does this by providing a listing of each of the above entities as well as allowing users to add/modify/delete entities. For modifying these entities, we allow troopers to be moved around to various garrisons (or no garrisons at all if they are in transit). Their equipment, modeled by the Loadouts entity, can also be updated as well. We can move troopers/droids from ship to ship as well and in this case these relationships are modeled by a M:M relationship. Stormtroopers can also be deleted from the database if they have fulfilled their purpose and given their lives for the Empire.
 
-The glorious Galactic Empire has 1.5 million planets under its control which includes 69
-million different colonies and states. Without proper organization and resolve the galaxy will turn
-to chaos, or worse, become under the control of rebel scum. Empire Employees is capable of
-managing all 1 billion stormtroopers, 25,000 Star Destroyers and other smaller vehicles, as well
-as droids that the Empire employs. There are 11 vehicles types and 20 droid types currently
-supported. Each stormtrooper is equipped with a loadout that contains 1 out of 7 blasters and 1
-out of 2 detonator grenades. To deploy a specific number of troops to ensure effective defense
-of each garrison spread such large cosmic distances it is critical to always have the correct
-number of supplies and personnel available. Empire Employees does this by allowing the users
-current troop, ship, and droid counts for each garrison and providing sufficient warnings when
-said counts drop below an acceptable level needed for adequate defense. For some ships, such
-as tie fighters, there may only be 1 trooper on board whereas for larger ships, such as star
-destroyers, may have as much as 9,700 stormtroopers. With our simple to use online interface,
-we will meet all your stormtrooper relocation management needs!
+The glorious Galactic Empire has 1.5 million planets under its control which includes 69 million different colonies and states. Without proper organization and resolve the galaxy will turn to chaos, or worse, become under the control of rebel scum. Empire Employees is capable of managing all 1 billion stormtroopers, 25,000 Star Destroyers and other smaller vehicles, as well as droids that the Empire employs. There are 11 vehicles types and 20 droid types currently supported. Each stormtrooper is equipped with a loadout that contains 1 out of 7 blasters and 1 out of 2 detonator grenades. To deploy a specific number of troops to ensure effective defense of each garrison spread such large cosmic distances it is critical to always have the correct number of supplies and personnel available. Empire Employees does this by allowing the users current troop, ship, and droid counts for each garrison and providing sufficient warnings when said counts drop below an acceptable level needed for adequate defense. For some ships, such as tie fighters, there may only be 1 trooper on board whereas for larger ships, such as star destroyers, may have as much as 9,700 stormtroopers. With our simple to use online interface, we will meet all your stormtrooper relocation management needs!
 * Database Outline
 ** Entity Tables
 *** ~troopers~
